@@ -76,6 +76,20 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .slb{font-size:11.5px;font-weight:500;color:var(--tm);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
 .sv{font-size:28px;font-weight:600;letter-spacing:-.8px;line-height:1}
 .sd{font-size:12px;color:var(--grn);margin-top:6px}.sd.n{color:var(--red)}
+.home-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:16px}
+.home-focus{background:linear-gradient(135deg,#161513 0%,#25231f 100%);color:#fff;border:none;position:relative;overflow:hidden}
+.home-focus::after{content:'';position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(245,200,0,.14)}
+.home-focus-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px}
+.home-focus-title{font-size:20px;font-weight:600;letter-spacing:-.4px;line-height:1.25;margin-bottom:10px;max-width:32ch}
+.home-focus-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.home-focus-desc{font-size:13px;line-height:1.55;color:rgba(255,255,255,.72);max-width:54ch}
+.home-chart{display:flex;flex-direction:column;gap:12px}
+.home-chart-row{display:grid;grid-template-columns:minmax(88px,108px) 1fr auto;gap:10px;align-items:center}
+.home-chart-label{font-size:12px;font-weight:500;color:var(--t2)}
+.home-chart-track{height:10px;border-radius:999px;background:var(--act);overflow:hidden}
+.home-chart-fill{height:100%;border-radius:999px;min-width:0;transition:width .3s ease}
+.home-chart-val{font-size:12px;font-weight:600;color:var(--t1);min-width:18px;text-align:right}
+@media (max-width:900px){.home-grid{grid-template-columns:1fr}}
 .dt{width:100%;border-collapse:collapse}
 .dt th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--tm);padding:10px 14px;border-bottom:1px solid var(--bdr);text-align:left}
 .dt td{font-size:13px;padding:11px 14px;border-bottom:1px solid var(--bdr)}
@@ -346,7 +360,7 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .feat-tab-panel.active{display:block}
 
 /* ── FEATURE NOTES ── */
-.feat-notes-wrap{background:var(--wh);border:1px solid var(--bdr);border-radius:10px;overflow:hidden}
+.feat-notes-wrap{background:var(--wh);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;position:relative}
 /* Rich editor toolbar */
 .rte-toolbar{display:flex;align-items:center;gap:2px;padding:7px 10px;border-bottom:1px solid var(--bdr);background:var(--sb);flex-wrap:wrap}
 .rte-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:5px;border:none;background:transparent;cursor:pointer;color:var(--t2);font-size:13px;font-family:'DM Sans',sans-serif;font-weight:600;transition:background .1s,color .1s;flex-shrink:0}
@@ -367,13 +381,18 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .rte-body p{margin:4px 0}
 /* Table */
 .rte-body table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13px}
-.rte-body th,.rte-body td{border:1px solid var(--bdr);padding:8px 11px;text-align:left;min-width:80px}
+.rte-body th,.rte-body td{border:1px solid var(--bdr);padding:8px 11px;text-align:left;min-width:120px;min-height:44px;height:44px;vertical-align:top}
 .rte-body th{background:var(--sb);font-weight:600;font-size:12px}
+.rte-body td:empty::before,.rte-body th:empty::before{content:'\00a0'}
 .rte-body td:focus,.rte-body th:focus{outline:2px solid var(--acc);outline-offset:-2px;background:var(--accl)}
 /* Table controls */
-.rte-tbl-ctrl{display:flex;gap:6px;padding:8px 12px;background:var(--sb);border-top:1px solid var(--bdr)}
-.rte-tbl-btn{font-size:11.5px;font-family:'DM Sans',sans-serif;font-weight:500;padding:4px 10px;border-radius:5px;border:1px solid var(--bdr);background:var(--wh);color:var(--t2);cursor:pointer;transition:all .1s}
-.rte-tbl-btn:hover{border-color:var(--t1);color:var(--t1)}
+.rte-tbl-ctrl{position:absolute;display:none;z-index:20;pointer-events:none}
+.rte-tbl-ctrl.show{display:block}
+.rte-tbl-line{position:absolute;display:flex;gap:6px;pointer-events:auto}
+.rte-tbl-line.col{transform:translate(-50%,-50%)}
+.rte-tbl-line.row{transform:translate(-50%,-50%);flex-direction:column}
+.rte-tbl-btn{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1;font-family:'DM Sans',sans-serif;font-weight:500;border-radius:999px;border:1px solid var(--bdr);background:var(--wh);color:var(--t2);cursor:pointer;transition:all .1s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.rte-tbl-btn:hover{border-color:var(--t1);color:var(--t1);background:#fff}
 
 /* ── TEST CASES ── */
 .tc-group{background:var(--wh);border:1px solid var(--bdr);border-radius:10px;margin-bottom:10px;overflow:hidden}
@@ -419,36 +438,35 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     <span class="ln">Jiqsys</span>
   </div>
   <div class="ss">
-    <div class="ni active" data-page="home"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
-    <div class="ni" data-page="tickets"><svg viewBox="0 0 24 24"><path d="M20 12v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h7"/><polyline points="16 3 21 3 21 8"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span>Tickets</span></div>
-    <div class="ni" data-page="flowchart"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="13" x2="5" y2="16"/><line x1="12" y1="13" x2="19" y2="16"/></svg><span>Flowchart</span></div>
+    <div class="ni active" data-page="home" onclick="nav('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+    <div class="ni" data-page="tickets" onclick="nav('tickets')"><svg viewBox="0 0 24 24"><path d="M20 12v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h7"/><polyline points="16 3 21 3 21 8"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span>Tickets</span></div>
+    <div class="ni" data-page="flowchart" onclick="nav('flowchart')"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="13" x2="5" y2="16"/><line x1="12" y1="13" x2="19" y2="16"/></svg><span>Flowchart</span></div>
   </div>
 
   <div class="sdiv" style="margin:10px 0 4px"></div>
   <div class="slbl" style="padding:0 16px 4px">Features</div>
   <div class="ss">
-    <div class="ni ni-feat" data-page="digital-form"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg><span>Digital Form</span></div>
-    <div class="ni ni-feat" data-page="promis"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>PROMiS Dashboard</span></div>
-    <div class="ni ni-feat" data-page="ops"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Executive Dashboard</span></div>
-    <div class="ni ni-feat" data-page="feat-pm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="9" height="9" rx="1"/><rect x="13" y="3" width="8" height="4" rx="1"/><rect x="13" y="10" width="8" height="5" rx="1"/><rect x="3" y="15" width="18" height="6" rx="1"/></svg><span>Project Management</span></div>
-    <div class="ni ni-feat" data-page="feat-md"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg><span>Master Data</span></div>
-    <div class="ni ni-feat" data-page="feat-mob"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span>Mobile App</span></div>
-    <div class="ni ni-feat" data-page="feat-rbac"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>RBAC / Access Control</span></div>
-    <div class="ni ni-feat" data-page="feat-lp"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Landing Page</span></div>
-    <div class="ni ni-feat" data-page="feat-vc"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/><polyline points="8 12 10 10 12 12 14 10 16 12"/></svg><span>Version Control</span></div>
-    <div class="ni ni-feat" data-page="feat-be"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><span>Backend Integration</span></div>
-    <div class="ni ni-feat" data-page="feat-qa"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span>Testing / QA</span></div>
-    <div class="ni ni-feat" data-page="feat-ob"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Onboarding</span></div>
-    <div class="ni ni-feat" data-page="feat-settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg><span>Settings</span></div>
-    <div class="ni ni-feat" data-page="feat-trash"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg><span>Trash</span></div>
+    <div class="ni ni-feat" data-page="digital-form" onclick="nav('digital-form')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg><span>Digital Form</span></div>
+    <div class="ni ni-feat" data-page="promis" onclick="nav('promis')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>PROMiS Dashboard</span></div>
+    <div class="ni ni-feat" data-page="ops" onclick="nav('ops')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Executive Dashboard</span></div>
+    <div class="ni ni-feat" data-page="feat-pm" onclick="nav('feat-pm')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="9" height="9" rx="1"/><rect x="13" y="3" width="8" height="4" rx="1"/><rect x="13" y="10" width="8" height="5" rx="1"/><rect x="3" y="15" width="18" height="6" rx="1"/></svg><span>Project Management</span></div>
+    <div class="ni ni-feat" data-page="feat-md" onclick="nav('feat-md')"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg><span>Master Data</span></div>
+    <div class="ni ni-feat" data-page="feat-mob" onclick="nav('feat-mob')"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span>Mobile App</span></div>
+    <div class="ni ni-feat" data-page="feat-rbac" onclick="nav('feat-rbac')"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>RBAC / Access Control</span></div>
+    <div class="ni ni-feat" data-page="feat-lp" onclick="nav('feat-lp')"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Landing Page</span></div>
+    <div class="ni ni-feat" data-page="feat-vc" onclick="nav('feat-vc')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/><polyline points="8 12 10 10 12 12 14 10 16 12"/></svg><span>Version Control</span></div>
+    <div class="ni ni-feat" data-page="feat-be" onclick="nav('feat-be')"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><span>Backend Integration</span></div>
+    <div class="ni ni-feat" data-page="feat-qa" onclick="nav('feat-qa')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span>Testing / QA</span></div>
+    <div class="ni ni-feat" data-page="feat-ob" onclick="nav('feat-ob')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Onboarding</span></div>
+    <div class="ni ni-feat" data-page="feat-settings" onclick="nav('feat-settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg><span>Settings</span></div>
+    <div class="ni ni-feat" data-page="feat-trash" onclick="nav('feat-trash')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg><span>Trash</span></div>
   </div>
 
   <div class="ssp"></div>
   <div class="sdiv"></div>
   <div class="ss" style="padding:4px 0 8px">
-    <div class="ni" data-page="team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Team</span></div>
-    <div class="ni" data-page="home"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg><span>Settings</span></div>
-    <div class="ni" id="ni-trash" data-page="trash"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg><span>Trash</span><span id="trash-badge" style="display:none;margin-left:auto;font-size:10px;font-weight:600;background:#d94f3d;color:#fff;border-radius:10px;padding:1px 6px;min-width:18px;text-align:center"></span></div>
+    <div class="ni" data-page="team" onclick="nav('team')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Team</span></div>
+    <div class="ni" id="ni-trash" data-page="trash" onclick="nav('trash')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg><span>Trash</span><span id="trash-badge" style="display:none;margin-left:auto;font-size:10px;font-weight:600;background:#d94f3d;color:#fff;border-radius:10px;padding:1px 6px;min-width:18px;text-align:center"></span></div>
   </div>
   <div class="sbot">
     <div class="ubl">
@@ -486,25 +504,15 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     <h1 style="font-size:22px;font-weight:600;color:#fff;letter-spacing:-.4px;margin-bottom:5px">Good morning, Haziq <span style="color:var(--acc)">·</span></h1>
     <p style="font-size:13.5px;color:rgba(255,255,255,.5)">Your integrated workflow hub — manage tickets, forms, and dashboards.</p>
   </div>
-  <p style="font-size:14px;font-weight:600;margin-bottom:14px">Core Modules</p>
-  <div class="g3" style="margin-bottom:26px">
-    <div class="card" style="cursor:pointer" onclick="nav('tickets')">
-      <div style="width:34px;height:34px;border-radius:8px;background:var(--bg);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;margin-bottom:11px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h7"/><polyline points="16 3 21 3 21 8"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
-      <h3 style="font-size:14px;font-weight:600;margin-bottom:4px">Tickets</h3>
-      <p style="font-size:12.5px;color:var(--t2);line-height:1.5">Personal to-do and task tracker across Table, Kanban, and Gantt views.</p>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px"><span class="bdg by">8 Open</span><span style="font-size:12px;color:var(--tm)">Open →</span></div>
-    </div>
-    <div class="card" style="cursor:pointer" onclick="nav('digital-form')">
-      <div style="width:34px;height:34px;border-radius:8px;background:var(--bg);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;margin-bottom:11px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
-      <h3 style="font-size:14px;font-weight:600;margin-bottom:4px">Digital Form</h3>
-      <p style="font-size:12.5px;color:var(--t2);line-height:1.5">Submit and track operational requests through structured approval workflows.</p>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px"><span class="bdg by">12 Pending</span><span style="font-size:12px;color:var(--tm)">Open →</span></div>
-    </div>
-    <div class="card" style="cursor:pointer" onclick="nav('flowchart')">
-      <div style="width:34px;height:34px;border-radius:8px;background:var(--bg);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;margin-bottom:11px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="13" x2="5" y2="16"/><line x1="12" y1="13" x2="19" y2="16"/></svg></div>
-      <h3 style="font-size:14px;font-weight:600;margin-bottom:4px">System Flowchart</h3>
-      <p style="font-size:12.5px;color:var(--t2);line-height:1.5">Visualise how Digital Form, PROMiS, and Executive Dashboard interconnect.</p>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px"><span class="bdg bgn">Live</span><span style="font-size:12px;color:var(--tm)">Open →</span></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap">
+    <p style="font-size:14px;font-weight:600">Dashboard</p>
+    <button class="btn btn-s btn-sm" onclick="nav('tickets')">Open Tickets</button>
+  </div>
+  <div class="home-grid" style="margin-bottom:26px">
+    <div class="card home-focus" id="home-focus-card"></div>
+    <div class="card">
+      <div class="slb">Tickets By Status</div>
+      <div class="home-chart" id="home-status-chart"></div>
     </div>
   </div>
 </div>
@@ -903,7 +911,7 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
           </div>
           <div class="dw-field">
             <label>Assignee</label>
-            <select class="inf" id="dw-assignee" oninput="dwField('assignee',this.value)">
+            <select class="inf" id="dw-assignee" oninput="dwField('assigneeId',this.value)">
             </select>
           </div>
           <div class="dw-field">
@@ -1020,18 +1028,23 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ════════════════════════════════════════════
 // DATA
 // ════════════════════════════════════════════
-let statuses=[
-  {id:'s1',name:'Backlog',color:'#aaa9a3'},
-  {id:'s2',name:'To Do',color:'#6f6e69'},
-  {id:'s3',name:'In Progress',color:'#f5c800'},
-  {id:'s4',name:'In Review',color:'#3b72d9'},
-  {id:'s5',name:'Done',color:'#2d9a6b'},
-  {id:'s6',name:'Blocked',color:'#d94f3d'},
+const SUPABASE_URL='https://dznuvdnapgcanljuauhn.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6bnV2ZG5hcGdjYW5sanVhdWhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMzM3MjAsImV4cCI6MjA4ODkwOTcyMH0.r9vn3Ul0LXIN7m0mIZHW8Z5hakQVEsX6HQJkvx6RHRM';
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const DEFAULT_STATUSES=[
+  {id:'backlog',code:'backlog',name:'Backlog',color:'#aaa9a3'},
+  {id:'todo',code:'todo',name:'To Do',color:'#6f6e69'},
+  {id:'in_progress',code:'in_progress',name:'In Progress',color:'#f5c800'},
+  {id:'in_review',code:'in_review',name:'In Review',color:'#3b72d9'},
+  {id:'done',code:'done',name:'Done',color:'#2d9a6b'},
+  {id:'blocked',code:'blocked',name:'Blocked',color:'#d94f3d'},
 ];
+let statuses=[...DEFAULT_STATUSES];
 let smDraft=[];
 const PRI={Critical:{bg:'#fdecea',c:'#b03a2e'},High:{bg:'#fff3cd',c:'#8a6800'},Normal:{bg:'#f0efeb',c:'#6f6e69'},Low:{bg:'#eaf0fd',c:'#2a56a8'}};
 // ════════════════════════════════════════════
@@ -1060,8 +1073,222 @@ const MOD_MAP=Object.fromEntries(MODULES.map(m=>[m.key,'mt-'+m.key.replace(/[^a-
 // ════════════════════════════════════════════
 const FEAT_KEYS=['df','pr','op','pm','md','mob','rbac','lp','vc','be','qa','ob','fs','ft'];
 const featData=Object.fromEntries(FEAT_KEYS.map(k=>[k,{notes:'',testGroups:[]}]));
+let moduleRows=[];
+let team=[];
+let tickets=[];
+let trash=[];
+let appReady=false;
+const pendingTicketSaves=new Map();
 
 function uid(){return Math.random().toString(36).slice(2,9);}
+function slugify(v){return String(v||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'')||'item';}
+function formatDeletedAt(v){return v?new Date(v).toLocaleString('en-MY',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';}
+function showDbError(context,error){
+  console.error(context,error);
+  toast(`${context} failed`,{icon:'trash',duration:5000});
+}
+function getStatusCodeById(id){return statuses.find(s=>s.id===id)?.code||'';}
+function getMemberNameById(id){
+  if(!id)return 'Unassigned';
+  const member=team.find(m=>m.id===id);
+  return member?member.name:'Unassigned';
+}
+function normalizeTicket(t){
+  t.modules=t.modules||[];
+  t.frefs=t.frefs||[];
+  t.activity=t.activity||[];
+  t.assignee=getMemberNameById(t.assigneeId);
+  t.deletedAt=t.deletedAtRaw?formatDeletedAt(t.deletedAtRaw):'';
+  return t;
+}
+function refreshDerivedTickets(){
+  tickets=tickets.map(normalizeTicket);
+  trash=trash.map(normalizeTicket);
+}
+function buildTicketPayload(ticket){
+  return {
+    ticket_no:ticket.id,
+    title:ticket.title,
+    description:ticket.desc||null,
+    status_id:ticket.statusId,
+    priority:ticket.priority,
+    assignee_id:ticket.assigneeId||null,
+    start_date:ticket.start||null,
+    due_date:ticket.due||null,
+    deleted_at:ticket.deletedAtRaw||null,
+  };
+}
+function nextTicketNo(){
+  return `TK-${Date.now().toString().slice(-6)}${Math.floor(Math.random()*10)}`;
+}
+function upsertLocalTrash(ticket){
+  const idx=trash.findIndex(x=>x.rowId===ticket.rowId);
+  if(idx>-1)trash[idx]=ticket;
+  else trash.unshift(ticket);
+}
+function removeLocalTrash(rowId){trash=trash.filter(t=>t.rowId!==rowId);}
+async function appendActivity(ticket,actionType,message,meta={}){
+  ticket.activity.unshift({user:'System',av:'SY',text:message,time:'Just now'});
+  if(!ticket.rowId)return;
+  const {error}=await supabaseClient.from('ticket_activity').insert({
+    ticket_id:ticket.rowId,
+    action_type:actionType,
+    message,
+    meta
+  });
+  if(error)console.error('append activity failed',error);
+}
+async function syncTicketModules(ticket){
+  if(!ticket.rowId)return;
+  const moduleIds=ticket.modules
+    .map(key=>moduleRows.find(row=>row.module_key===key)?.id)
+    .filter(Boolean);
+  const {error:deleteError}=await supabaseClient.from('ticket_modules').delete().eq('ticket_id',ticket.rowId);
+  if(deleteError)throw deleteError;
+  if(!moduleIds.length)return;
+  const {error:insertError}=await supabaseClient.from('ticket_modules').insert(
+    moduleIds.map(moduleId=>({ticket_id:ticket.rowId,module_id:moduleId}))
+  );
+  if(insertError)throw insertError;
+}
+async function persistTicket(ticket){
+  if(!ticket.rowId)return;
+  const {error}=await supabaseClient.from('tickets').update(buildTicketPayload(ticket)).eq('id',ticket.rowId);
+  if(error)throw error;
+}
+function queueTicketPersist(ticket,delay=300){
+  if(!ticket?.rowId)return;
+  clearTimeout(pendingTicketSaves.get(ticket.rowId));
+  const timeout=setTimeout(async()=>{
+    try{
+      await persistTicket(ticket);
+    }catch(error){
+      showDbError(`Saving ticket ${ticket.id}`,error);
+    }finally{
+      pendingTicketSaves.delete(ticket.rowId);
+    }
+  },delay);
+  pendingTicketSaves.set(ticket.rowId,timeout);
+}
+async function loadStatuses(){
+  const {data,error}=await supabaseClient
+    .from('statuses')
+    .select('id, code, name, color, sort_order')
+    .eq('is_active',true)
+    .order('sort_order');
+  if(error)throw error;
+  statuses=(data&&data.length?data:DEFAULT_STATUSES).map((row,i)=>({
+    id:row.id||`status-${i}`,
+    code:row.code||slugify(row.name),
+    name:row.name,
+    color:row.color
+  }));
+}
+async function loadModules(){
+  const {data,error}=await supabaseClient
+    .from('modules')
+    .select('id, module_key, name, page_slug')
+    .eq('is_active',true)
+    .order('sort_order');
+  if(error)throw error;
+  moduleRows=data||[];
+}
+async function loadTeam(){
+  const {data,error}=await supabaseClient
+    .from('team_members')
+    .select('id, full_name, role_title, email')
+    .eq('is_active',true)
+    .order('full_name');
+  if(error)throw error;
+  team=(data||[]).map(row=>({
+    id:row.id,
+    name:row.full_name,
+    role:row.role_title||'',
+    email:row.email||''
+  }));
+}
+async function loadTickets(){
+  const [{data:ticketRows,error:ticketsError},{data:linkRows,error:linksError},{data:refRows,error:refsError},{data:activityRows,error:activityError}]=await Promise.all([
+    supabaseClient.from('tickets').select('id, ticket_no, title, description, status_id, priority, assignee_id, start_date, due_date, deleted_at').order('created_at',{ascending:false}),
+    supabaseClient.from('ticket_modules').select('ticket_id, module_id'),
+    supabaseClient.from('ticket_references').select('ticket_id, ref_value').order('created_at'),
+    supabaseClient.from('ticket_activity').select('ticket_id, message, created_at').order('created_at',{ascending:false}),
+  ]);
+  if(ticketsError)throw ticketsError;
+  if(linksError)throw linksError;
+  if(refsError)throw refsError;
+  if(activityError)throw activityError;
+  const moduleKeyById=Object.fromEntries(moduleRows.map(row=>[row.id,row.module_key]));
+  const modulesByTicket={};
+  (linkRows||[]).forEach(row=>{
+    const moduleKey=moduleKeyById[row.module_id];
+    if(!moduleKey)return;
+    if(!modulesByTicket[row.ticket_id])modulesByTicket[row.ticket_id]=[];
+    modulesByTicket[row.ticket_id].push(moduleKey);
+  });
+  const refsByTicket={};
+  (refRows||[]).forEach(row=>{
+    if(!refsByTicket[row.ticket_id])refsByTicket[row.ticket_id]=[];
+    refsByTicket[row.ticket_id].push(row.ref_value);
+  });
+  const activitiesByTicket={};
+  (activityRows||[]).forEach(row=>{
+    if(!activitiesByTicket[row.ticket_id])activitiesByTicket[row.ticket_id]=[];
+    activitiesByTicket[row.ticket_id].push({
+      user:'System',
+      av:'SY',
+      text:row.message,
+      time:formatDeletedAt(row.created_at)
+    });
+  });
+  tickets=[];
+  trash=[];
+  (ticketRows||[]).forEach(row=>{
+    const ticket=normalizeTicket({
+      rowId:row.id,
+      id:row.ticket_no,
+      title:row.title,
+      desc:row.description||'',
+      statusId:row.status_id,
+      priority:row.priority,
+      assigneeId:row.assignee_id||'',
+      assignee:'',
+      start:row.start_date||'',
+      due:row.due_date||'',
+      deletedAtRaw:row.deleted_at||null,
+      deletedAt:'',
+      modules:modulesByTicket[row.id]||[],
+      frefs:refsByTicket[row.id]||[],
+      activity:activitiesByTicket[row.id]||[],
+      testProgress:{},
+    });
+    if(ticket.deletedAtRaw)trash.push(ticket);
+    else tickets.push(ticket);
+  });
+}
+async function hydrateApp(){
+  try{
+    await loadStatuses();
+    await loadModules();
+    await loadTeam();
+    await loadTickets();
+    refreshAssigneeDropdowns();
+    populateNtStatus();
+    populateFltStatus();
+    renderTeamPage();
+    renderTrashPage();
+    renderActive();
+    appReady=true;
+  }catch(error){
+    showDbError('Loading Supabase data',error);
+    refreshAssigneeDropdowns();
+    populateNtStatus();
+    populateFltStatus();
+    renderTeamPage();
+    renderTrashPage();
+    renderActive();
+  }
+}
 
 // ── Tab switcher ──
 function switchFeatTab(fk,tab,btn){
@@ -1090,7 +1317,8 @@ const RTE_TOOLBAR=[
   {type:'cmd',cmd:'insertUnorderedList', icon:'<svg viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="5" x2="16" y2="5"/><line x1="6" y1="9" x2="16" y2="9"/><line x1="6" y1="13" x2="16" y2="13"/><circle cx="2.5" cy="5" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="9" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="13" r="1" fill="currentColor" stroke="none"/></svg>', title:'Bullet List'},
   {type:'cmd',cmd:'insertOrderedList',   icon:'<svg viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="5" x2="16" y2="5"/><line x1="6" y1="9" x2="16" y2="9"/><line x1="6" y1="13" x2="16" y2="13"/><text x="1" y="6" font-size="5" font-family="DM Sans" fill="currentColor" stroke="none" font-weight="700">1</text><text x="1" y="10" font-size="5" font-family="DM Sans" fill="currentColor" stroke="none" font-weight="700">2</text><text x="1" y="14" font-size="5" font-family="DM Sans" fill="currentColor" stroke="none" font-weight="700">3</text></svg>', title:'Numbered List'},
   {type:'sep'},
-  {type:'table', label:'Table', title:'Insert Table'},
+  {type:'table', rows:2, cols:2, label:'2x2', title:'Insert 2x2 Table'},
+  {type:'table', rows:1, cols:2, label:'1x2', title:'Insert 1x2 Table'},
 ];
 
 function rteToolbarHTML(fk){
@@ -1099,7 +1327,7 @@ function rteToolbarHTML(fk){
       if(t.type==='sep') return `<div class="rte-sep"></div>`;
       if(t.type==='heading') return `<button class="rte-btn wide" title="${t.title}" onmousedown="event.preventDefault();rteHeading('${fk}','${t.tag}')">${t.label}</button>`;
       if(t.type==='cmd') return `<button class="rte-btn" title="${t.title}" id="rteb-${fk}-${t.cmd}" onmousedown="event.preventDefault();rteCmd('${fk}','${t.cmd}')">${t.icon}</button>`;
-      if(t.type==='table') return `<button class="rte-btn wide" title="${t.title}" onmousedown="event.preventDefault();rteInsertTable('${fk}')">⊞ Table</button>`;
+      if(t.type==='table') return `<button class="rte-btn wide" title="${t.title}" onmousedown="event.preventDefault();rteInsertTable('${fk}',${t.rows},${t.cols})">⊞ ${t.label}</button>`;
     }).join('')}
   </div>`;
 }
@@ -1118,17 +1346,14 @@ function rteBodyHTML(fk){
 function rteMountEditor(fk){
   const wrap=document.getElementById(`${fk}-editor-wrap`);
   if(!wrap||wrap.dataset.mounted==='1')return;
-  wrap.innerHTML=rteToolbarHTML(fk)+rteBodyHTML(fk)+`<div class="rte-tbl-ctrl" id="rte-tblctrl-${fk}" style="display:none">
-    <button class="rte-tbl-btn" onmousedown="event.preventDefault();rteTblAddRow('${fk}')">+ Row</button>
-    <button class="rte-tbl-btn" onmousedown="event.preventDefault();rteTblAddCol('${fk}')">+ Column</button>
-    <button class="rte-tbl-btn" onmousedown="event.preventDefault();rteTblDelRow('${fk}')">− Row</button>
-    <button class="rte-tbl-btn" onmousedown="event.preventDefault();rteTblDelCol('${fk}')">− Column</button>
-  </div>`;
+  wrap.innerHTML=rteToolbarHTML(fk)+rteBodyHTML(fk)+`<div class="rte-tbl-ctrl" id="rte-tblctrl-${fk}"></div>`;
   wrap.dataset.mounted='1';
   // show/hide table controls based on cursor position
   const body=document.getElementById(`rte-${fk}`);
   body.addEventListener('click',()=>rteCheckTable(fk));
   body.addEventListener('keyup',()=>rteCheckTable(fk));
+  body.addEventListener('scroll',()=>rteCheckTable(fk));
+  window.addEventListener('resize',()=>rteCheckTable(fk));
 }
 
 function rteInput(fk){
@@ -1190,15 +1415,15 @@ function rteKey(e,fk){
 }
 
 // ── Table helpers ──
-function rteInsertTable(fk){
+function rteInsertTable(fk,rows=2,cols=2){
   const body=document.getElementById(`rte-${fk}`);
   if(!body)return;
   body.focus();
   const tbl=document.createElement('table');
   const thead=tbl.createTHead();const hr=thead.insertRow();
-  ['Column 1','Column 2','Column 3'].forEach(h=>{const th=document.createElement('th');th.contentEditable='true';th.textContent=h;hr.appendChild(th);});
+  Array.from({length:cols},(_,i)=>`Column ${i+1}`).forEach(h=>{const th=document.createElement('th');th.contentEditable='true';th.textContent=h;hr.appendChild(th);});
   const tbody=tbl.createTBody();
-  for(let r=0;r<2;r++){const row=tbody.insertRow();for(let c=0;c<3;c++){const td=row.insertCell();td.contentEditable='true';}}
+  for(let r=0;r<rows;r++){const row=tbody.insertRow();for(let c=0;c<cols;c++){const td=row.insertCell();td.contentEditable='true';td.innerHTML='<br>';}}
   // insert at cursor or append
   const sel=window.getSelection();
   if(sel.rangeCount){
@@ -1228,17 +1453,54 @@ function rteGetActiveTable(fk){
 
 function rteCheckTable(fk){
   const ctrl=document.getElementById(`rte-tblctrl-${fk}`);
-  if(!ctrl)return;
-  ctrl.style.display=rteGetActiveTable(fk)?'flex':'none';
+  const wrap=document.getElementById(`${fk}-editor-wrap`);
+  const body=document.getElementById(`rte-${fk}`);
+  const tbl=rteGetActiveTable(fk);
+  if(!ctrl||!wrap||!body)return;
+  if(!tbl){
+    ctrl.classList.remove('show');
+    return;
+  }
+  const wrapRect=wrap.getBoundingClientRect();
+  const tblRect=tbl.getBoundingClientRect();
+  ctrl.classList.add('show');
+  ctrl.style.left='0px';
+  ctrl.style.top='0px';
+  const rows=[...tbl.rows];
+  const rowButtons=rows.slice(1).map((row,i)=>{
+    const rect=row.getBoundingClientRect();
+    const top=rect.top-wrapRect.top+rect.height/2;
+    const left=rect.left-wrapRect.left-18;
+    return `<div class="rte-tbl-line row" style="left:${left}px;top:${top}px">
+      <button class="rte-tbl-btn" title="Add row here" onmousedown="event.preventDefault();rteTblAddRowAt('${fk}',${i})">+</button>
+      <button class="rte-tbl-btn" title="Remove this row" onmousedown="event.preventDefault();rteTblDelRowAt('${fk}',${i})">−</button>
+    </div>`;
+  }).join('');
+  const headerCells=[...rows[0].cells];
+  const colButtons=headerCells.map((cell,i)=>{
+    const rect=cell.getBoundingClientRect();
+    const left=rect.left-wrapRect.left+rect.width/2;
+    const top=tblRect.top-wrapRect.top-18;
+    return `<div class="rte-tbl-line col" style="left:${left}px;top:${top}px">
+      <button class="rte-tbl-btn" title="Add column here" onmousedown="event.preventDefault();rteTblAddColAt('${fk}',${i})">+</button>
+      <button class="rte-tbl-btn" title="Remove this column" onmousedown="event.preventDefault();rteTblDelColAt('${fk}',${i})">−</button>
+    </div>`;
+  }).join('');
+  ctrl.innerHTML=colButtons+rowButtons;
 }
 
 function rteTblAddRow(fk){
   const tbl=rteGetActiveTable(fk);if(!tbl)return;
+  rteTblAddRowAt(fk,tbl.rows.length-1);
+}
+function rteTblAddRowAt(fk,idx){
+  const tbl=rteGetActiveTable(fk);if(!tbl)return;
   const cols=tbl.rows[0].cells.length;
   const body=tbl.querySelector('tbody')||tbl;
-  const row=body.insertRow();
-  for(let c=0;c<cols;c++){const td=row.insertCell();td.contentEditable='true';}
+  const row=body.insertRow(Math.max(0,Math.min(idx+1,body.rows.length)));
+  for(let c=0;c<cols;c++){const td=row.insertCell();td.contentEditable='true';td.innerHTML='<br>';}
   rteInput(fk);
+  rteCheckTable(fk);
 }
 
 function rteTblDelRow(fk){
@@ -1247,18 +1509,40 @@ function rteTblDelRow(fk){
   const node=sel.anchorNode;
   const el=node.nodeType===3?node.parentElement:node;
   const row=el.closest('tr');
-  if(row&&tbl.rows.length>2)row.parentNode.removeChild(row);
+  const body=tbl.querySelector('tbody')||tbl;
+  const idx=row?[...body.rows].indexOf(row):-1;
+  if(idx>=0)rteTblDelRowAt(fk,idx);
+}
+function rteTblDelRowAt(fk,idx){
+  const tbl=rteGetActiveTable(fk);if(!tbl)return;
+  const body=tbl.querySelector('tbody')||tbl;
+  if(body.rows.length<=1)return;
+  if(body.rows[idx])body.deleteRow(idx);
   rteInput(fk);
+  rteCheckTable(fk);
 }
 
 function rteTblAddCol(fk){
   const tbl=rteGetActiveTable(fk);if(!tbl)return;
+  rteTblAddColAt(fk,tbl.rows[0].cells.length-1);
+}
+function rteTblAddColAt(fk,idx){
+  const tbl=rteGetActiveTable(fk);if(!tbl)return;
   [...tbl.rows].forEach((row,i)=>{
-    const cell=i===0?document.createElement('th'):row.insertCell();
+    const insertAt=Math.max(0,Math.min(idx+1,row.cells.length));
+    const cell=i===0?document.createElement('th'):row.insertCell(insertAt);
     cell.contentEditable='true';
-    if(i===0){cell.textContent=`Column ${row.cells.length+1}`;row.appendChild(cell);}
+    if(i===0){
+      cell.textContent=`Column ${insertAt+1}`;
+      if(insertAt>=row.cells.length)row.appendChild(cell);
+      else row.insertBefore(cell,row.cells[insertAt]);
+    } else {
+      cell.innerHTML='<br>';
+    }
   });
+  rteTblRenumberHeaders(tbl);
   rteInput(fk);
+  rteCheckTable(fk);
 }
 
 function rteTblDelCol(fk){
@@ -1267,11 +1551,21 @@ function rteTblDelCol(fk){
   const node=sel.anchorNode;
   const el=node.nodeType===3?node.parentElement:node;
   const cell=el.closest('td,th');
-  if(!cell)return;
-  const colIdx=[...cell.parentElement.cells].indexOf(cell);
+  const idx=cell?[...cell.parentElement.cells].indexOf(cell):-1;
+  if(idx>=0)rteTblDelColAt(fk,idx);
+}
+function rteTblDelColAt(fk,colIdx){
+  const tbl=rteGetActiveTable(fk);if(!tbl)return;
   if(colIdx<0||tbl.rows[0].cells.length<=1)return;
   [...tbl.rows].forEach(row=>{if(row.cells[colIdx])row.deleteCell(colIdx);});
+  rteTblRenumberHeaders(tbl);
   rteInput(fk);
+  rteCheckTable(fk);
+}
+function rteTblRenumberHeaders(tbl){
+  [...tbl.rows[0].cells].forEach((cell,i)=>{
+    if(!cell.textContent.trim()||/^Column \d+$/.test(cell.textContent.trim()))cell.textContent=`Column ${i+1}`;
+  });
 }
 
 // ── Test Groups ──
@@ -1433,14 +1727,6 @@ function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt
 // ════════════════════════════════════════════
 // TEAM
 // ════════════════════════════════════════════
-let team=[
-  {id:uid(),name:'Haziq',role:'Admin',email:'haziq@company.com'},
-  {id:uid(),name:'Ahmad Faris',role:'Engineer',email:'ahmad.faris@company.com'},
-  {id:uid(),name:'Nurul Ain',role:'Analyst',email:'nurul.ain@company.com'},
-  {id:uid(),name:'Nadia Zain',role:'Coordinator',email:'nadia.zain@company.com'},
-  {id:uid(),name:'Reza Mohamad',role:'Technician',email:'reza.mohamad@company.com'},
-  {id:uid(),name:'Emad Alhaderi',role:'Engineer',email:'emad.alhaderi@company.com'},
-];
 
 function tmInitials(name){
   return name.trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2)||'?';
@@ -1467,17 +1753,18 @@ function renderTeamPage(){
 }
 
 function refreshAssigneeDropdowns(){
-  const names=team.map(m=>m.name);
-  const opts=names.map(n=>`<option>${escHtml(n)}</option>`).join('');
+  refreshDerivedTickets();
+  const ids=team.map(m=>m.id);
+  const opts=`<option value="">Unassigned</option>`+team.map(m=>`<option value="${m.id}">${escHtml(m.name)}</option>`).join('');
   // filter bar
   const fb=document.getElementById('flt-assignee');
-  if(fb){const v=fb.value;fb.innerHTML=`<option value="">All Assignees</option>`+opts;if(names.includes(v))fb.value=v;}
+  if(fb){const v=fb.value;fb.innerHTML=`<option value="">All Assignees</option>`+team.map(m=>`<option value="${m.id}">${escHtml(m.name)}</option>`).join('');if(ids.includes(v))fb.value=v;}
   // drawer
   const dw=document.getElementById('dw-assignee');
-  if(dw){const v=dw.value;dw.innerHTML=opts;if(names.includes(v))dw.value=v;}
+  if(dw){const v=dw.value;dw.innerHTML=opts;dw.value=ids.includes(v)||v===''?v:'';}
   // new ticket modal
   const nt=document.getElementById('nt-asgn');
-  if(nt){const v=nt.value;nt.innerHTML=opts;if(names.includes(v))nt.value=v;}
+  if(nt){const v=nt.value;nt.innerHTML=opts;nt.value=ids.includes(v)||v===''?v:'';}
 }
 
 // ── Add / Edit modal state ──
@@ -1513,59 +1800,55 @@ function tmPreviewAv(){
   document.getElementById('tm-av-preview').textContent=tmInitials(val)||'?';
 }
 
-function saveMember(){
+async function saveMember(){
   const name=document.getElementById('tm-name').value.trim();
   if(!name){document.getElementById('tm-name').focus();return;}
   const role=document.getElementById('tm-role').value.trim();
   const email=document.getElementById('tm-email').value.trim();
-  if(tmEditId){
-    const m=team.find(x=>x.id===tmEditId);
-    if(m){m.name=name;m.role=role;m.email=email;}
-  } else {
-    team.push({id:uid(),name,role,email});
+  try{
+    if(tmEditId){
+      const {error}=await supabaseClient
+        .from('team_members')
+        .update({full_name:name,role_title:role||null,email:email||null})
+        .eq('id',tmEditId);
+      if(error)throw error;
+      const m=team.find(x=>x.id===tmEditId);
+      if(m){m.name=name;m.role=role;m.email=email;}
+    } else {
+      const {data,error}=await supabaseClient
+        .from('team_members')
+        .insert({full_name:name,role_title:role||null,email:email||null})
+        .select('id, full_name, role_title, email')
+        .single();
+      if(error)throw error;
+      team.push({id:data.id,name:data.full_name,role:data.role_title||'',email:data.email||''});
+    }
+    closeOvl('tm-ovl');
+    renderTeamPage();
+    refreshAssigneeDropdowns();
+    renderActive();
+  }catch(error){
+    showDbError('Saving team member',error);
   }
-  closeOvl('tm-ovl');
-  renderTeamPage();
-  refreshAssigneeDropdowns();
 }
 
-function deleteMember(id){
+async function deleteMember(id){
   const m=team.find(x=>x.id===id);if(!m)return;
   if(!confirm(`Remove ${m.name} from the team? They will be unassigned from any tickets.`))return;
-  team=team.filter(x=>x.id!==id);
-  renderTeamPage();
-  refreshAssigneeDropdowns();
+  try{
+    const {error}=await supabaseClient.from('team_members').delete().eq('id',id);
+    if(error)throw error;
+    team=team.filter(x=>x.id!==id);
+    [...tickets,...trash].forEach(t=>{
+      if(t.assigneeId===id){t.assigneeId='';t.assignee='Unassigned';}
+    });
+    renderTeamPage();
+    refreshAssigneeDropdowns();
+    renderActive();
+  }catch(error){
+    showDbError('Deleting team member',error);
+  }
 }
-
-let tickets=[
-  {id:'TK-001',title:'Replace AC Unit – Block A, Level 3',desc:'Faulty compressor. Contractor scheduled.',statusId:'s3',priority:'Critical',assignee:'Ahmad Faris',start:'2024-03-10',due:'2024-03-14',modules:['Digital Form','Ops','Project Mgmt','Testing'],frefs:['DF-2024-0041'],activity:[{user:'Ahmad Faris',av:'AF',text:'Contractor confirmed for Thursday.',time:'2 hr ago'},{user:'Haziq',av:'HQ',text:'Ticket created and linked to DF-2024-0041.',time:'Yesterday'}]},
-  {id:'TK-002',title:'Update Q1 Asset Register',desc:'Quarterly asset reconciliation across all departments.',statusId:'s2',priority:'Normal',assignee:'Nurul Ain',start:'2024-03-12',due:'2024-03-20',modules:['PROMiS','Master Data'],frefs:[],activity:[]},
-  {id:'TK-003',title:'Fire Suppression Inspection – Block B',desc:'Semi-annual inspection per JKKP requirement.',statusId:'s4',priority:'High',assignee:'Nadia Zain',start:'2024-03-08',due:'2024-03-15',modules:['Ops','Mobile App','Testing'],frefs:['DF-2024-0039'],activity:[{user:'Nadia Zain',av:'NZ',text:'Inspection team briefed.',time:'3 hr ago'}]},
-  {id:'TK-004',title:'Quarterly Electrical Audit – HQ',desc:'Full audit of main distribution board and sub-panels.',statusId:'s2',priority:'High',assignee:'Emad Alhaderi',start:'2024-03-15',due:'2024-03-22',modules:['Ops','Backend','Version Control'],frefs:[],activity:[]},
-  {id:'TK-005',title:'HVAC Filter Cleaning – Block C',desc:'Scheduled preventive maintenance.',statusId:'s1',priority:'Normal',assignee:'Reza Mohamad',start:'2024-03-18',due:'2024-03-19',modules:['Ops','Mobile App'],frefs:[],activity:[]},
-  {id:'TK-006',title:'Procurement Review – Office Furniture',desc:'Sourcing chairs and workstations for Level 5 expansion.',statusId:'s4',priority:'Normal',assignee:'Haziq',start:'2024-03-05',due:'2024-03-16',modules:['PROMiS','Digital Form','Project Mgmt'],frefs:['DF-2024-0037'],activity:[]},
-  {id:'TK-007',title:'Space Allocation – Conference Room 3B',desc:'Temporary reallocation for project team.',statusId:'s5',priority:'Normal',assignee:'Nadia Zain',start:'2024-03-01',due:'2024-03-07',modules:['RBAC'],frefs:[],activity:[{user:'Nadia Zain',av:'NZ',text:'Completed and room reassigned.',time:'5 days ago'}]},
-  {id:'TK-008',title:'Security Badge System Upgrade',desc:'Vendor onboarding and migration.',statusId:'s6',priority:'High',assignee:'Ahmad Faris',start:'2024-03-11',due:'2024-03-25',modules:['Ops','RBAC','Backend'],frefs:[],activity:[{user:'Ahmad Faris',av:'AF',text:'Vendor unresponsive — escalating.',time:'1 day ago'}]},
-  {id:'TK-009',title:'Lift Maintenance – Tower 2',desc:'Scheduled servicing by KONE technician.',statusId:'s3',priority:'High',assignee:'Reza Mohamad',start:'2024-03-13',due:'2024-03-13',modules:['Digital Form','Ops','Mobile App'],frefs:['DF-2024-0040'],activity:[{user:'Reza Mohamad',av:'RM',text:'Technician on site.',time:'1 hr ago'}]},
-  {id:'TK-010',title:'Office Lease Renewal – Lot 7B',desc:'Review terms and coordinate with legal.',statusId:'s4',priority:'High',assignee:'Haziq',start:'2024-03-10',due:'2024-03-28',modules:['PROMiS','Digital Form','Master Data'],frefs:['DF-2024-0036'],activity:[]},
-  {id:'TK-011',title:'IT Infrastructure Audit',desc:'Audit of server room, cabling, and network switches.',statusId:'s2',priority:'Normal',assignee:'Emad Alhaderi',start:'2024-03-14',due:'2024-03-21',modules:['PROMiS','Backend','Version Control'],frefs:[],activity:[]},
-  {id:'TK-012',title:'Plumbing Repair – Level 2 Restroom',desc:'Reported leakage from ceiling panel.',statusId:'s3',priority:'Critical',assignee:'Ahmad Faris',start:'2024-03-12',due:'2024-03-12',modules:['Digital Form','Ops','Mobile App','Testing'],frefs:['DF-2024-0038'],activity:[{user:'Ahmad Faris',av:'AF',text:'Plumber dispatched.',time:'30 min ago'}]},
-  {id:'TK-013',title:'Vendor Performance Review – Q1',desc:'Evaluate all active vendors against SLA metrics.',statusId:'s1',priority:'Normal',assignee:'Nurul Ain',start:'2024-03-20',due:'2024-03-29',modules:['PROMiS','Master Data','Project Mgmt'],frefs:[],activity:[]},
-  {id:'TK-014',title:'Car Park Barrier Replacement',desc:'West entrance barrier motor failed.',statusId:'s5',priority:'Normal',assignee:'Reza Mohamad',start:'2024-03-03',due:'2024-03-08',modules:['Digital Form','Ops','Testing'],frefs:['DF-2024-0035'],activity:[{user:'Reza Mohamad',av:'RM',text:'Replacement installed and tested.',time:'4 days ago'}]},
-  {id:'TK-015',title:'Staff Headcount Report – March',desc:'Monthly headcount submission to HR.',statusId:'s5',priority:'Low',assignee:'Nurul Ain',start:'2024-03-01',due:'2024-03-05',modules:['PROMiS','Onboarding'],frefs:[],activity:[]},
-  {id:'TK-016',title:'Emergency Generator Test – HQ',desc:'Monthly load test per TNB guidelines.',statusId:'s2',priority:'High',assignee:'Emad Alhaderi',start:'2024-03-18',due:'2024-03-18',modules:['Digital Form','Ops','Backend'],frefs:['DF-2024-0042'],activity:[]},
-  {id:'TK-017',title:'Storeroom Reorganisation – Block A',desc:'Clear outdated equipment and relabel shelving.',statusId:'s1',priority:'Low',assignee:'Nadia Zain',start:'2024-03-19',due:'2024-03-22',modules:['Ops','Landing Page'],frefs:[],activity:[]},
-  {id:'TK-018',title:'Chiller System Check – Level B1',desc:'Biannual performance check for chiller units.',statusId:'s4',priority:'High',assignee:'Reza Mohamad',start:'2024-03-11',due:'2024-03-17',modules:['Digital Form','Ops','Mobile App','Testing'],frefs:['DF-2024-0043'],activity:[{user:'Reza Mohamad',av:'RM',text:'Chiller 2 showing abnormal pressure.',time:'Yesterday'}]},
-  {id:'TK-019',title:'Budget Forecast – FY2025 Q1',desc:'Submit department budget requests to Finance.',statusId:'s3',priority:'High',assignee:'Haziq',start:'2024-03-14',due:'2024-03-24',modules:['PROMiS','Project Mgmt'],frefs:[],activity:[]},
-  {id:'TK-020',title:'CCTV Footage Archival – Feb',desc:'Transfer Feb recordings to NAS and clear DVR.',statusId:'s5',priority:'Low',assignee:'Ahmad Faris',start:'2024-03-06',due:'2024-03-10',modules:['Ops','Version Control','Fox Settings'],frefs:[],activity:[]},
-  {id:'TK-021',title:'Access Card Issuance – New Hires',desc:'5 new staff joining on 18 Mar.',statusId:'s2',priority:'Normal',assignee:'Nadia Zain',start:'2024-03-16',due:'2024-03-18',modules:['Digital Form','RBAC','Onboarding'],frefs:['DF-2024-0044'],activity:[]},
-  {id:'TK-022',title:'Roof Inspection – Block C',desc:'Post-rain inspection following reported leak.',statusId:'s6',priority:'Critical',assignee:'Ahmad Faris',start:'2024-03-13',due:'2024-03-14',modules:['Digital Form','Ops','Mobile App'],frefs:['DF-2024-0045'],activity:[{user:'Ahmad Faris',av:'AF',text:'Structural engineer review pending.',time:'2 hr ago'}]},
-  {id:'TK-023',title:'Software License Renewal – AutoCAD',desc:'Renew 4 seats before expiry on 25 Mar.',statusId:'s4',priority:'Normal',assignee:'Emad Alhaderi',start:'2024-03-12',due:'2024-03-25',modules:['PROMiS','Digital Form','Master Data','Version Control'],frefs:['DF-2024-0046'],activity:[]},
-  {id:'TK-024',title:'Canteen Vendor Contract Review',desc:'Evaluate existing vendor; prepare RFP if needed.',statusId:'s1',priority:'Low',assignee:'Nurul Ain',start:'2024-03-20',due:'2024-03-31',modules:['PROMiS','Landing Page'],frefs:[],activity:[]},
-  {id:'TK-025',title:'Water Tank Cleaning – Block B Rooftop',desc:'Scheduled annual cleaning per health guidelines.',statusId:'s2',priority:'Normal',assignee:'Reza Mohamad',start:'2024-03-17',due:'2024-03-20',modules:['Digital Form','Ops','Fox Trash'],frefs:['DF-2024-0047'],activity:[]},
-];
-
-let trash=[];
 
 // ════════════════════════════════════════════
 // TRASH HELPERS
@@ -1577,11 +1860,24 @@ function updateTrashBadge(){
   else{badge.style.display='none';}
 }
 
-function softDelete(ids){
+async function softDelete(ids){
   const toDelete=tickets.filter(t=>ids.includes(t.id));
-  toDelete.forEach(t=>{t.deletedAt=new Date().toLocaleString('en-MY',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});trash.unshift(t);});
-  tickets=tickets.filter(t=>!ids.includes(t.id));
-  updateTrashBadge();
+  if(!toDelete.length)return;
+  const deletedAtRaw=new Date().toISOString();
+  try{
+    const rowIds=toDelete.map(t=>t.rowId).filter(Boolean);
+    const {error}=await supabaseClient.from('tickets').update({deleted_at:deletedAtRaw}).in('id',rowIds);
+    if(error)throw error;
+    toDelete.forEach(t=>{
+      t.deletedAtRaw=deletedAtRaw;
+      normalizeTicket(t);
+      upsertLocalTrash(t);
+    });
+    tickets=tickets.filter(t=>!ids.includes(t.id));
+    updateTrashBadge();
+  }catch(error){
+    showDbError('Moving tickets to trash',error);
+  }
 }
 
 function renderTrashPage(){
@@ -1623,29 +1919,51 @@ function renderTrashRows(){
 }
 
 // single restore / permanent delete
-function restoreTicket(id){
+async function restoreTicket(id){
   const t=trash.find(x=>x.id===id);if(!t)return;
   const label=t.title;
-  delete t.deletedAt;
-  tickets.push(t);
-  trash=trash.filter(x=>x.id!==id);
-  trashSelected.delete(id);
-  updateTrashBadge();
-  renderTrashPage();
-  toast(`"${label.length>32?label.slice(0,32)+'…':label}" restored`,{icon:'restore'});
+  try{
+    const {error}=await supabaseClient.from('tickets').update({deleted_at:null}).eq('id',t.rowId);
+    if(error)throw error;
+    t.deletedAtRaw=null;
+    t.deletedAt='';
+    tickets.push(normalizeTicket(t));
+    removeLocalTrash(t.rowId);
+    trashSelected.delete(id);
+    updateTrashBadge();
+    renderTrashPage();
+    renderActive();
+    toast(`"${label.length>32?label.slice(0,32)+'…':label}" restored`,{icon:'restore'});
+  }catch(error){
+    showDbError('Restoring ticket',error);
+  }
 }
-function permanentDelete(id){
+async function permanentDelete(id){
   if(!confirm('Permanently delete this ticket? This cannot be undone.'))return;
-  trash=trash.filter(x=>x.id!==id);
-  trashSelected.delete(id);
-  updateTrashBadge();
-  renderTrashPage();
+  const t=trash.find(x=>x.id===id);if(!t)return;
+  try{
+    const {error}=await supabaseClient.from('tickets').delete().eq('id',t.rowId);
+    if(error)throw error;
+    trash=trash.filter(x=>x.id!==id);
+    trashSelected.delete(id);
+    updateTrashBadge();
+    renderTrashPage();
+  }catch(error){
+    showDbError('Deleting ticket forever',error);
+  }
 }
-function emptyTrash(){
+async function emptyTrash(){
   if(!trash.length)return;
   if(!confirm(`Permanently delete all ${trash.length} ticket${trash.length>1?'s':''} in trash? This cannot be undone.`))return;
-  trash=[];trashSelected.clear();
-  updateTrashBadge();renderTrashPage();
+  try{
+    const rowIds=trash.map(t=>t.rowId).filter(Boolean);
+    const {error}=await supabaseClient.from('tickets').delete().in('id',rowIds);
+    if(error)throw error;
+    trash=[];trashSelected.clear();
+    updateTrashBadge();renderTrashPage();
+  }catch(error){
+    showDbError('Emptying trash',error);
+  }
 }
 
 // trash selection
@@ -1674,25 +1992,42 @@ function updateTrashBulkBar(){
     chkAll.indeterminate=trashSelected.size>0&&!chkAll.checked;
   }
 }
-function bulkRestore(){
-  const ids=[...trashSelected];
+async function bulkRestore(idsArg=null){
+  const ids=idsArg||[...trashSelected];
   const n=ids.length;
-  ids.forEach(id=>{
-    const t=trash.find(x=>x.id===id);if(!t)return;
-    delete t.deletedAt;tickets.push(t);
-  });
-  trash=trash.filter(t=>!ids.includes(t.id));
-  trashSelected.clear();
-  updateTrashBadge();renderTrashPage();
-  toast(`${n} ticket${n>1?'s':''} restored`,{icon:'restore'});
+  if(!n)return;
+  try{
+    const restoreRows=trash.filter(t=>ids.includes(t.id));
+    const rowIds=restoreRows.map(t=>t.rowId);
+    const {error}=await supabaseClient.from('tickets').update({deleted_at:null}).in('id',rowIds);
+    if(error)throw error;
+    restoreRows.forEach(t=>{
+      t.deletedAtRaw=null;
+      t.deletedAt='';
+      tickets.push(normalizeTicket(t));
+    });
+    trash=trash.filter(t=>!ids.includes(t.id));
+    if(!idsArg)trashSelected.clear();
+    updateTrashBadge();renderTrashPage();renderActive();
+    toast(`${n} ticket${n>1?'s':''} restored`,{icon:'restore'});
+  }catch(error){
+    showDbError('Restoring selected tickets',error);
+  }
 }
-function bulkPermanentDelete(){
+async function bulkPermanentDelete(){
   const n=trashSelected.size;
   if(!confirm(`Permanently delete ${n} ticket${n>1?'s':''}? This cannot be undone.`))return;
-  trash=trash.filter(t=>!trashSelected.has(t.id));
-  trashSelected.clear();
-  updateTrashBadge();renderTrashPage();
-  toast(`${n} ticket${n>1?'s':''} permanently deleted`,{icon:'trash'});
+  try{
+    const rowIds=trash.filter(t=>trashSelected.has(t.id)).map(t=>t.rowId);
+    const {error}=await supabaseClient.from('tickets').delete().in('id',rowIds);
+    if(error)throw error;
+    trash=trash.filter(t=>!trashSelected.has(t.id));
+    trashSelected.clear();
+    updateTrashBadge();renderTrashPage();
+    toast(`${n} ticket${n>1?'s':''} permanently deleted`,{icon:'trash'});
+  }catch(error){
+    showDbError('Deleting selected tickets forever',error);
+  }
 }
 
 // ════════════════════════════════════════════
@@ -1705,6 +2040,7 @@ function nav(p){
   if(ni)ni.classList.add('active');
   const pg=document.getElementById(`page-${p}`);
   if(pg){pg.classList.add('active');pg.scrollTop=0;}
+  if(p==='home')renderHome();
   if(p==='tickets')renderActive();
   if(p==='trash')renderTrashPage();
   if(p==='team')renderTeamPage();
@@ -1736,7 +2072,11 @@ function nav(p){
     allPanels.forEach((t,i)=>{t.classList.toggle('active',i===0);});
   }
 }
-document.querySelectorAll('.ni').forEach(e=>e.addEventListener('click',()=>nav(e.dataset.page)));
+document.addEventListener('click',e=>{
+  const item=e.target.closest('.ni[data-page]');
+  if(!item)return;
+  nav(item.dataset.page);
+});
 refreshAssigneeDropdowns();
 
 // ════════════════════════════════════════════
@@ -1750,6 +2090,7 @@ function switchView(v){
   if(v==='gantt')renderGantt();
 }
 function renderActive(){
+  renderHome();
   const v=document.querySelector('.vtab.active')?.dataset.view||'table';
   switchView(v);
 }
@@ -1765,6 +2106,66 @@ function modTag(m){
   const icons={'Digital Form':'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>','PROMiS':'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>','Ops':'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'};
   const labels={'Digital Form':'Digital Form','PROMiS':'PROMiS','Ops':'Ops Dashboard'};
   return `<span class="mtag">${icons[m]||''}${labels[m]||m}</span>`;
+}
+function getPriorityRank(p){return ({Critical:0,High:1,Normal:2,Low:3})[p]??99;}
+function compareTicketImportance(a,b){
+  const pr=getPriorityRank(a.priority)-getPriorityRank(b.priority);
+  if(pr!==0)return pr;
+  const statusOrder={blocked:0,in_progress:1,todo:2,in_review:3,backlog:4,done:5};
+  const sr=(statusOrder[getStatusCodeById(a.statusId)]??99)-(statusOrder[getStatusCodeById(b.statusId)]??99);
+  if(sr!==0)return sr;
+  const ad=a.due?new Date(a.due+'T00:00:00').getTime():Number.POSITIVE_INFINITY;
+  const bd=b.due?new Date(b.due+'T00:00:00').getTime():Number.POSITIVE_INFINITY;
+  if(ad!==bd)return ad-bd;
+  return String(a.id).localeCompare(String(b.id));
+}
+function getMostImportantTicket(){
+  return tickets
+    .filter(t=>getStatusCodeById(t.statusId)!=='done')
+    .sort(compareTicketImportance)[0]||null;
+}
+function renderHome(){
+  const focus=document.getElementById('home-focus-card');
+  const chart=document.getElementById('home-status-chart');
+  if(!focus||!chart)return;
+  const top=getMostImportantTicket();
+  if(!top){
+    focus.innerHTML=`
+      <div class="home-focus-label">Top Priority Right Now</div>
+      <div class="home-focus-title">No active tickets yet</div>
+      <div class="home-focus-desc">Create your first ticket to surface the most important task here and start tracking workload by status.</div>
+      <div style="margin-top:18px">
+        <button class="btn btn-s btn-sm" onclick="openNt(null)">New Ticket</button>
+      </div>`;
+  } else {
+    const modules=top.modules.length?top.modules.slice(0,3).map(modTag).join(''):`<span class="mtag">No module linked</span>`;
+    focus.innerHTML=`
+      <div class="home-focus-label">Top Priority Right Now</div>
+      <div class="home-focus-title">${escHtml(top.title)}</div>
+      <div class="home-focus-meta">
+        ${priBdg(top.priority)}
+        ${pill(top.statusId)}
+        <span class="bdg bg">Due ${fmtD(top.due)}</span>
+        <span class="bdg bg">${escHtml(top.id)}</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">${modules}</div>
+      <div class="home-focus-desc">${escHtml(top.desc)||'No description added yet.'}</div>
+      <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-s btn-sm" onclick="nav('tickets')">View Tickets</button>
+      </div>`;
+  }
+
+  const total=tickets.length;
+  chart.innerHTML=statuses.map(s=>{
+    const count=tickets.filter(t=>t.statusId===s.id).length;
+    const width=total?Math.max((count/total)*100,count>0?6:0):0;
+    return `
+      <div class="home-chart-row">
+        <div class="home-chart-label">${escHtml(s.name)}</div>
+        <div class="home-chart-track"><div class="home-chart-fill" style="width:${width}%;background:${s.color}"></div></div>
+        <div class="home-chart-val">${count}</div>
+      </div>`;
+  }).join('')+`<div style="font-size:12px;color:var(--tm);padding-top:2px">${total} total ticket${total!==1?'s':''}</div>`;
 }
 
 // ════════════════════════════════════════════
@@ -1934,8 +2335,9 @@ function getFilteredSorted(){
   let list=tickets.filter(t=>{
     if(fltState.status&&t.statusId!==fltState.status)return false;
     if(fltState.priority&&t.priority!==fltState.priority)return false;
-    if(fltState.assignee&&t.assignee!==fltState.assignee)return false;
-    if(q&&!t.title.toLowerCase().includes(q)&&!t.assignee.toLowerCase().includes(q)&&!t.id.toLowerCase().includes(q))return false;
+    if(fltState.assignee&&t.assigneeId!==fltState.assignee)return false;
+    const assignee=t.assignee.toLowerCase();
+    if(q&&!t.title.toLowerCase().includes(q)&&!assignee.includes(q)&&!t.id.toLowerCase().includes(q))return false;
     return true;
   });
   list.sort((a,b)=>{
@@ -1976,7 +2378,7 @@ function renderFltTags(){
   const tags=[];
   if(fltState.status){const s=getSt(fltState.status);tags.push({key:'status',label:`Status: ${s.name}`});}
   if(fltState.priority)tags.push({key:'priority',label:`Priority: ${fltState.priority}`});
-  if(fltState.assignee)tags.push({key:'assignee',label:`Assignee: ${fltState.assignee}`});
+  if(fltState.assignee)tags.push({key:'assignee',label:`Assignee: ${getMemberNameById(fltState.assignee)}`});
   const q=document.getElementById('tv-q')?.value||'';
   if(q)tags.push({key:'q',label:`Search: "${q}"`});
   if(tags.length){
@@ -2061,23 +2463,16 @@ function clearSelection(){
   renderTable();
 }
 
-function bulkDelete(){
+async function bulkDelete(){
   if(selected.size===0)return;
   const ids=[...selected];
   const n=ids.length;
-  softDelete(ids);
+  await softDelete(ids);
   selected.clear();
   updateBulkBar();
   renderTable();
-  const snapshot=trash.filter(t=>ids.includes(t.id)).map(t=>({...t}));
   toast(`${n} ticket${n>1?'s':''} moved to Trash`,{icon:'trash',undoFn:()=>{
-    ids.forEach(id=>{
-      const t=trash.find(x=>x.id===id);if(!t)return;
-      delete t.deletedAt;tickets.push(t);
-    });
-    trash=trash.filter(t=>!ids.includes(t.id));
-    updateTrashBadge();renderTable();
-    toast(`${n} ticket${n>1?'s':''} restored`,{icon:'restore'});
+    bulkRestore(ids);
   }});
 }
 
@@ -2226,7 +2621,8 @@ function pdEnd(e,card,onMove,onUp){
     if(t&&t.statusId!==newSid){
       const oldSt=getSt(t.statusId).name;
       t.statusId=newSid;
-      t.activity.unshift({user:'Haziq',av:'HQ',text:`Status changed from "${oldSt}" to "${getSt(newSid).name}".`,time:'Just now'});
+      queueTicketPersist(normalizeTicket(t),0);
+      appendActivity(t,'status_changed',`Status changed from "${oldSt}" to "${getSt(newSid).name}".`,{from:oldSt,to:getSt(newSid).name});
       renderKanban();
       renderTable(document.getElementById('tv-q')?.value||'');
     }
@@ -2458,7 +2854,7 @@ function openDw(tid){
   document.getElementById('dw-title').value=t.title;
   ss.value=t.statusId;
   document.getElementById('dw-priority').value=t.priority;
-  document.getElementById('dw-assignee').value=t.assignee;
+  document.getElementById('dw-assignee').value=t.assigneeId||'';
   document.getElementById('dw-start').value=t.start||'';
   document.getElementById('dw-due').value=t.due||'';
   document.getElementById('dw-desc').value=t.desc||'';
@@ -2475,6 +2871,9 @@ function closeDw(){
 function dwField(field,val){
   const t=tickets.find(x=>x.id===dwTid);if(!t)return;
   t[field]=val;
+  if(field==='assigneeId')t.assignee=getMemberNameById(val);
+  queueTicketPersist(normalizeTicket(t));
+  renderActive();
 }
 
 function renderModTags(t){
@@ -2485,13 +2884,19 @@ function renderModTags(t){
     </div>`).join('');
 }
 
-function toggleMod(mod){
+async function toggleMod(mod){
   const t=tickets.find(x=>x.id===dwTid);if(!t)return;
   const idx=t.modules.indexOf(mod);
   if(idx>-1)t.modules.splice(idx,1);
   else t.modules.push(mod);
   renderModTags(t);
   renderDwTestCases(t);
+  renderActive();
+  try{
+    await syncTicketModules(t);
+  }catch(error){
+    showDbError(`Saving modules for ${t.id}`,error);
+  }
 }
 // Module key → featData key mapping
 const MOD_FEAT_KEY={
@@ -2568,21 +2973,17 @@ function toggleDtcGroup(fk,gid){
   if(el)el.classList.toggle('open');
 }
 
-function deleteTicket(){
+async function deleteTicket(){
   if(!dwTid)return;
   const tid=dwTid;
   const t=tickets.find(x=>x.id===tid);
   const label=t?t.title:'Ticket';
-  softDelete([tid]);
+  await softDelete([tid]);
   selected.delete(tid);
   updateBulkBar();
   closeDw();
   toast(`"${label.length>32?label.slice(0,32)+'…':label}" moved to Trash`,{icon:'trash',undoFn:()=>{
-    const found=trash.find(x=>x.id===tid);if(!found)return;
-    delete found.deletedAt;tickets.push(found);
-    trash=trash.filter(x=>x.id!==tid);
-    updateTrashBadge();renderTable();
-    toast('Ticket restored',{icon:'restore'});
+    restoreTicket(tid);
   }});
 }
 
@@ -2615,14 +3016,45 @@ function smCC(i,v){smDraft[i].color=v;const sw=document.getElementById(`sw${i}`)
 function smDel(i){smDraft.splice(i,1);smRender();}
 function smAdd(){
   const pal=['#9b59b6','#e67e22','#1abc9c','#e74c3c','#3498db','#f39c12'];
-  smDraft.push({id:'s'+Date.now(),name:'New Status',color:pal[smDraft.length%pal.length]});smRender();
+  smDraft.push({id:`tmp-${Date.now()}`,code:'',name:'New Status',color:pal[smDraft.length%pal.length]});smRender();
 }
-function smSave(){
-  statuses=smDraft.map(s=>({...s}));
-  closeOvl('sm-ovl');
-  populateNtStatus();
-  populateFltStatus();
-  renderActive();
+async function smSave(){
+  const removed=statuses.filter(s=>!smDraft.some(d=>d.id===s.id));
+  const blockedRemoval=removed.find(s=>[...tickets,...trash].some(t=>t.statusId===s.id));
+  if(blockedRemoval){
+    alert(`Cannot remove "${blockedRemoval.name}" because tickets still use it.`);
+    return;
+  }
+  try{
+    for(let i=0;i<smDraft.length;i++){
+      const s=smDraft[i];
+      const payload={
+        code:s.code||slugify(s.name)+(String(s.id).startsWith('tmp-')?`_${String(Date.now()).slice(-4)}`:''),
+        name:s.name,
+        color:s.color,
+        sort_order:i+1,
+        is_active:true,
+      };
+      if(String(s.id).startsWith('tmp-')){
+        const {error}=await supabaseClient.from('statuses').insert(payload);
+        if(error)throw error;
+      }else{
+        const {error}=await supabaseClient.from('statuses').update(payload).eq('id',s.id);
+        if(error)throw error;
+      }
+    }
+    for(const s of removed){
+      const {error}=await supabaseClient.from('statuses').update({is_active:false}).eq('id',s.id);
+      if(error)throw error;
+    }
+    await loadStatuses();
+    closeOvl('sm-ovl');
+    populateNtStatus();
+    populateFltStatus();
+    renderActive();
+  }catch(error){
+    showDbError('Saving statuses',error);
+  }
 }
 
 // ════════════════════════════════════════════
@@ -2641,25 +3073,48 @@ function openNt(sid){
   document.getElementById('nt-desc').value='';
   document.getElementById('nt-start').value=new Date().toISOString().split('T')[0];
   document.getElementById('nt-due').value='';
+  document.getElementById('nt-asgn').value='';
   document.getElementById('nt-title').style.borderColor='';
   openOvl('nt-ovl');
 }
-function ntCreate(){
+async function ntCreate(){
   const title=document.getElementById('nt-title').value.trim();
   if(!title){document.getElementById('nt-title').style.borderColor='var(--red)';return;}
   document.getElementById('nt-title').style.borderColor='';
-  tickets.push({
-    id:`TK-${String(tickets.length+1).padStart(3,'0')}`,
-    title,desc:document.getElementById('nt-desc').value.trim(),
+  const ticketNo=nextTicketNo();
+  const ticket=normalizeTicket({
+    rowId:'',
+    id:ticketNo,
+    title,
+    desc:document.getElementById('nt-desc').value.trim(),
     statusId:document.getElementById('nt-status').value,
     priority:document.getElementById('nt-pri').value,
-    assignee:document.getElementById('nt-asgn').value,
+    assigneeId:document.getElementById('nt-asgn').value,
+    assignee:'',
     start:document.getElementById('nt-start').value,
     due:document.getElementById('nt-due').value,
-    modules:[],frefs:[],
-    activity:[{user:'Haziq',av:'HQ',text:'Ticket created.',time:'Just now'}],
+    deletedAtRaw:null,
+    deletedAt:'',
+    modules:[],
+    frefs:[],
+    activity:[],
+    testProgress:{},
   });
-  closeOvl('nt-ovl');renderActive();
+  try{
+    const {data,error}=await supabaseClient
+      .from('tickets')
+      .insert(buildTicketPayload(ticket))
+      .select('id')
+      .single();
+    if(error)throw error;
+    ticket.rowId=data.id;
+    tickets.unshift(ticket);
+    await appendActivity(ticket,'created','Ticket created.');
+    closeOvl('nt-ovl');
+    renderActive();
+  }catch(error){
+    showDbError('Creating ticket',error);
+  }
 }
 
 // ════════════════════════════════════════════
@@ -2690,9 +3145,7 @@ function populateFltStatus(){
   sel.innerHTML=`<option value="">All Statuses</option>`+statuses.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
   if(cur)sel.value=cur;
 }
-populateNtStatus();
-populateFltStatus();
-renderTable();
+hydrateApp();
 </script>
 </body>
 </html>

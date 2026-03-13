@@ -36,6 +36,9 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .sbot{padding:10px;border-top:1px solid var(--bdr)}
 .ubl{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer}
 .ubl:hover{background:var(--act)}
+.ubl-settings{position:relative}
+.ubl-settings::after{content:'Settings';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--tm);opacity:0;transition:opacity .12s}
+.ubl-settings:hover::after{opacity:1}
 .uav{width:28px;height:28px;border-radius:50%;background:var(--t1);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .unm{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .url{font-size:11px;color:var(--tm)}
@@ -254,12 +257,55 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .modal{background:var(--wh);border-radius:14px;width:500px;max-height:82vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.14);transform:translateY(10px);transition:transform .18s}
 .ovl.open .modal{transform:translateY(0)}
 .modal.wd{width:560px}
+.modal.xl{width:min(860px,94vw)}
 .mhd{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px;border-bottom:1px solid var(--bdr)}
 .mttl{font-size:16px;font-weight:600;letter-spacing:-.2px}
 .mcls{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tm);border:none;background:transparent;font-size:18px;line-height:1}
 .mcls:hover{background:var(--act);color:var(--t1)}
 .mbdy{padding:20px 24px;overflow-y:auto;flex:1}
 .mft{padding:14px 24px;border-top:1px solid var(--bdr);display:flex;justify-content:flex-end;gap:8px}
+.auth-ovl{position:fixed;inset:0;z-index:600;background:radial-gradient(circle at top,#f6f4ef 0%,#ece8de 44%,#ddd7ca 100%);display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .18s}
+.auth-ovl.hidden{opacity:0;pointer-events:none}
+.auth-card{width:min(420px,100%);background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(17,17,17,.06);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.14);padding:30px 28px}
+.auth-brand{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:22px}
+.auth-logo{width:66px;height:66px;border-radius:20px;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(17,17,17,.18);margin-bottom:16px}
+.auth-logo svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.auth-title{font-size:31px;font-weight:700;letter-spacing:-.04em;color:var(--t1);margin-bottom:4px}
+.auth-sub{font-size:13px;color:var(--t2);max-width:260px}
+.auth-stack{display:flex;flex-direction:column;gap:14px}
+.auth-msg{min-height:18px;font-size:12px;color:var(--red)}
+.auth-note{margin-top:8px;font-size:11.5px;color:var(--tm);text-align:center}
+.st-shell{display:flex;min-height:540px}
+.st-side{width:220px;flex-shrink:0;border-right:1px solid var(--bdr);background:linear-gradient(180deg,#faf8f4 0%,#f3f0e8 100%);padding:18px 14px 16px}
+.st-brand{display:flex;align-items:center;gap:10px;padding:4px 6px 16px}
+.st-brand-mark{width:34px;height:34px;border-radius:12px;background:#111;color:#fff;display:flex;align-items:center;justify-content:center}
+.st-brand-mark svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.st-brand-copy{min-width:0}
+.st-brand-name{font-size:14px;font-weight:700;color:var(--t1)}
+.st-brand-sub{font-size:11px;color:var(--tm)}
+.st-nav{display:flex;flex-direction:column;gap:6px}
+.st-nav-btn{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:none;border-radius:12px;background:transparent;color:var(--t2);font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .12s}
+.st-nav-btn:hover{background:#fff;color:var(--t1)}
+.st-nav-btn.active{background:#111;color:#fff;box-shadow:0 10px 24px rgba(17,17,17,.14)}
+.st-nav-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.st-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.st-pane{display:none;padding:24px}
+.st-pane.active{display:block}
+.st-pane-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:7px}
+.st-pane-title{font-size:24px;font-weight:700;letter-spacing:-.04em;color:var(--t1);margin-bottom:6px}
+.st-pane-copy{font-size:13px;color:var(--t2);margin-bottom:22px;max-width:520px}
+.st-card{border:1px solid var(--bdr);border-radius:16px;padding:18px;background:linear-gradient(180deg,#fff 0%,#faf8f4 100%)}
+.st-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.st-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:var(--sb);font-size:12px;color:var(--t2);font-weight:600}
+.st-chip svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.st-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+@media (max-width: 860px){
+  .st-shell{flex-direction:column;min-height:auto}
+  .st-side{width:100%;border-right:none;border-bottom:1px solid var(--bdr)}
+  .st-nav{flex-direction:row;overflow:auto}
+  .st-nav-btn{min-width:max-content}
+  .st-grid{grid-template-columns:1fr}
+}
 .ntg{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 /* status manager */
 .sli{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--bdr);border-radius:8px;background:var(--bg);margin-bottom:6px;transition:border-color .12s}
@@ -281,6 +327,22 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .ni.ni-feat:hover{color:var(--t1);background:var(--act)}
 .ni.ni-feat svg{opacity:.7}
 .ni.ni-feat.active{color:var(--t1);background:var(--act)}
+.ni.ni-feat{cursor:grab}
+.ni.ni-feat.drag-over{background:var(--accl);outline:1px dashed var(--acc)}
+.ni-feat{position:relative;padding-right:38px;overflow:visible}
+.ni-feat.menu-open{z-index:80}
+.ni-feat-actions{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;align-items:center}
+.ni-feat-more{width:24px;height:24px;border:none;border-radius:7px;background:transparent;color:var(--tm);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:all .12s}
+.ni-feat:hover .ni-feat-more,.ni-feat.menu-open .ni-feat-more{opacity:1}
+.ni-feat-more:hover{background:rgba(17,17,17,.06);color:var(--t1)}
+.ni-feat-more svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat-menu{position:absolute;right:8px;top:calc(100% - 4px);min-width:150px;padding:6px;background:var(--wh);border:1px solid var(--bdr);border-radius:10px;box-shadow:0 12px 28px rgba(0,0,0,.12);display:none;z-index:90}
+.ni-feat.menu-open .feat-menu{display:block}
+.feat-menu-btn{width:100%;display:flex;align-items:center;gap:8px;padding:8px 10px;border:none;border-radius:8px;background:transparent;color:var(--t2);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;text-align:left}
+.feat-menu-btn:hover{background:#fdecea;color:var(--red)}
+.feat-menu-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.feat-add-btn{width:24px;height:24px;border-radius:6px;border:1px solid var(--bdr);background:var(--wh);color:var(--t2);display:inline-flex;align-items:center;justify-content:center;font-size:15px;line-height:1;cursor:pointer;transition:all .12s}
+.feat-add-btn:hover{border-color:var(--t1);color:var(--t1);background:var(--act)}
 
 /* ── GANTT SCALE BUTTONS ── */
 .gscale-btn{padding:4px 12px;font-size:12px;font-weight:500;font-family:inherit;border:1px solid var(--bdr);border-radius:6px;background:var(--wh);color:var(--t2);cursor:pointer;transition:all .12s}
@@ -358,9 +420,44 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .feat-tab.active{color:var(--t1);border-bottom-color:var(--t1);font-weight:600}
 .feat-tab-panel{display:none}
 .feat-tab-panel.active{display:block}
+.feat-meta-title{width:100%;border:none;background:transparent;padding:0;margin:0;font:inherit;font-size:26px;font-weight:600;letter-spacing:-.5px;color:var(--t1);outline:none}
+.feat-meta-title::placeholder,.feat-meta-desc::placeholder{color:var(--tm)}
+.feat-meta-desc{width:100%;border:none;background:transparent;padding:0;margin-top:5px;font:inherit;font-size:13.5px;line-height:1.6;color:var(--t2);outline:none;resize:none;min-height:24px}
 
 /* ── FEATURE NOTES ── */
+.feat-detail-shell{display:flex;gap:14px;align-items:stretch}
+.feat-detail-side{width:248px;flex-shrink:0;background:var(--wh);border:1px solid var(--bdr);border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
+.feat-detail-head{display:flex;align-items:center;gap:10px;padding:12px 12px 10px;border-bottom:1px solid var(--bdr);background:var(--sb)}
+.feat-detail-copy{min-width:0;flex:1}
+.feat-detail-eyebrow{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:2px}
+.feat-detail-title{font-size:13px;font-weight:600;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feat-canvas-list{padding:10px;display:flex;flex-direction:column;gap:8px;overflow:auto;flex:1}
+.feat-canvas-item{border:1px solid var(--bdr);border-radius:10px;background:var(--wh);padding:10px;cursor:pointer;transition:all .12s}
+.feat-canvas-item:hover{border-color:#d6d3cb;background:var(--sb)}
+.feat-canvas-item.active{border-color:var(--t1);background:var(--act)}
+.feat-canvas-top{display:flex;align-items:center;gap:8px}
+.feat-canvas-dot{width:24px;height:24px;border-radius:7px;background:var(--sb);display:inline-flex;align-items:center;justify-content:center;color:var(--t2);flex-shrink:0}
+.feat-canvas-dot svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.feat-canvas-item.active .feat-canvas-dot{background:var(--t1);color:#fff}
+.feat-canvas-name{flex:1;min-width:0;border:none;background:transparent;color:var(--t1);font:inherit;font-size:13px;font-weight:600;outline:none;padding:0}
+.feat-canvas-name::placeholder{color:var(--tm)}
+.feat-canvas-del{width:24px;height:24px;border:none;border-radius:7px;background:transparent;color:var(--tm);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .12s}
+.feat-canvas-del:hover{background:#fcecea;color:#b03a2e}
+.feat-canvas-del:disabled{opacity:.35;cursor:not-allowed}
+.feat-canvas-del svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat-canvas-meta{font-size:11px;color:var(--tm);margin-top:7px;padding-left:32px}
+.feat-canvas-add{margin:0 10px 10px;border:1px dashed var(--bdr);border-radius:10px;background:var(--sb);color:var(--t2);font:inherit;font-size:12.5px;font-weight:600;padding:10px 12px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .12s}
+.feat-canvas-add:hover{border-color:var(--t1);color:var(--t1);background:var(--act)}
+.feat-canvas-add svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat-detail-main{flex:1;min-width:0}
 .feat-notes-wrap{background:var(--wh);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;position:relative}
+.rte-sidebar-btn{width:30px;height:30px;border-radius:8px;border:none;background:transparent;color:var(--t2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .12s}
+.rte-sidebar-btn:hover{background:var(--act);color:var(--t1)}
+.rte-sidebar-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width: 960px){
+  .feat-detail-shell{flex-direction:column}
+  .feat-detail-side{width:100%}
+}
 /* Rich editor toolbar */
 .rte-toolbar{display:flex;align-items:center;gap:2px;padding:7px 10px;border-bottom:1px solid var(--bdr);background:var(--sb);flex-wrap:wrap}
 .rte-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:5px;border:none;background:transparent;cursor:pointer;color:var(--t2);font-size:13px;font-family:'DM Sans',sans-serif;font-weight:600;transition:background .1s,color .1s;flex-shrink:0}
@@ -379,6 +476,9 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .rte-body ol{padding-left:20px;margin:6px 0}
 .rte-body li{margin:2px 0}
 .rte-body p{margin:4px 0}
+.rte-body a{color:#2a56a8;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.rte-body img{display:block;max-width:100%;height:auto;border-radius:10px;margin:12px 0}
+.rte-body.drop-active{background:var(--accl);box-shadow:inset 0 0 0 2px var(--acc)}
 /* Table */
 .rte-body table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13px}
 .rte-body th,.rte-body td{border:1px solid var(--bdr);padding:8px 11px;text-align:left;min-width:120px;min-height:44px;height:44px;vertical-align:top}
@@ -391,6 +491,9 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .rte-tbl-line{position:absolute;display:flex;gap:6px;pointer-events:auto}
 .rte-tbl-line.col{transform:translate(-50%,-50%)}
 .rte-tbl-line.row{transform:translate(-50%,-50%);flex-direction:column}
+.rte-tbl-line::before{content:'';position:absolute;border-radius:999px;background:var(--bdr);opacity:.65}
+.rte-tbl-line.col::before{left:50%;top:22px;transform:translateX(-50%);width:28px;height:4px}
+.rte-tbl-line.row::before{left:22px;top:50%;transform:translateY(-50%);width:4px;height:28px}
 .rte-tbl-btn{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1;font-family:'DM Sans',sans-serif;font-weight:500;border-radius:999px;border:1px solid var(--bdr);background:var(--wh);color:var(--t2);cursor:pointer;transition:all .1s;box-shadow:0 4px 12px rgba(0,0,0,.08)}
 .rte-tbl-btn:hover{border-color:var(--t1);color:var(--t1);background:#fff}
 
@@ -444,23 +547,7 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   </div>
 
   <div class="sdiv" style="margin:10px 0 4px"></div>
-  <div class="slbl" style="padding:0 16px 4px">Features</div>
-  <div class="ss">
-    <div class="ni ni-feat" data-page="digital-form" onclick="nav('digital-form')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg><span>Digital Form</span></div>
-    <div class="ni ni-feat" data-page="promis" onclick="nav('promis')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>PROMiS Dashboard</span></div>
-    <div class="ni ni-feat" data-page="ops" onclick="nav('ops')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Executive Dashboard</span></div>
-    <div class="ni ni-feat" data-page="feat-pm" onclick="nav('feat-pm')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="9" height="9" rx="1"/><rect x="13" y="3" width="8" height="4" rx="1"/><rect x="13" y="10" width="8" height="5" rx="1"/><rect x="3" y="15" width="18" height="6" rx="1"/></svg><span>Project Management</span></div>
-    <div class="ni ni-feat" data-page="feat-md" onclick="nav('feat-md')"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg><span>Master Data</span></div>
-    <div class="ni ni-feat" data-page="feat-mob" onclick="nav('feat-mob')"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span>Mobile App</span></div>
-    <div class="ni ni-feat" data-page="feat-rbac" onclick="nav('feat-rbac')"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>RBAC / Access Control</span></div>
-    <div class="ni ni-feat" data-page="feat-lp" onclick="nav('feat-lp')"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Landing Page</span></div>
-    <div class="ni ni-feat" data-page="feat-vc" onclick="nav('feat-vc')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/><polyline points="8 12 10 10 12 12 14 10 16 12"/></svg><span>Version Control</span></div>
-    <div class="ni ni-feat" data-page="feat-be" onclick="nav('feat-be')"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><span>Backend Integration</span></div>
-    <div class="ni ni-feat" data-page="feat-qa" onclick="nav('feat-qa')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span>Testing / QA</span></div>
-    <div class="ni ni-feat" data-page="feat-ob" onclick="nav('feat-ob')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Onboarding</span></div>
-    <div class="ni ni-feat" data-page="feat-settings" onclick="nav('feat-settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg><span>Settings</span></div>
-    <div class="ni ni-feat" data-page="feat-trash" onclick="nav('feat-trash')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg><span>Trash</span></div>
-  </div>
+  <div id="feature-sidebar-shell"></div>
 
   <div class="ssp"></div>
   <div class="sdiv"></div>
@@ -469,7 +556,7 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     <div class="ni" id="ni-trash" data-page="trash" onclick="nav('trash')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg><span>Trash</span><span id="trash-badge" style="display:none;margin-left:auto;font-size:10px;font-weight:600;background:#d94f3d;color:#fff;border-radius:10px;padding:1px 6px;min-width:18px;text-align:center"></span></div>
   </div>
   <div class="sbot">
-    <div class="ubl">
+    <div class="ubl ubl-settings" onclick="openSettingsModal('security')">
       <div class="uav">HQ</div>
       <div style="flex:1;min-width:0"><div class="unm">Haziq</div><div class="url">Admin</div></div>
       <span style="color:var(--tm);font-size:16px">···</span>
@@ -612,146 +699,7 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 </div>
 </div>
 
-<!-- DIGITAL FORM -->
-<!-- DIGITAL FORM -->
-<div class="page" id="page-digital-form"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Module</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Digital Form</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Submit, route, and monitor operational requests through structured approval workflows.</div></div>
-  <div id="df-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('df','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('df','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('df','tests',this)">Test Cases</button></div>
-  <div id="df-tab-tickets" class="feat-tab-panel active"><div id="df-ticket-list"></div></div>
-  <div id="df-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="df-editor-wrap"></div></div>
-  <div id="df-tab-tests" class="feat-tab-panel"><div id="df-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('df')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- PROMiS -->
-<div class="page" id="page-promis"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Management Dashboard</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">PROMiS Dashboard</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Executive summaries, performance overviews, and cross-departmental reporting.</div></div>
-  <div id="pr-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('pr','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('pr','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('pr','tests',this)">Test Cases</button></div>
-  <div id="pr-tab-tickets" class="feat-tab-panel active"><div id="pr-ticket-list"></div></div>
-  <div id="pr-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="pr-editor-wrap"></div></div>
-  <div id="pr-tab-tests" class="feat-tab-panel"><div id="pr-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('pr')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- EXECUTIVE DASHBOARD -->
-<div class="page" id="page-ops"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Executive</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Executive Dashboard</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">High-level KPI views, cross-module summaries, and leadership reporting.</div></div>
-  <div id="op-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('op','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('op','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('op','tests',this)">Test Cases</button></div>
-  <div id="op-tab-tickets" class="feat-tab-panel active"><div id="op-ticket-list"></div></div>
-  <div id="op-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="op-editor-wrap"></div></div>
-  <div id="op-tab-tests" class="feat-tab-panel"><div id="op-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('op')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- PROJECT MANAGEMENT -->
-<div class="page" id="page-feat-pm"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Project Management</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Plan, track, and deliver projects with milestones, timelines, and cross-team visibility.</div></div>
-  <div id="pm-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('pm','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('pm','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('pm','tests',this)">Test Cases</button></div>
-  <div id="pm-tab-tickets" class="feat-tab-panel active"><div id="pm-ticket-list"></div></div>
-  <div id="pm-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="pm-editor-wrap"></div></div>
-  <div id="pm-tab-tests" class="feat-tab-panel"><div id="pm-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('pm')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- MASTER DATA -->
-<div class="page" id="page-feat-md"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Master Data</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Centralised reference data management for assets, locations, vendors, and categories.</div></div>
-  <div id="md-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('md','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('md','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('md','tests',this)">Test Cases</button></div>
-  <div id="md-tab-tickets" class="feat-tab-panel active"><div id="md-ticket-list"></div></div>
-  <div id="md-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="md-editor-wrap"></div></div>
-  <div id="md-tab-tests" class="feat-tab-panel"><div id="md-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('md')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- MOBILE APP -->
-<div class="page" id="page-feat-mob"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Mobile App</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">iOS and Android companion app for field staff to submit, track, and act on requests.</div></div>
-  <div id="mob-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('mob','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('mob','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('mob','tests',this)">Test Cases</button></div>
-  <div id="mob-tab-tickets" class="feat-tab-panel active"><div id="mob-ticket-list"></div></div>
-  <div id="mob-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="mob-editor-wrap"></div></div>
-  <div id="mob-tab-tests" class="feat-tab-panel"><div id="mob-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('mob')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- RBAC -->
-<div class="page" id="page-feat-rbac"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">RBAC / Access Control</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Role-based permission management controlling what each user can view, edit, or approve.</div></div>
-  <div id="rbac-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('rbac','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('rbac','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('rbac','tests',this)">Test Cases</button></div>
-  <div id="rbac-tab-tickets" class="feat-tab-panel active"><div id="rbac-ticket-list"></div></div>
-  <div id="rbac-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="rbac-editor-wrap"></div></div>
-  <div id="rbac-tab-tests" class="feat-tab-panel"><div id="rbac-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('rbac')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- LANDING PAGE -->
-<div class="page" id="page-feat-lp"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Landing Page</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Public-facing entry point and product showcase for the Fox platform.</div></div>
-  <div id="lp-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('lp','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('lp','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('lp','tests',this)">Test Cases</button></div>
-  <div id="lp-tab-tickets" class="feat-tab-panel active"><div id="lp-ticket-list"></div></div>
-  <div id="lp-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="lp-editor-wrap"></div></div>
-  <div id="lp-tab-tests" class="feat-tab-panel"><div id="lp-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('lp')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- VERSION CONTROL -->
-<div class="page" id="page-feat-vc"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Version Control</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Track changes, manage releases, and maintain a full audit trail across the platform.</div></div>
-  <div id="vc-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('vc','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('vc','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('vc','tests',this)">Test Cases</button></div>
-  <div id="vc-tab-tickets" class="feat-tab-panel active"><div id="vc-ticket-list"></div></div>
-  <div id="vc-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="vc-editor-wrap"></div></div>
-  <div id="vc-tab-tests" class="feat-tab-panel"><div id="vc-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('vc')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- BACKEND INTEGRATION -->
-<div class="page" id="page-feat-be"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Backend Integration</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">APIs, webhooks, and service connectors linking Fox to external systems and data sources.</div></div>
-  <div id="be-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('be','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('be','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('be','tests',this)">Test Cases</button></div>
-  <div id="be-tab-tickets" class="feat-tab-panel active"><div id="be-ticket-list"></div></div>
-  <div id="be-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="be-editor-wrap"></div></div>
-  <div id="be-tab-tests" class="feat-tab-panel"><div id="be-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('be')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- TESTING / QA -->
-<div class="page" id="page-feat-qa"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Testing / QA</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Test case management, bug reporting, and quality assurance tracking across releases.</div></div>
-  <div id="qa-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('qa','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('qa','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('qa','tests',this)">Test Cases</button></div>
-  <div id="qa-tab-tickets" class="feat-tab-panel active"><div id="qa-ticket-list"></div></div>
-  <div id="qa-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="qa-editor-wrap"></div></div>
-  <div id="qa-tab-tests" class="feat-tab-panel"><div id="qa-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('qa')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- ONBOARDING -->
-<div class="page" id="page-feat-ob"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Onboarding</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Guided user setup flows, walkthroughs, and onboarding checklists for new users.</div></div>
-  <div id="ob-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('ob','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('ob','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('ob','tests',this)">Test Cases</button></div>
-  <div id="ob-tab-tickets" class="feat-tab-panel active"><div id="ob-ticket-list"></div></div>
-  <div id="ob-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="ob-editor-wrap"></div></div>
-  <div id="ob-tab-tests" class="feat-tab-panel"><div id="ob-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('ob')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- FOX SETTINGS -->
-<div class="page" id="page-feat-settings"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Settings</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Platform-level configuration, preferences, and system settings for the Fox app.</div></div>
-  <div id="fs-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('fs','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('fs','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('fs','tests',this)">Test Cases</button></div>
-  <div id="fs-tab-tickets" class="feat-tab-panel active"><div id="fs-ticket-list"></div></div>
-  <div id="fs-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="fs-editor-wrap"></div></div>
-  <div id="fs-tab-tests" class="feat-tab-panel"><div id="fs-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('fs')">+ Add Test Group</button></div>
-</div></div>
-
-<!-- FOX TRASH -->
-<div class="page" id="page-feat-trash"><div style="max-width:920px">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Trash</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Soft-delete management, data recovery, and retention policy configuration for the Fox app.</div></div>
-  <div id="ft-stat-cards" class="g4" style="margin-bottom:24px"></div>
-  <div class="feat-tabs"><button class="feat-tab active" onclick="switchFeatTab('ft','tickets',this)">Linked Tickets</button><button class="feat-tab" onclick="switchFeatTab('ft','details',this)">Feature Details</button><button class="feat-tab" onclick="switchFeatTab('ft','tests',this)">Test Cases</button></div>
-  <div id="ft-tab-tickets" class="feat-tab-panel active"><div id="ft-ticket-list"></div></div>
-  <div id="ft-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="ft-editor-wrap"></div></div>
-  <div id="ft-tab-tests" class="feat-tab-panel"><div id="ft-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('ft')">+ Add Test Group</button></div>
-</div></div>
+<div id="dynamic-feature-pages"></div>
 
 <!-- FLOWCHART -->
 <div class="page" id="page-flowchart" style="padding:32px 40px;max-width:100%">
@@ -837,7 +785,7 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     <div>
       <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">System</div>
       <div style="font-size:26px;font-weight:600;letter-spacing:-.5px">Trash</div>
-      <div style="font-size:13.5px;color:var(--t2);margin-top:5px">Deleted tickets are kept here. Restore them or permanently delete them.</div>
+      <div style="font-size:13.5px;color:var(--t2);margin-top:5px">Deleted tickets and features are kept here. Restore them when needed.</div>
     </div>
     <button class="btn btn-s" id="empty-trash-btn" onclick="emptyTrash()" style="flex-shrink:0;border-color:#fcd4d0;color:var(--red);margin-top:4px">
       <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
@@ -850,7 +798,7 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tm)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
     </div>
     <div style="font-size:14px;font-weight:500;color:var(--t2)">Trash is empty</div>
-    <div style="font-size:12.5px;color:var(--tm);margin-top:4px">Deleted tickets will appear here</div>
+    <div style="font-size:12.5px;color:var(--tm);margin-top:4px">Deleted tickets and features will appear here</div>
   </div>
   <!-- bulk bar for trash -->
   <div id="trash-bulk-bar" style="display:none;align-items:center;gap:10px;padding:8px 14px;background:var(--t1);border-radius:9px;margin-bottom:10px">
@@ -876,10 +824,43 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <tbody id="trash-body"></tbody>
     </table>
   </div>
+  <div id="feature-trash-wrap" class="card" style="display:none;padding:18px;margin-top:16px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--t1)">Deleted Features</div>
+        <div style="font-size:12px;color:var(--tm);margin-top:2px">Soft-deleted features are hidden from the sidebar until restored.</div>
+      </div>
+      <div id="feature-trash-count" style="font-size:12px;color:var(--tm)"></div>
+    </div>
+    <div id="feature-trash-list"></div>
+  </div>
 </div>
 </div>
 
 </main>
+</div>
+
+<div class="auth-ovl" id="auth-ovl">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="auth-logo"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="auth-title">Jiqsys</div>
+      <div class="auth-sub" id="auth-subtitle">Enter your password to unlock the workspace.</div>
+    </div>
+    <div class="auth-stack">
+      <div class="fr" style="margin-bottom:0">
+        <div class="ilbl" id="auth-password-label">Password</div>
+        <input class="inf" id="auth-password" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')submitAccessPassword()"/>
+      </div>
+      <div class="fr" id="auth-confirm-wrap" style="display:none;margin-bottom:0">
+        <div class="ilbl">Confirm Password</div>
+        <input class="inf" id="auth-password-confirm" type="password" placeholder="Confirm password" onkeydown="if(event.key==='Enter')submitAccessPassword()"/>
+      </div>
+      <div class="auth-msg" id="auth-msg"></div>
+      <button class="btn btn-p" style="width:100%;justify-content:center" id="auth-submit-btn" onclick="submitAccessPassword()">Unlock</button>
+    </div>
+    <div class="auth-note" id="auth-note">Your password is stored on this device for this static prototype.</div>
+  </div>
 </div>
 
 <!-- ══ TICKET DETAIL DRAWER ══ -->
@@ -1028,6 +1009,87 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   </div>
 </div>
 
+<!-- SETTINGS MODAL -->
+<div class="ovl" id="settings-ovl">
+  <div class="modal xl">
+    <div class="mhd">
+      <div class="mttl">Workspace Settings</div>
+      <button class="mcls" onclick="closeOvl('settings-ovl')">×</button>
+    </div>
+    <div class="st-shell">
+      <aside class="st-side">
+        <div class="st-brand">
+          <div class="st-brand-mark"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="st-brand-copy">
+            <div class="st-brand-name">Jiqsys</div>
+            <div class="st-brand-sub">Workspace controls</div>
+          </div>
+        </div>
+        <div class="st-nav">
+          <button class="st-nav-btn active" data-st-section="general" onclick="switchSettingsSection('general')">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>
+            General
+          </button>
+          <button class="st-nav-btn" data-st-section="security" onclick="switchSettingsSection('security')">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            Security
+          </button>
+        </div>
+      </aside>
+      <div class="st-main">
+        <section class="st-pane active" data-st-pane="general">
+          <div class="st-pane-eyebrow">Workspace</div>
+          <div class="st-pane-title">Profile & Access</div>
+          <div class="st-pane-copy">Open your workspace settings from the sidebar footer. Security controls live here, including the login password for this prototype.</div>
+          <div class="st-card">
+            <div class="st-grid">
+              <div>
+                <div class="ilbl">Workspace Name</div>
+                <input class="inf" value="Jiqsys" readonly />
+              </div>
+              <div>
+                <div class="ilbl">Owner</div>
+                <input class="inf" value="Haziq" readonly />
+              </div>
+            </div>
+            <div class="st-actions">
+              <span class="st-chip"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Static prototype mode</span>
+              <span class="st-chip"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 000 7H14.5a3.5 3.5 0 010 7H6"/></svg>Password lives in browser storage</span>
+            </div>
+          </div>
+        </section>
+        <section class="st-pane" data-st-pane="security">
+          <div class="st-pane-eyebrow">Security</div>
+          <div class="st-pane-title">Password Lock</div>
+          <div class="st-pane-copy">Set a workspace password, update it later, or lock the app immediately. For this static deployment, the password hash is stored in the browser.</div>
+          <div class="st-card">
+            <div class="st-grid">
+              <div style="grid-column:1/-1">
+                <div class="ilbl">Current Status</div>
+                <div class="st-chip" id="security-status-chip"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span id="security-status-text">No password set</span></div>
+              </div>
+              <div>
+                <div class="ilbl">New Password</div>
+                <input class="inf" id="settings-password" type="password" placeholder="Set or replace password" />
+              </div>
+              <div>
+                <div class="ilbl">Confirm Password</div>
+                <input class="inf" id="settings-password-confirm" type="password" placeholder="Confirm password" />
+              </div>
+            </div>
+            <div class="auth-msg" id="settings-password-msg" style="margin-top:10px"></div>
+            <div class="st-actions">
+              <button class="btn btn-p" onclick="saveSettingsPassword()">Save Password</button>
+              <button class="btn btn-s" onclick="lockWorkspaceNow()">Lock Now</button>
+              <button class="btn btn-s" style="color:var(--red)" onclick="clearWorkspacePassword()">Remove Password</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ════════════════════════════════════════════
@@ -1048,7 +1110,7 @@ let statuses=[...DEFAULT_STATUSES];
 let smDraft=[];
 const PRI={Critical:{bg:'#fdecea',c:'#b03a2e'},High:{bg:'#fff3cd',c:'#8a6800'},Normal:{bg:'#f0efeb',c:'#6f6e69'},Low:{bg:'#eaf0fd',c:'#2a56a8'}};
 // ════════════════════════════════════════════
-// MODULES — single source of truth
+// MODULES — seed icon presets for known modules
 // ════════════════════════════════════════════
 const MODULES=[
   {key:'Digital Form',   page:'digital-form', label:'Digital Form',          icon:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>'},
@@ -1066,30 +1128,15 @@ const MODULES=[
   {key:'Fox Settings',   page:'feat-settings', label:'Settings',              icon:'<circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/>'},
   {key:'Fox Trash',      page:'feat-trash',    label:'Trash',                 icon:'<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>'},
 ];
-const MOD_MAP=Object.fromEntries(MODULES.map(m=>[m.key,'mt-'+m.key.replace(/[^a-z]/gi,'-').toLowerCase()]));
 
 // ════════════════════════════════════════════
 // FEATURE DATA — notes + test groups per feature key
 // ════════════════════════════════════════════
-const FEAT_KEYS=['df','pr','op','pm','md','mob','rbac','lp','vc','be','qa','ob','fs','ft'];
-const featData=Object.fromEntries(FEAT_KEYS.map(k=>[k,{notes:'',testGroups:[]}]));
-const FEAT_MODULE_KEY={
-  df:'Digital Form',
-  pr:'PROMiS',
-  op:'Ops',
-  pm:'Project Mgmt',
-  md:'Master Data',
-  mob:'Mobile App',
-  rbac:'RBAC',
-  lp:'Landing Page',
-  vc:'Version Control',
-  be:'Backend',
-  qa:'Testing',
-  ob:'Onboarding',
-  fs:'Fox Settings',
-  ft:'Fox Trash',
-};
+const featData={};
+const FEATURE_ICON_MAP=Object.fromEntries(MODULES.map(m=>[m.key,m.icon]));
+const DEFAULT_FEATURE_ICON='<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/>';
 let moduleRows=[];
+let deletedModuleRows=[];
 let team=[];
 let tickets=[];
 let trash=[];
@@ -1098,6 +1145,12 @@ const pendingTicketSaves=new Map();
 const pendingTestGroupSaves=new Map();
 const pendingTestCaseSaves=new Map();
 const pendingFeatureNoteSaves=new Map();
+const pendingModuleMetaSaves=new Map();
+const rteSelectionRanges=new Map();
+const rteResizeHandlers=new Map();
+const AUTH_PASSWORD_HASH_KEY='jiqsys_password_hash';
+const AUTH_SESSION_KEY='jiqsys_session_open';
+let authMode='login';
 
 function uid(){return Math.random().toString(36).slice(2,9);}
 function slugify(v){return String(v||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'')||'item';}
@@ -1111,6 +1164,139 @@ function getMemberNameById(id){
   if(!id)return 'Unassigned';
   const member=team.find(m=>m.id===id);
   return member?member.name:'Unassigned';
+}
+async function sha256Hex(input){
+  const data=new TextEncoder().encode(input);
+  const hashBuffer=await crypto.subtle.digest('SHA-256',data);
+  return [...new Uint8Array(hashBuffer)].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+function getSavedPasswordHash(){
+  return localStorage.getItem(AUTH_PASSWORD_HASH_KEY)||'';
+}
+function hasWorkspacePassword(){
+  return !!getSavedPasswordHash();
+}
+function isWorkspaceUnlocked(){
+  return sessionStorage.getItem(AUTH_SESSION_KEY)==='1';
+}
+function setWorkspaceUnlocked(v){
+  if(v)sessionStorage.setItem(AUTH_SESSION_KEY,'1');
+  else sessionStorage.removeItem(AUTH_SESSION_KEY);
+}
+function setAuthMessage(message,target='auth-msg'){
+  const el=document.getElementById(target);
+  if(el)el.textContent=message||'';
+}
+function configureAuthScreen(){
+  const hasPassword=hasWorkspacePassword();
+  authMode=hasPassword?'login':'setup';
+  const subtitle=document.getElementById('auth-subtitle');
+  const submit=document.getElementById('auth-submit-btn');
+  const confirmWrap=document.getElementById('auth-confirm-wrap');
+  const note=document.getElementById('auth-note');
+  const password=document.getElementById('auth-password');
+  const confirm=document.getElementById('auth-password-confirm');
+  if(subtitle)subtitle.textContent=hasPassword?'Enter your password to unlock the workspace.':'Set a password before using Jiqsys for the first time.';
+  if(submit)submit.textContent=hasPassword?'Unlock':'Create Password';
+  if(confirmWrap)confirmWrap.style.display=hasPassword?'none':'block';
+  if(note)note.textContent=hasPassword?'Open Settings from the sidebar footer if you want to change this password.':'This password hash is stored in your browser for this static prototype.';
+  if(password)password.value='';
+  if(confirm)confirm.value='';
+  setAuthMessage('');
+  const label=document.getElementById('auth-password-label');
+  if(label)label.textContent=hasPassword?'Password':'Create Password';
+  setTimeout(()=>document.getElementById('auth-password')?.focus(),40);
+}
+function openAuthGate(){
+  configureAuthScreen();
+  const ovl=document.getElementById('auth-ovl');
+  if(ovl)ovl.classList.remove('hidden');
+}
+function closeAuthGate(){
+  const ovl=document.getElementById('auth-ovl');
+  if(ovl)ovl.classList.add('hidden');
+}
+async function submitAccessPassword(){
+  const password=document.getElementById('auth-password')?.value||'';
+  const confirm=document.getElementById('auth-password-confirm')?.value||'';
+  if(password.length<4){
+    setAuthMessage('Use at least 4 characters.');
+    return;
+  }
+  if(authMode==='setup'){
+    if(password!==confirm){
+      setAuthMessage('Passwords do not match.');
+      return;
+    }
+    localStorage.setItem(AUTH_PASSWORD_HASH_KEY,await sha256Hex(password));
+    setWorkspaceUnlocked(true);
+    closeAuthGate();
+    refreshSettingsSecurityUi();
+    toast('Password created',{icon:'check'});
+    return;
+  }
+  const matches=await sha256Hex(password)===getSavedPasswordHash();
+  if(!matches){
+    setAuthMessage('Incorrect password.');
+    return;
+  }
+  setWorkspaceUnlocked(true);
+  closeAuthGate();
+}
+function initWorkspaceAccess(){
+  if(hasWorkspacePassword()){
+    if(isWorkspaceUnlocked())closeAuthGate();
+    else openAuthGate();
+  }else{
+    openAuthGate();
+  }
+}
+function switchSettingsSection(section){
+  document.querySelectorAll('[data-st-section]').forEach(btn=>btn.classList.toggle('active',btn.dataset.stSection===section));
+  document.querySelectorAll('[data-st-pane]').forEach(pane=>pane.classList.toggle('active',pane.dataset.stPane===section));
+}
+function refreshSettingsSecurityUi(){
+  const hasPassword=hasWorkspacePassword();
+  const status=document.getElementById('security-status-text');
+  if(status)status.textContent=hasPassword?'Password enabled':'No password set';
+  const msg=document.getElementById('settings-password-msg');
+  if(msg)msg.textContent='';
+}
+function openSettingsModal(section='general'){
+  switchSettingsSection(section);
+  refreshSettingsSecurityUi();
+  openOvl('settings-ovl');
+}
+async function saveSettingsPassword(){
+  const password=document.getElementById('settings-password')?.value||'';
+  const confirm=document.getElementById('settings-password-confirm')?.value||'';
+  if(password.length<4){
+    setAuthMessage('Use at least 4 characters.','settings-password-msg');
+    return;
+  }
+  if(password!==confirm){
+    setAuthMessage('Passwords do not match.','settings-password-msg');
+    return;
+  }
+  localStorage.setItem(AUTH_PASSWORD_HASH_KEY,await sha256Hex(password));
+  setWorkspaceUnlocked(true);
+  document.getElementById('settings-password').value='';
+  document.getElementById('settings-password-confirm').value='';
+  refreshSettingsSecurityUi();
+  toast('Password updated',{icon:'check'});
+}
+function clearWorkspacePassword(){
+  localStorage.removeItem(AUTH_PASSWORD_HASH_KEY);
+  setWorkspaceUnlocked(true);
+  document.getElementById('settings-password').value='';
+  document.getElementById('settings-password-confirm').value='';
+  refreshSettingsSecurityUi();
+  toast('Password removed',{icon:'restore'});
+}
+function lockWorkspaceNow(){
+  closeOvl('settings-ovl');
+  setWorkspaceUnlocked(false);
+  openAuthGate();
 }
 function normalizeTicket(t){
   t.modules=t.modules||[];
@@ -1140,12 +1326,77 @@ function buildTicketPayload(ticket){
 function nextTicketNo(){
   return `TK-${Date.now().toString().slice(-6)}${Math.floor(Math.random()*10)}`;
 }
+function getFeatureRows(){
+  return [...moduleRows].sort((a,b)=>(a.sort_order??999)-(b.sort_order??999)||String(a.name||'').localeCompare(String(b.name||'')));
+}
+function getFeatureKeyFromRow(row){return `feature-${row.page_slug}`;}
+function getFeatureRowByKey(fk){return getFeatureRows().find(row=>getFeatureKeyFromRow(row)===fk)||null;}
+function getFeatureKeyByModuleKey(moduleKey){
+  const row=moduleRows.find(r=>r.module_key===moduleKey);
+  return row?getFeatureKeyFromRow(row):null;
+}
+function getDeletedFeatureRows(){
+  return [...deletedModuleRows].sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));
+}
+function createFeatureCanvas(title='Canvas 1',content=''){
+  return {id:`canvas-${uid()}`,title,content};
+}
+function ensureFeatureState(fk){
+  if(!featData[fk])featData[fk]={canvases:[createFeatureCanvas()],activeCanvasId:null,sidebarCollapsed:false,testGroups:[]};
+  if(!Array.isArray(featData[fk].canvases)||!featData[fk].canvases.length){
+    featData[fk].canvases=[createFeatureCanvas()];
+  }
+  featData[fk].canvases=featData[fk].canvases.map((canvas,index)=>({
+    id:canvas.id||`canvas-${uid()}`,
+    title:(canvas.title||`Canvas ${index+1}`).trim()||`Canvas ${index+1}`,
+    content:canvas.content||''
+  }));
+  if(!featData[fk].activeCanvasId||!featData[fk].canvases.some(canvas=>canvas.id===featData[fk].activeCanvasId)){
+    featData[fk].activeCanvasId=featData[fk].canvases[0].id;
+  }
+  if(typeof featData[fk].sidebarCollapsed!=='boolean')featData[fk].sidebarCollapsed=false;
+  return featData[fk];
+}
+function getActiveFeatureCanvas(fk){
+  const state=ensureFeatureState(fk);
+  return state.canvases.find(canvas=>canvas.id===state.activeCanvasId)||state.canvases[0];
+}
+function parseFeatureNotesPayload(raw){
+  if(!raw)return {canvases:[createFeatureCanvas()],activeCanvasId:null};
+  try{
+    const parsed=JSON.parse(raw);
+    if(parsed&&Array.isArray(parsed.canvases)&&parsed.canvases.length){
+      return {
+        canvases:parsed.canvases.map((canvas,index)=>({
+          id:canvas.id||`canvas-${uid()}`,
+          title:(canvas.title||`Canvas ${index+1}`).trim()||`Canvas ${index+1}`,
+          content:canvas.content||''
+        })),
+        activeCanvasId:parsed.activeCanvasId||parsed.canvases[0]?.id||null,
+        sidebarCollapsed:!!parsed.sidebarCollapsed,
+      };
+    }
+  }catch(error){}
+  return {canvases:[createFeatureCanvas('Canvas 1',raw)],activeCanvasId:null,sidebarCollapsed:false};
+}
+function serializeFeatureNotesPayload(fk){
+  const state=ensureFeatureState(fk);
+  return JSON.stringify({
+    version:2,
+    activeCanvasId:state.activeCanvasId,
+    sidebarCollapsed:state.sidebarCollapsed,
+    canvases:state.canvases.map(canvas=>({
+      id:canvas.id,
+      title:canvas.title,
+      content:canvas.content||''
+    }))
+  });
+}
 function getModuleRowByFeatKey(fk){
-  const moduleKey=FEAT_MODULE_KEY[fk];
-  return moduleRows.find(row=>row.module_key===moduleKey)||null;
+  return getFeatureRowByKey(fk);
 }
 function getTestGroupById(fk,gid){
-  return featData[fk]?.testGroups.find(group=>group.id===gid)||null;
+  return ensureFeatureState(fk).testGroups.find(group=>group.id===gid)||null;
 }
 function upsertLocalTrash(ticket){
   const idx=trash.findIndex(x=>x.rowId===ticket.rowId);
@@ -1211,13 +1462,297 @@ async function loadStatuses(){
   }));
 }
 async function loadModules(){
-  const {data,error}=await supabaseClient
-    .from('modules')
-    .select('id, module_key, name, page_slug')
-    .eq('is_active',true)
-    .order('sort_order');
-  if(error)throw error;
-  moduleRows=data||[];
+  const [{data:activeRows,error:activeError},{data:inactiveRows,error:inactiveError}]=await Promise.all([
+    supabaseClient
+      .from('modules')
+      .select('id, module_key, name, page_slug, description, sort_order')
+      .eq('is_active',true)
+      .order('sort_order'),
+    supabaseClient
+      .from('modules')
+      .select('id, module_key, name, page_slug, description, sort_order')
+      .eq('is_active',false)
+      .order('name')
+  ]);
+  if(activeError)throw activeError;
+  if(inactiveError)throw inactiveError;
+  moduleRows=activeRows||[];
+  deletedModuleRows=inactiveRows||[];
+}
+function updateFeatureNavLabel(fk,name){
+  const item=document.querySelector(`#feature-nav .ni-feat[data-feature-key="${fk}"] span`);
+  if(item)item.textContent=name;
+}
+function queueModuleMetaSave(fk,delay=350){
+  clearTimeout(pendingModuleMetaSaves.get(fk));
+  const timeout=setTimeout(async()=>{
+    try{
+      const row=getFeatureRowByKey(fk);
+      if(!row)return;
+      const {error}=await supabaseClient
+        .from('modules')
+        .update({
+          name:row.name,
+          description:row.description||null,
+        })
+        .eq('id',row.id);
+      if(error)throw error;
+    }catch(error){
+      showDbError('Saving feature title and description',error);
+    }finally{
+      pendingModuleMetaSaves.delete(fk);
+    }
+  },delay);
+  pendingModuleMetaSaves.set(fk,timeout);
+}
+function updateFeatureMeta(fk,field,value){
+  const row=getFeatureRowByKey(fk);
+  if(!row)return;
+  row[field]=field==='name'?String(value||'').trimStart():String(value||'');
+  if(field==='name'){
+    updateFeatureNavLabel(fk,row.name||'Untitled Feature');
+  }
+  queueModuleMetaSave(fk);
+}
+function autosizeFeatureDescription(el){
+  if(!el)return;
+  el.style.height='auto';
+  el.style.height=`${Math.max(el.scrollHeight,24)}px`;
+}
+function mountFeatureSidebarShell(){
+  if(document.getElementById('feature-nav'))return;
+  const shellHost=document.getElementById('feature-sidebar-shell');
+  if(!shellHost)return;
+  const shell=document.createElement('div');
+  shell.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 16px 4px">
+      <div class="slbl" style="padding:0;margin:0">Features</div>
+      <button class="feat-add-btn" type="button" onclick="openFeatureModal()" aria-label="Add feature">+</button>
+    </div>
+    <div class="ss" id="feature-nav"></div>`;
+  shellHost.replaceChildren(shell);
+}
+function mountFeaturePagesShell(){
+  return document.getElementById('dynamic-feature-pages');
+}
+function mountFeatureModalShell(){
+  if(document.getElementById('feature-ovl'))return;
+  document.body.insertAdjacentHTML('beforeend',`
+  <div class="ovl" id="feature-ovl">
+    <div class="modal" style="width:420px;max-width:95vw">
+      <div class="mhd">
+        <div class="mttl">Add Feature</div>
+        <button class="mcls" onclick="closeOvl('feature-ovl')">×</button>
+      </div>
+      <div class="mbdy">
+        <div class="fr">
+          <div class="ilbl">Title <span style="color:var(--red)">*</span></div>
+          <input class="inf" id="feature-title" placeholder="e.g. Procurement"/>
+        </div>
+        <div class="fr" style="margin-bottom:0">
+          <div class="ilbl">Description</div>
+          <textarea class="inf" id="feature-desc" rows="3" style="resize:none" placeholder="What this feature is for..."></textarea>
+        </div>
+      </div>
+      <div class="mft">
+        <button class="btn btn-s" onclick="closeOvl('feature-ovl')">Cancel</button>
+        <button class="btn btn-p" onclick="saveFeature()">Create Feature</button>
+      </div>
+    </div>
+  </div>`);
+  document.getElementById('feature-ovl').addEventListener('click',e=>{if(e.target.id==='feature-ovl')closeOvl('feature-ovl');});
+}
+function ensureFeatureUi(){
+  mountFeatureSidebarShell();
+  mountFeaturePagesShell();
+  mountFeatureModalShell();
+}
+function getFeatureIcon(row){return FEATURE_ICON_MAP[row.module_key]||DEFAULT_FEATURE_ICON;}
+function buildFeaturePage(row){
+  const fk=getFeatureKeyFromRow(row);
+  ensureFeatureState(fk);
+  return `<div class="page" id="page-${fk}"><div style="max-width:920px">
+    <div style="margin-bottom:24px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">Feature</div>
+      <input class="feat-meta-title" value="${escHtml(row.name)}" placeholder="Feature title" oninput="updateFeatureMeta('${fk}','name',this.value)">
+      <textarea class="feat-meta-desc" rows="1" placeholder="Add a short description for this feature" oninput="updateFeatureMeta('${fk}','description',this.value);autosizeFeatureDescription(this)">${escHtml(row.description||'')}</textarea>
+    </div>
+    <div id="${fk}-stat-cards" class="g4" style="margin-bottom:24px"></div>
+    <div class="feat-tabs">
+      <button class="feat-tab active" onclick="switchFeatTab('${fk}','tickets',this)">Linked Tickets</button>
+      <button class="feat-tab" onclick="switchFeatTab('${fk}','details',this)">Feature Details</button>
+      <button class="feat-tab" onclick="switchFeatTab('${fk}','tests',this)">Test Cases</button>
+    </div>
+    <div id="${fk}-tab-tickets" class="feat-tab-panel active"><div id="${fk}-ticket-list"></div></div>
+    <div id="${fk}-tab-details" class="feat-tab-panel"><div class="feat-notes-wrap" id="${fk}-editor-wrap"></div></div>
+    <div id="${fk}-tab-tests" class="feat-tab-panel"><div id="${fk}-tests"></div><button class="btn btn-s" style="margin-top:12px" onclick="addTestGroup('${fk}')">+ Add Test Group</button></div>
+  </div></div>`;
+}
+let featureDragKey=null;
+function attachFeatureDnD(){
+  document.querySelectorAll('#feature-nav .ni-feat').forEach(item=>{
+    item.addEventListener('dragstart',()=>{
+      featureDragKey=item.dataset.featureKey;
+      item.style.opacity='.45';
+    });
+    item.addEventListener('dragend',()=>{
+      featureDragKey=null;
+      item.style.opacity='';
+      document.querySelectorAll('#feature-nav .ni-feat').forEach(el=>el.classList.remove('drag-over'));
+    });
+    item.addEventListener('dragover',e=>{
+      e.preventDefault();
+      item.classList.add('drag-over');
+    });
+    item.addEventListener('dragleave',()=>item.classList.remove('drag-over'));
+    item.addEventListener('drop',async e=>{
+      e.preventDefault();
+      item.classList.remove('drag-over');
+      const targetKey=item.dataset.featureKey;
+      if(!featureDragKey||featureDragKey===targetKey)return;
+      const ordered=getFeatureRows();
+      const from=ordered.findIndex(row=>getFeatureKeyFromRow(row)===featureDragKey);
+      const to=ordered.findIndex(row=>getFeatureKeyFromRow(row)===targetKey);
+      if(from<0||to<0)return;
+      const moved=ordered.splice(from,1)[0];
+      ordered.splice(to,0,moved);
+      moduleRows=ordered.map((row,index)=>({...row,sort_order:index+1}));
+      renderFeatureUi();
+      try{
+        for(const row of moduleRows){
+          const {error}=await supabaseClient.from('modules').update({sort_order:row.sort_order}).eq('id',row.id);
+          if(error)throw error;
+        }
+      }catch(error){
+        showDbError('Reordering features',error);
+      }
+    });
+  });
+}
+function renderFeatureSidebar(){
+  const nav=document.getElementById('feature-nav');
+  if(!nav)return;
+  nav.innerHTML=getFeatureRows().map(row=>{
+    const pageId=getFeatureKeyFromRow(row);
+    return `<div class="ni ni-feat" draggable="true" data-page="${pageId}" data-feature-key="${pageId}">
+      <svg viewBox="0 0 24 24">${getFeatureIcon(row)}</svg>
+      <span>${escHtml(row.name)}</span>
+      <div class="ni-feat-actions">
+        <button class="ni-feat-more" type="button" onclick="event.stopPropagation();toggleFeatureMenu('${pageId}',event)" aria-label="Feature actions">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>
+        </button>
+        <div class="feat-menu">
+          <button class="feat-menu-btn" type="button" onclick="event.stopPropagation();softDeleteFeature('${pageId}')">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            Delete Feature
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('')||`<div style="padding:8px 10px;font-size:12px;color:var(--tm)">No features yet.</div>`;
+  attachFeatureDnD();
+}
+function renderFeaturePages(){
+  const container=mountFeaturePagesShell();
+  if(!container)return;
+  container.innerHTML=getFeatureRows().map(buildFeaturePage).join('');
+  container.querySelectorAll('.feat-meta-desc').forEach(autosizeFeatureDescription);
+}
+function renderFeatureUi(){
+  const activePage=document.querySelector('.page.active')?.id.replace(/^page-/,'');
+  renderFeatureSidebar();
+  renderFeaturePages();
+  if(activePage&&document.getElementById(`page-${activePage}`))nav(activePage);
+}
+function closeFeatureMenus(){
+  document.querySelectorAll('#feature-nav .ni-feat.menu-open').forEach(item=>item.classList.remove('menu-open'));
+}
+function toggleFeatureMenu(fk,event){
+  const item=event.currentTarget.closest('.ni-feat');
+  if(!item)return;
+  const alreadyOpen=item.classList.contains('menu-open');
+  closeFeatureMenus();
+  if(!alreadyOpen)item.classList.add('menu-open');
+}
+async function softDeleteFeature(fk){
+  const row=getFeatureRowByKey(fk);
+  if(!row)return;
+  if(!confirm(`Move "${row.name}" to trash?`))return;
+  closeFeatureMenus();
+  try{
+    const {error}=await supabaseClient.from('modules').update({is_active:false}).eq('id',row.id);
+    if(error)throw error;
+    moduleRows=moduleRows.filter(entry=>entry.id!==row.id);
+    deletedModuleRows.unshift({...row});
+    renderFeatureUi();
+    renderTrashPage();
+    if(document.querySelector(`.page.active#page-${fk}`))nav('home');
+    toast(`"${row.name}" moved to Trash`,{icon:'trash'});
+  }catch(error){
+    showDbError('Deleting feature',error);
+  }
+}
+async function restoreFeature(fk){
+  const row=deletedModuleRows.find(entry=>getFeatureKeyFromRow(entry)===fk);
+  if(!row)return;
+  try{
+    const nextOrder=getFeatureRows().length+1;
+    const {error}=await supabaseClient.from('modules').update({is_active:true,sort_order:nextOrder}).eq('id',row.id);
+    if(error)throw error;
+    deletedModuleRows=deletedModuleRows.filter(entry=>entry.id!==row.id);
+    moduleRows.push({...row,sort_order:nextOrder});
+    renderFeatureUi();
+    renderTrashPage();
+    renderActive();
+    toast(`"${row.name}" restored`,{icon:'restore'});
+  }catch(error){
+    showDbError('Restoring feature',error);
+  }
+}
+function openFeatureModal(){
+  document.getElementById('feature-title').value='';
+  document.getElementById('feature-desc').value='';
+  openOvl('feature-ovl');
+  setTimeout(()=>document.getElementById('feature-title')?.focus(),80);
+}
+function uniqueField(base,selector){
+  const values=new Set(moduleRows.map(row=>row[selector]));
+  if(!values.has(base))return base;
+  let i=2;
+  while(values.has(`${base}-${i}`))i++;
+  return `${base}-${i}`;
+}
+async function saveFeature(){
+  const name=document.getElementById('feature-title').value.trim();
+  const description=document.getElementById('feature-desc').value.trim();
+  if(!name){
+    document.getElementById('feature-title').focus();
+    return;
+  }
+  const pageSlug=uniqueField(slugify(name),'page_slug');
+  const moduleKey=uniqueField(name,'module_key');
+  try{
+    const {data,error}=await supabaseClient
+      .from('modules')
+      .insert({
+        module_key:moduleKey,
+        name,
+        page_slug:pageSlug,
+        description:description||null,
+        sort_order:getFeatureRows().length+1,
+        is_active:true
+      })
+      .select('id, module_key, name, page_slug, description, sort_order')
+      .single();
+    if(error)throw error;
+    moduleRows.push(data);
+    ensureFeatureState(getFeatureKeyFromRow(data));
+    closeOvl('feature-ovl');
+    renderFeatureUi();
+    nav(getFeatureKeyFromRow(data));
+  }catch(error){
+    showDbError('Creating feature',error);
+  }
 }
 async function loadTeam(){
   const {data,error}=await supabaseClient
@@ -1299,7 +1834,7 @@ async function loadFeatureTests(){
   ]);
   if(groupsError)throw groupsError;
   if(casesError)throw casesError;
-  FEAT_KEYS.forEach(fk=>{featData[fk].testGroups=[];});
+  getFeatureRows().forEach(row=>{ensureFeatureState(getFeatureKeyFromRow(row)).testGroups=[];});
   const casesByGroup={};
   (caseRows||[]).forEach(row=>{
     if(!casesByGroup[row.test_group_id])casesByGroup[row.test_group_id]=[];
@@ -1307,9 +1842,9 @@ async function loadFeatureTests(){
   });
   (groupRows||[]).forEach(row=>{
     const moduleRow=moduleRows.find(m=>m.id===row.module_id);
-    const fk=moduleRow?MOD_FEAT_KEY[moduleRow.module_key]:null;
-    if(!fk||!featData[fk])return;
-    featData[fk].testGroups.push({
+    const fk=moduleRow?getFeatureKeyFromRow(moduleRow):null;
+    if(!fk)return;
+    ensureFeatureState(fk).testGroups.push({
       id:row.id,
       name:row.name,
       open:true,
@@ -1322,12 +1857,21 @@ async function loadFeatureNotes(){
     .from('module_notes')
     .select('module_id, notes_html');
   if(error)throw error;
-  FEAT_KEYS.forEach(fk=>{featData[fk].notes='';});
+  getFeatureRows().forEach(row=>{
+    const state=ensureFeatureState(getFeatureKeyFromRow(row));
+    state.canvases=[createFeatureCanvas()];
+    state.activeCanvasId=state.canvases[0].id;
+  });
   (data||[]).forEach(row=>{
     const moduleRow=moduleRows.find(m=>m.id===row.module_id);
-    const fk=moduleRow?MOD_FEAT_KEY[moduleRow.module_key]:null;
-    if(!fk||!featData[fk])return;
-    featData[fk].notes=row.notes_html||'';
+    const fk=moduleRow?getFeatureKeyFromRow(moduleRow):null;
+    if(!fk)return;
+    const state=ensureFeatureState(fk);
+    const parsed=parseFeatureNotesPayload(row.notes_html||'');
+    state.canvases=parsed.canvases;
+    state.activeCanvasId=parsed.activeCanvasId;
+    state.sidebarCollapsed=parsed.sidebarCollapsed;
+    ensureFeatureState(fk);
   });
 }
 function queueFeatureNoteSave(fk,delay=400){
@@ -1340,7 +1884,7 @@ function queueFeatureNoteSave(fk,delay=400){
         .from('module_notes')
         .upsert({
           module_id:moduleRow.id,
-          notes_html:featData[fk].notes||''
+          notes_html:serializeFeatureNotesPayload(fk)
         },{onConflict:'module_id'});
       if(error)throw error;
     }catch(error){
@@ -1357,7 +1901,7 @@ function queueTestGroupSave(fk,gid,delay=250){
     try{
       const group=getTestGroupById(fk,gid);
       if(!group)return;
-      const order=featData[fk].testGroups.findIndex(x=>x.id===gid);
+      const order=ensureFeatureState(fk).testGroups.findIndex(x=>x.id===gid);
       const {error}=await supabaseClient
         .from('test_groups')
         .update({name:group.name,sort_order:order>-1?order:0})
@@ -1394,8 +1938,10 @@ function queueTestCaseSave(fk,gid,iid,delay=250){
 }
 async function hydrateApp(){
   try{
+    ensureFeatureUi();
     await loadStatuses();
     await loadModules();
+    renderFeatureUi();
     await loadTeam();
     await loadTickets();
     await loadFeatureNotes();
@@ -1429,7 +1975,8 @@ function switchFeatTab(fk,tab,btn){
 
 // ── Notes ──
 function saveFeatNotes(fk,val){
-  featData[fk].notes=val;
+  const canvas=getActiveFeatureCanvas(fk);
+  if(canvas)canvas.content=val;
   queueFeatureNoteSave(fk);
 }
 
@@ -1445,6 +1992,8 @@ const RTE_TOOLBAR=[
   {type:'cmd',cmd:'italic',    icon:'<i>I</i>',          title:'Italic'},
   {type:'cmd',cmd:'underline', icon:'<u style="text-decoration:underline">U</u>', title:'Underline'},
   {type:'sep'},
+  {type:'action', action:'image', icon:'<svg viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="14" height="12" rx="2"/><circle cx="6.5" cy="7" r="1.2"/><path d="M16 12l-3.5-3.5L5 15"/></svg>', title:'Add Image'},
+  {type:'sep'},
   {type:'cmd',cmd:'insertUnorderedList', icon:'<svg viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="5" x2="16" y2="5"/><line x1="6" y1="9" x2="16" y2="9"/><line x1="6" y1="13" x2="16" y2="13"/><circle cx="2.5" cy="5" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="9" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="13" r="1" fill="currentColor" stroke="none"/></svg>', title:'Bullet List'},
   {type:'cmd',cmd:'insertOrderedList',   icon:'<svg viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="5" x2="16" y2="5"/><line x1="6" y1="9" x2="16" y2="9"/><line x1="6" y1="13" x2="16" y2="13"/><text x="1" y="6" font-size="5" font-family="DM Sans" fill="currentColor" stroke="none" font-weight="700">1</text><text x="1" y="10" font-size="5" font-family="DM Sans" fill="currentColor" stroke="none" font-weight="700">2</text><text x="1" y="14" font-size="5" font-family="DM Sans" fill="currentColor" stroke="none" font-weight="700">3</text></svg>', title:'Numbered List'},
   {type:'sep'},
@@ -1453,19 +2002,137 @@ const RTE_TOOLBAR=[
 ];
 
 function rteToolbarHTML(fk){
+  const state=ensureFeatureState(fk);
+  const toggleTitle=state.sidebarCollapsed?'Show canvas sidebar':'Hide canvas sidebar';
+  const toggleIcon=state.sidebarCollapsed
+    ? '<polyline points="9 18 15 12 9 6"/><line x1="4" y1="5" x2="4" y2="19"/>'
+    : '<polyline points="15 18 9 12 15 6"/><line x1="20" y1="5" x2="20" y2="19"/>';
   return `<div class="rte-toolbar" id="rte-tb-${fk}">
+    <button class="rte-sidebar-btn" title="${toggleTitle}" onmousedown="event.preventDefault();toggleFeatureCanvasSidebar('${fk}')">
+      <svg viewBox="0 0 24 24">${toggleIcon}</svg>
+    </button>
+    <div class="rte-sep"></div>
     ${RTE_TOOLBAR.map(t=>{
       if(t.type==='sep') return `<div class="rte-sep"></div>`;
       if(t.type==='heading') return `<button class="rte-btn wide" title="${t.title}" onmousedown="event.preventDefault();rteHeading('${fk}','${t.tag}')">${t.label}</button>`;
       if(t.type==='cmd') return `<button class="rte-btn" title="${t.title}" id="rteb-${fk}-${t.cmd}" onmousedown="event.preventDefault();rteCmd('${fk}','${t.cmd}')">${t.icon}</button>`;
+      if(t.type==='action') return `<button class="rte-btn" title="${t.title}" onmousedown="event.preventDefault();rteAction('${fk}','${t.action}')">${t.icon}</button>`;
       if(t.type==='table') return `<button class="rte-btn wide" title="${t.title}" onmousedown="event.preventDefault();rteInsertTable('${fk}',${t.rows},${t.cols})">⊞ ${t.label}</button>`;
     }).join('')}
   </div>`;
 }
 
+function featureCanvasPreview(canvas){
+  const plain=String(canvas.content||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  return plain||'Blank canvas';
+}
+function featureCanvasTitleForIndex(state,index){
+  const base=`Canvas ${index}`;
+  const titles=new Set(state.canvases.map(canvas=>canvas.title));
+  if(!titles.has(base))return base;
+  let n=index+1;
+  while(titles.has(`Canvas ${n}`))n++;
+  return `Canvas ${n}`;
+}
+function focusCanvasTitleInput(fk,canvasId){
+  const wrap=document.getElementById(`${fk}-editor-wrap`);
+  const input=wrap?.querySelector('.feat-canvas-item.active .feat-canvas-name');
+  if(input){
+    input.focus();
+    input.select();
+  }
+}
+function addFeatureCanvas(fk){
+  const state=ensureFeatureState(fk);
+  const canvas=createFeatureCanvas(featureCanvasTitleForIndex(state,state.canvases.length+1),'');
+  state.canvases.push(canvas);
+  state.activeCanvasId=canvas.id;
+  queueFeatureNoteSave(fk);
+  rteMountEditor(fk);
+  setTimeout(()=>focusCanvasTitleInput(fk,canvas.id),40);
+}
+function selectFeatureCanvas(fk,canvasId){
+  const state=ensureFeatureState(fk);
+  if(state.activeCanvasId===canvasId)return;
+  state.activeCanvasId=canvasId;
+  queueFeatureNoteSave(fk);
+  rteMountEditor(fk);
+}
+function renameFeatureCanvas(fk,canvasId,val){
+  const state=ensureFeatureState(fk);
+  const canvas=state.canvases.find(entry=>entry.id===canvasId);
+  if(!canvas)return;
+  canvas.title=String(val||'').trimStart()||'Untitled Canvas';
+  if(canvasId===state.activeCanvasId){
+    const wrap=document.getElementById(`${fk}-editor-wrap`);
+    const titleEl=wrap?.querySelector('.feat-detail-title');
+    if(titleEl)titleEl.textContent=canvas.title;
+  }
+  queueFeatureNoteSave(fk);
+}
+function deleteFeatureCanvas(fk,canvasId){
+  const state=ensureFeatureState(fk);
+  if(state.canvases.length<=1)return;
+  const idx=state.canvases.findIndex(entry=>entry.id===canvasId);
+  if(idx<0)return;
+  state.canvases.splice(idx,1);
+  if(state.activeCanvasId===canvasId){
+    state.activeCanvasId=(state.canvases[idx]||state.canvases[idx-1]||state.canvases[0]).id;
+  }
+  queueFeatureNoteSave(fk);
+  rteMountEditor(fk);
+}
+function toggleFeatureCanvasSidebar(fk){
+  const state=ensureFeatureState(fk);
+  state.sidebarCollapsed=!state.sidebarCollapsed;
+  queueFeatureNoteSave(fk);
+  rteMountEditor(fk);
+}
+
+function renderFeatureDetailShell(fk){
+  const state=ensureFeatureState(fk);
+  const activeCanvas=getActiveFeatureCanvas(fk);
+  return `<div class="feat-detail-shell">
+    ${state.sidebarCollapsed?'':`<aside class="feat-detail-side">
+      <div class="feat-detail-head">
+        <div class="feat-detail-copy">
+          <div class="feat-detail-eyebrow">Canvas Stack</div>
+          <div class="feat-detail-title">${escHtml(activeCanvas?.title||'Canvas 1')}</div>
+        </div>
+      </div>
+      <div class="feat-canvas-list">
+        ${state.canvases.map((canvas,index)=>`<div class="feat-canvas-item${canvas.id===state.activeCanvasId?' active':''}" onclick="selectFeatureCanvas('${fk}','${canvas.id}')">
+          <div class="feat-canvas-top">
+            <div class="feat-canvas-dot">
+              <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><polyline points="14 3 14 8 19 8"/></svg>
+            </div>
+            <input class="feat-canvas-name" value="${escHtml(canvas.title)}" placeholder="Canvas title" onclick="event.stopPropagation()" oninput="renameFeatureCanvas('${fk}','${canvas.id}',this.value)" />
+            <button class="feat-canvas-del" type="button" onclick="event.stopPropagation();deleteFeatureCanvas('${fk}','${canvas.id}')" ${state.canvases.length===1?'disabled':''} aria-label="Delete canvas">
+              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+          <div class="feat-canvas-meta">Canvas ${index+1} · ${escHtml(featureCanvasPreview(canvas).slice(0,52))}${featureCanvasPreview(canvas).length>52?'...':''}</div>
+        </div>`).join('')}
+      </div>
+      <button class="feat-canvas-add" type="button" onclick="addFeatureCanvas('${fk}')">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>New Canvas</span>
+      </button>
+    </aside>`}
+    <div class="feat-detail-main">
+      <div class="feat-notes-wrap" id="${fk}-rte-wrap">
+        ${rteToolbarHTML(fk)}
+        ${rteBodyHTML(fk)}
+        <div class="rte-tbl-ctrl" id="rte-tblctrl-${fk}"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function rteBodyHTML(fk){
-  const content=featData[fk].notes||'';
-  return `<div class="rte-body" id="rte-${fk}" contenteditable="true"
+  const content=getActiveFeatureCanvas(fk)?.content||'';
+  return `<input type="file" id="rte-file-${fk}" accept="image/*" style="display:none" onchange="rtePickImage(event,'${fk}')">
+  <div class="rte-body" id="rte-${fk}" contenteditable="true"
     data-placeholder="Describe this feature — goals, scope, requirements, edge cases, open questions…"
     oninput="rteInput('${fk}')"
     onkeydown="rteKey(event,'${fk}')"
@@ -1476,20 +2143,171 @@ function rteBodyHTML(fk){
 
 function rteMountEditor(fk){
   const wrap=document.getElementById(`${fk}-editor-wrap`);
-  if(!wrap||wrap.dataset.mounted==='1')return;
-  wrap.innerHTML=rteToolbarHTML(fk)+rteBodyHTML(fk)+`<div class="rte-tbl-ctrl" id="rte-tblctrl-${fk}"></div>`;
-  wrap.dataset.mounted='1';
+  if(!wrap)return;
+  wrap.innerHTML=renderFeatureDetailShell(fk);
   // show/hide table controls based on cursor position
   const body=document.getElementById(`rte-${fk}`);
-  body.addEventListener('click',()=>rteCheckTable(fk));
-  body.addEventListener('keyup',()=>rteCheckTable(fk));
+  body.addEventListener('click',()=>{rteRememberSelection(fk);rteCheckTable(fk);});
+  body.addEventListener('click',e=>{
+    const link=e.target.closest('a[href]');
+    if(link&&body.contains(link)){
+      e.preventDefault();
+      window.open(link.href,'_blank','noopener,noreferrer');
+    }
+  });
+  body.addEventListener('keyup',()=>{rteRememberSelection(fk);rteCheckTable(fk);});
+  body.addEventListener('mouseup',()=>rteRememberSelection(fk));
+  body.addEventListener('paste',e=>rteHandlePaste(e,fk));
+  body.addEventListener('mousemove',e=>{
+    const cell=e.target.closest('td,th');
+    if(cell&&body.contains(cell))rteCheckTable(fk,cell);
+  });
   body.addEventListener('scroll',()=>rteCheckTable(fk));
-  window.addEventListener('resize',()=>rteCheckTable(fk));
+  body.addEventListener('dragover',e=>{
+    if(![...e.dataTransfer?.files||[]].some(file=>file.type.startsWith('image/')))return;
+    e.preventDefault();
+    body.classList.add('drop-active');
+  });
+  body.addEventListener('dragleave',()=>body.classList.remove('drop-active'));
+  body.addEventListener('drop',e=>{
+    const files=[...e.dataTransfer?.files||[]].filter(file=>file.type.startsWith('image/'));
+    body.classList.remove('drop-active');
+    if(!files.length)return;
+    e.preventDefault();
+    const range=rteRangeFromPoint(e.clientX,e.clientY,body);
+    files.forEach((file,index)=>rteInsertImageFile(fk,file,index===0?range:null));
+  });
+  wrap.addEventListener('mouseleave',()=>rteHideTableCtrl(fk));
+  if(!rteResizeHandlers.has(fk)){
+    const handler=()=>rteCheckTable(fk);
+    window.addEventListener('resize',handler);
+    rteResizeHandlers.set(fk,handler);
+  }
 }
 
 function rteInput(fk){
   const body=document.getElementById(`rte-${fk}`);
-  if(body)saveFeatNotes(fk,body.innerHTML);
+  if(!body)return;
+  rteNormalizeContent(body);
+  saveFeatNotes(fk,body.innerHTML);
+}
+
+function rteNormalizeUrl(url){
+  const raw=String(url||'').trim();
+  if(!raw)return '';
+  if(/^(https?:|mailto:|tel:|data:)/i.test(raw))return raw;
+  return `https://${raw}`;
+}
+
+function rteNormalizeContent(body){
+  body.querySelectorAll('a[href]').forEach(link=>{
+    const href=rteNormalizeUrl(link.getAttribute('href'));
+    if(href)link.setAttribute('href',href);
+    link.setAttribute('target','_blank');
+    link.setAttribute('rel','noopener noreferrer');
+  });
+  body.querySelectorAll('img[src]').forEach(img=>{
+    const src=rteNormalizeUrl(img.getAttribute('src'));
+    if(src)img.setAttribute('src',src);
+    if(!img.getAttribute('alt'))img.setAttribute('alt','Feature image');
+  });
+}
+
+function rteInsertHtmlAtCursor(html){
+  const sel=window.getSelection();
+  if(!sel.rangeCount)return false;
+  const range=sel.getRangeAt(0);
+  range.deleteContents();
+  const fragment=range.createContextualFragment(html);
+  const lastNode=fragment.lastChild;
+  range.insertNode(fragment);
+  if(lastNode){
+    range.setStartAfter(lastNode);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  return true;
+}
+function rteRememberSelection(fk){
+  const sel=window.getSelection();
+  if(!sel.rangeCount)return;
+  rteSelectionRanges.set(fk,sel.getRangeAt(0).cloneRange());
+}
+function rteRestoreSelection(fk,rangeOverride=null){
+  const body=document.getElementById(`rte-${fk}`);
+  if(!body)return false;
+  body.focus();
+  const range=rangeOverride||rteSelectionRanges.get(fk);
+  if(!range)return false;
+  const sel=window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range.cloneRange());
+  return true;
+}
+function rteRangeFromPoint(x,y,container){
+  if(document.caretRangeFromPoint){
+    const range=document.caretRangeFromPoint(x,y);
+    if(range&&container.contains(range.startContainer))return range;
+  }
+  if(document.caretPositionFromPoint){
+    const pos=document.caretPositionFromPoint(x,y);
+    if(pos&&container.contains(pos.offsetNode)){
+      const range=document.createRange();
+      range.setStart(pos.offsetNode,pos.offset);
+      range.collapse(true);
+      return range;
+    }
+  }
+  return null;
+}
+
+function rteAction(fk,action){
+  if(action==='image')return rteInsertImage(fk);
+}
+function rteHandlePaste(event,fk){
+  const body=document.getElementById(`rte-${fk}`);
+  if(!body)return;
+  const text=event.clipboardData?.getData('text/plain')?.trim()||'';
+  const sel=window.getSelection();
+  const hasSelection=!!(sel&&sel.rangeCount&&!sel.getRangeAt(0).collapsed&&sel.toString().trim());
+  if(hasSelection&&text&&/^(https?:\/\/|mailto:|tel:)/i.test(text)){
+    event.preventDefault();
+    body.focus();
+    document.execCommand('createLink',false,rteNormalizeUrl(text));
+    rteInput(fk);
+    rteUpdateToolbar(fk);
+  }
+}
+
+function rteInsertImage(fk){
+  rteRememberSelection(fk);
+  const input=document.getElementById(`rte-file-${fk}`);
+  if(!input)return;
+  input.value='';
+  input.click();
+}
+function rtePickImage(event,fk){
+  const files=[...event.target.files||[]].filter(file=>file.type.startsWith('image/'));
+  files.forEach(file=>rteInsertImageFile(fk,file));
+  event.target.value='';
+}
+function rteInsertImageFile(fk,file,rangeOverride=null){
+  if(!file||!file.type.startsWith('image/'))return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const body=document.getElementById(`rte-${fk}`);
+    if(!body)return;
+    const alt=file.name.replace(/\.[^.]+$/,'')||'Feature image';
+    rteRestoreSelection(fk,rangeOverride);
+    if(!rteInsertHtmlAtCursor(`<p><img src="${escHtml(reader.result)}" alt="${escHtml(alt)}"></p>`)){
+      body.insertAdjacentHTML('beforeend',`<p><img src="${escHtml(reader.result)}" alt="${escHtml(alt)}"></p>`);
+    }
+    rteInput(fk);
+    rteUpdateToolbar(fk);
+    rteRememberSelection(fk);
+  };
+  reader.readAsDataURL(file);
 }
 
 function rteCmd(fk,cmd){
@@ -1581,43 +2399,72 @@ function rteGetActiveTable(fk){
   const tbl=el.closest('table');
   return tbl&&body.contains(tbl)?tbl:null;
 }
+function rteGetActiveTableCell(fk){
+  const sel=window.getSelection();if(!sel.rangeCount)return null;
+  const node=sel.anchorNode;
+  const el=node.nodeType===3?node.parentElement:node;
+  const body=document.getElementById(`rte-${fk}`);
+  if(!body)return null;
+  const cell=el.closest('td,th');
+  return cell&&body.contains(cell)?cell:null;
+}
+function rteHideTableCtrl(fk){
+  const ctrl=document.getElementById(`rte-tblctrl-${fk}`);
+  if(!ctrl)return;
+  ctrl.classList.remove('show');
+  ctrl.innerHTML='';
+}
 
-function rteCheckTable(fk){
+function rteCheckTable(fk,anchorCell=null){
   const ctrl=document.getElementById(`rte-tblctrl-${fk}`);
   const wrap=document.getElementById(`${fk}-editor-wrap`);
   const body=document.getElementById(`rte-${fk}`);
-  const tbl=rteGetActiveTable(fk);
+  const activeCell=anchorCell||rteGetActiveTableCell(fk);
+  const tbl=activeCell?.closest('table')||rteGetActiveTable(fk);
   if(!ctrl||!wrap||!body)return;
   if(!tbl){
-    ctrl.classList.remove('show');
+    rteHideTableCtrl(fk);
     return;
   }
   const wrapRect=wrap.getBoundingClientRect();
-  const tblRect=tbl.getBoundingClientRect();
+  const headerRow=tbl.rows[0];
+  if(!headerRow){
+    rteHideTableCtrl(fk);
+    return;
+  }
+  const colSourceCell=activeCell&&tbl.contains(activeCell)?activeCell:headerRow.cells[0];
+  if(!colSourceCell){
+    rteHideTableCtrl(fk);
+    return;
+  }
+  const colIdx=Math.max(0,[...colSourceCell.parentElement.cells].indexOf(colSourceCell));
+  const headerCell=headerRow.cells[colIdx]||headerRow.cells[0];
+  const colRect=headerCell.getBoundingClientRect();
+  const colLeft=colRect.left-wrapRect.left+colRect.width/2;
+  const colTop=colRect.top-wrapRect.top-18;
+
+  let rowButtons='';
+  const tbody=tbl.tBodies[0];
+  const rowSource=activeCell?.closest('tbody tr');
+  if(tbody&&tbody.rows.length&&rowSource){
+    const rowIdx=[...tbody.rows].indexOf(rowSource);
+    if(rowIdx>-1){
+      const rowRect=rowSource.getBoundingClientRect();
+      const rowTop=rowRect.top-wrapRect.top+rowRect.height/2;
+      const rowLeft=rowRect.left-wrapRect.left-18;
+      rowButtons=`<div class="rte-tbl-line row" style="left:${rowLeft}px;top:${rowTop}px">
+        <button class="rte-tbl-btn" title="Add row here" onmousedown="event.preventDefault();rteTblAddRowAt('${fk}',${rowIdx})">+</button>
+        <button class="rte-tbl-btn" title="Remove this row" onmousedown="event.preventDefault();rteTblDelRowAt('${fk}',${rowIdx})">−</button>
+      </div>`;
+    }
+  }
   ctrl.classList.add('show');
   ctrl.style.left='0px';
   ctrl.style.top='0px';
-  const rows=[...tbl.rows];
-  const rowButtons=rows.slice(1).map((row,i)=>{
-    const rect=row.getBoundingClientRect();
-    const top=rect.top-wrapRect.top+rect.height/2;
-    const left=rect.left-wrapRect.left-18;
-    return `<div class="rte-tbl-line row" style="left:${left}px;top:${top}px">
-      <button class="rte-tbl-btn" title="Add row here" onmousedown="event.preventDefault();rteTblAddRowAt('${fk}',${i})">+</button>
-      <button class="rte-tbl-btn" title="Remove this row" onmousedown="event.preventDefault();rteTblDelRowAt('${fk}',${i})">−</button>
-    </div>`;
-  }).join('');
-  const headerCells=[...rows[0].cells];
-  const colButtons=headerCells.map((cell,i)=>{
-    const rect=cell.getBoundingClientRect();
-    const left=rect.left-wrapRect.left+rect.width/2;
-    const top=tblRect.top-wrapRect.top-18;
-    return `<div class="rte-tbl-line col" style="left:${left}px;top:${top}px">
-      <button class="rte-tbl-btn" title="Add column here" onmousedown="event.preventDefault();rteTblAddColAt('${fk}',${i})">+</button>
-      <button class="rte-tbl-btn" title="Remove this column" onmousedown="event.preventDefault();rteTblDelColAt('${fk}',${i})">−</button>
-    </div>`;
-  }).join('');
-  ctrl.innerHTML=colButtons+rowButtons;
+  ctrl.innerHTML=`<div class="rte-tbl-line col" style="left:${colLeft}px;top:${colTop}px">
+      <button class="rte-tbl-btn" title="Add column here" onmousedown="event.preventDefault();rteTblAddColAt('${fk}',${colIdx})">+</button>
+      <button class="rte-tbl-btn" title="Remove this column" onmousedown="event.preventDefault();rteTblDelColAt('${fk}',${colIdx})">−</button>
+    </div>${rowButtons}`;
 }
 
 function rteTblAddRow(fk){
@@ -1712,12 +2559,12 @@ async function addTestGroup(fk){
       .insert({
         module_id:moduleRow.id,
         name:'New Test Group',
-        sort_order:featData[fk].testGroups.length
+        sort_order:ensureFeatureState(fk).testGroups.length
       })
       .select('id, name')
       .single();
     if(error)throw error;
-    featData[fk].testGroups.push({id:data.id,name:data.name,open:true,items:[]});
+    ensureFeatureState(fk).testGroups.push({id:data.id,name:data.name,open:true,items:[]});
     renderTestGroups(fk);
   }catch(error){
     showDbError('Adding test group',error);
@@ -1727,26 +2574,26 @@ async function deleteTestGroup(fk,gid){
   try{
     const {error}=await supabaseClient.from('test_groups').delete().eq('id',gid);
     if(error)throw error;
-    featData[fk].testGroups=featData[fk].testGroups.filter(g=>g.id!==gid);
+    ensureFeatureState(fk).testGroups=ensureFeatureState(fk).testGroups.filter(g=>g.id!==gid);
     renderTestGroups(fk);
   }catch(error){
     showDbError('Deleting test group',error);
   }
 }
 function toggleTestGroup(fk,gid){
-  const g=featData[fk].testGroups.find(x=>x.id===gid);
+  const g=ensureFeatureState(fk).testGroups.find(x=>x.id===gid);
   if(g)g.open=!g.open;
   renderTestGroups(fk);
 }
 function renameTestGroup(fk,gid,val){
-  const g=featData[fk].testGroups.find(x=>x.id===gid);
+  const g=ensureFeatureState(fk).testGroups.find(x=>x.id===gid);
   if(g)g.name=val;
   queueTestGroupSave(fk,gid);
 }
 
 // ── Test Items ──
 async function addTestItem(fk,gid){
-  const g=featData[fk].testGroups.find(x=>x.id===gid);
+  const g=ensureFeatureState(fk).testGroups.find(x=>x.id===gid);
   if(!g)return;
   try{
     const {data,error}=await supabaseClient
@@ -1766,7 +2613,7 @@ async function addTestItem(fk,gid){
   }
 }
 async function deleteTestItem(fk,gid,iid){
-  const g=featData[fk].testGroups.find(x=>x.id===gid);
+  const g=ensureFeatureState(fk).testGroups.find(x=>x.id===gid);
   if(!g)return;
   try{
     const {error}=await supabaseClient.from('test_cases').delete().eq('id',iid);
@@ -1778,7 +2625,7 @@ async function deleteTestItem(fk,gid,iid){
   }
 }
 function editTestItem(fk,gid,iid,val){
-  const g=featData[fk].testGroups.find(x=>x.id===gid);
+  const g=ensureFeatureState(fk).testGroups.find(x=>x.id===gid);
   const it=g&&g.items.find(i=>i.id===iid);
   if(it)it.label=val;
   queueTestCaseSave(fk,gid,iid);
@@ -1787,7 +2634,7 @@ function editTestItem(fk,gid,iid,val){
 // ── Render: feature page — pure authoring, no checkboxes/progress ──
 function renderTestGroups(fk){
   const c=document.getElementById(`${fk}-tests`);if(!c)return;
-  const groups=featData[fk].testGroups;
+  const groups=ensureFeatureState(fk).testGroups;
   if(!groups.length){
     c.innerHTML=`<div style="padding:32px 0;text-align:center;color:var(--tm);font-size:13px">No test groups yet — click <strong>+ Add Test Group</strong> to get started.</div>`;
     return;
@@ -1835,7 +2682,7 @@ let gpDraft={};// { fk+gid : bool }
 
 function openGroupPicker(){
   const t=tickets.find(x=>x.id===dwTid);if(!t)return;
-  const linked=t.modules.map(mk=>({mk,fk:MOD_FEAT_KEY[mk]})).filter(({fk})=>fk&&featData[fk]&&featData[fk].testGroups.length);
+  const linked=t.modules.map(mk=>({mk,fk:getFeatureKeyByModuleKey(mk)})).filter(({fk})=>fk&&ensureFeatureState(fk).testGroups.length);
   const listEl=document.getElementById('gp-list');
   const emptyEl=document.getElementById('gp-empty');
   if(!linked.length){listEl.innerHTML='';emptyEl.style.display='';openOvl('gp-ovl');return;}
@@ -1844,12 +2691,12 @@ function openGroupPicker(){
   gpDraft={};
   linked.forEach(({fk})=>{
     const p=getTkProgress(t.id,fk);
-    featData[fk].testGroups.forEach(g=>{gpDraft[fk+'::'+g.id]=p.selected.includes(g.id);});
+    ensureFeatureState(fk).testGroups.forEach(g=>{gpDraft[fk+'::'+g.id]=p.selected.includes(g.id);});
   });
   listEl.innerHTML=linked.map(({mk,fk})=>`
     <div class="gp-section">
       <div class="gp-mod-label">${mk}</div>
-      ${featData[fk].testGroups.map(g=>{
+      ${ensureFeatureState(fk).testGroups.map(g=>{
         const preview=g.items.slice(0,3).map(i=>escHtml(i.label)||'Untitled').join(' · ')+(g.items.length>3?' · …':'');
         return `<div class="gp-row" onclick="gpToggle('${fk}','${g.id}')">
           <div class="gp-chk${gpDraft[fk+'::'+g.id]?' sel':''}" id="gpck-${fk}-${g.id}"></div>
@@ -1890,7 +2737,7 @@ function toggleDwCheck(tid,fk,gid,iid,val){
   if(!p.checks[gid])p.checks[gid]={};
   p.checks[gid][iid]=val;
   // lightweight DOM update — no full re-render
-  const g=featData[fk].testGroups.find(x=>x.id===gid);if(!g)return;
+  const g=ensureFeatureState(fk).testGroups.find(x=>x.id===gid);if(!g)return;
   const done=g.items.filter(i=>p.checks[gid]&&p.checks[gid][i.id]).length;
   const pct=g.items.length?Math.round(done/g.items.length*100):0;
   const fill=document.getElementById(`dwf-${tid}-${fk}-${gid}`);
@@ -2065,15 +2912,22 @@ async function softDelete(ids){
 function renderTrashPage(){
   const empty=document.getElementById('trash-empty-state');
   const wrap=document.getElementById('trash-table-wrap');
+  const featureWrap=document.getElementById('feature-trash-wrap');
+  const featureCount=document.getElementById('feature-trash-count');
   const emptyBtn=document.getElementById('empty-trash-btn');
-  if(!empty||!wrap)return;
-  if(trash.length===0){
-    empty.style.display='block';wrap.style.display='none';
+  const deletedFeatures=getDeletedFeatureRows();
+  if(!empty||!wrap||!featureWrap)return;
+  if(trash.length===0&&deletedFeatures.length===0){
+    empty.style.display='block';wrap.style.display='none';featureWrap.style.display='none';
     if(emptyBtn)emptyBtn.style.display='none';
   } else {
-    empty.style.display='none';wrap.style.display='block';
-    if(emptyBtn)emptyBtn.style.display='inline-flex';
-    renderTrashRows();
+    empty.style.display='none';
+    wrap.style.display=trash.length?'block':'none';
+    featureWrap.style.display=deletedFeatures.length?'block':'none';
+    if(featureCount)featureCount.textContent=`${deletedFeatures.length} feature${deletedFeatures.length!==1?'s':''}`;
+    if(emptyBtn)emptyBtn.style.display=trash.length?'inline-flex':'none';
+    if(trash.length)renderTrashRows();
+    renderFeatureTrashRows();
   }
   updateTrashBulkBar();
 }
@@ -2098,6 +2952,26 @@ function renderTrashRows(){
         </div>
       </td>
     </tr>`).join('');
+}
+function renderFeatureTrashRows(){
+  const container=document.getElementById('feature-trash-list');
+  if(!container)return;
+  const rows=getDeletedFeatureRows();
+  container.innerHTML=rows.map(row=>{
+    const fk=getFeatureKeyFromRow(row);
+    return `<div style="display:flex;align-items:center;gap:12px;padding:12px 2px;border-top:1px solid #f0eeea">
+      <div style="width:34px;height:34px;border-radius:10px;background:var(--sb);display:flex;align-items:center;justify-content:center;color:var(--t2);flex-shrink:0">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${getFeatureIcon(row)}</svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600;color:var(--t1)">${escHtml(row.name)}</div>
+        <div style="font-size:12px;color:var(--tm);margin-top:2px">${escHtml(row.description||'No description')}</div>
+      </div>
+      <button class="trash-restore-btn" onclick="restoreFeature('${fk}')">
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>Restore
+      </button>
+    </div>`;
+  }).join('');
 }
 
 // single restore / permanent delete
@@ -2226,27 +3100,11 @@ function nav(p){
   if(p==='tickets')renderActive();
   if(p==='trash')renderTrashPage();
   if(p==='team')renderTeamPage();
-  // All feature/module pages — unified via featPageMap
-  const featPageMap={
-    'digital-form':['df-stat-cards','Digital Form','df'],
-    'promis':['pr-stat-cards','PROMiS','pr'],
-    'ops':['op-stat-cards','Ops','op'],
-    'feat-pm':['pm-stat-cards','Project Mgmt','pm'],
-    'feat-md':['md-stat-cards','Master Data','md'],
-    'feat-mob':['mob-stat-cards','Mobile App','mob'],
-    'feat-rbac':['rbac-stat-cards','RBAC','rbac'],
-    'feat-lp':['lp-stat-cards','Landing Page','lp'],
-    'feat-vc':['vc-stat-cards','Version Control','vc'],
-    'feat-be':['be-stat-cards','Backend','be'],
-    'feat-qa':['qa-stat-cards','Testing','qa'],
-    'feat-ob':['ob-stat-cards','Onboarding','ob'],
-    'feat-settings':['fs-stat-cards','Fox Settings','fs'],
-    'feat-trash':['ft-stat-cards','Fox Trash','ft'],
-  };
-  if(featPageMap[p]){
-    const[sc,mk,fk]=featPageMap[p];
-    renderStatCards(sc,mk);
-    renderModuleTicketList(`${fk}-ticket-list`,mk);
+  const featureRow=getFeatureRowByKey(p);
+  if(featureRow){
+    const fk=getFeatureKeyFromRow(featureRow);
+    renderStatCards(`${fk}-stat-cards`,featureRow.module_key);
+    renderModuleTicketList(`${fk}-ticket-list`,featureRow.module_key);
     // restore Linked Tickets tab as default on each navigation
     const allTabs=document.querySelectorAll(`#page-${p} .feat-tab`);
     const allPanels=document.querySelectorAll(`#page-${p} .feat-tab-panel`);
@@ -2255,6 +3113,7 @@ function nav(p){
   }
 }
 document.addEventListener('click',e=>{
+  if(!e.target.closest('#feature-nav .ni-feat'))closeFeatureMenus();
   const item=e.target.closest('.ni[data-page]');
   if(!item)return;
   nav(item.dataset.page);
@@ -2285,9 +3144,10 @@ function pill(sid){const s=getSt(sid);return `<span class="spl" style="backgroun
 function priBdg(p){const m=PRI[p]||PRI.Normal;return `<span class="pri" style="background:${m.bg};color:${m.c}">${p}</span>`;}
 function fmtD(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-MY',{day:'numeric',month:'short'});}
 function modTag(m){
-  const icons={'Digital Form':'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>','PROMiS':'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>','Ops':'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'};
-  const labels={'Digital Form':'Digital Form','PROMiS':'PROMiS','Ops':'Ops Dashboard'};
-  return `<span class="mtag">${icons[m]||''}${labels[m]||m}</span>`;
+  const row=moduleRows.find(x=>x.module_key===m);
+  const icon=row?getFeatureIcon(row):FEATURE_ICON_MAP[m];
+  const label=row?.name||m;
+  return `<span class="mtag">${icon?`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>`:''}${escHtml(label)}</span>`;
 }
 function getPriorityRank(p){return ({Critical:0,High:1,Normal:2,Low:3})[p]??99;}
 function compareTicketImportance(a,b){
@@ -3060,9 +3920,9 @@ function dwField(field,val){
 
 function renderModTags(t){
   const c=document.getElementById('mod-tags-dyn');if(!c)return;
-  c.innerHTML=MODULES.map(m=>`
-    <div class="mod-tag${t.modules.includes(m.key)?' sel':''}" onclick="toggleMod('${m.key}',this)">
-      <svg viewBox="0 0 24 24">${m.icon}</svg>${m.label}
+  c.innerHTML=getFeatureRows().map(row=>`
+    <div class="mod-tag${t.modules.includes(row.module_key)?' sel':''}" onclick="toggleMod('${row.module_key.replace(/'/g,"\\'")}',this)">
+      <svg viewBox="0 0 24 24">${getFeatureIcon(row)}</svg>${escHtml(row.name)}
     </div>`).join('');
 }
 
@@ -3080,20 +3940,11 @@ async function toggleMod(mod){
     showDbError(`Saving modules for ${t.id}`,error);
   }
 }
-// Module key → featData key mapping
-const MOD_FEAT_KEY={
-  'Digital Form':'df','PROMiS':'pr','Ops':'op',
-  'Project Mgmt':'pm','Master Data':'md','Mobile App':'mob',
-  'RBAC':'rbac','Landing Page':'lp','Version Control':'vc',
-  'Backend':'be','Testing':'qa','Onboarding':'ob',
-  'Fox Settings':'fs','Fox Trash':'ft',
-};
-
 function renderDwTestCases(t){
   const c=document.getElementById('dw-testcases');if(!c)return;
   const linked=t.modules
-    .map(mk=>({mk,fk:MOD_FEAT_KEY[mk]}))
-    .filter(({fk})=>fk&&featData[fk]&&featData[fk].testGroups.length);
+    .map(mk=>({mk,fk:getFeatureKeyByModuleKey(mk)}))
+    .filter(({fk})=>fk&&ensureFeatureState(fk).testGroups.length);
   if(!linked.length){
     c.innerHTML=`<div class="dtc-empty">No test groups available — add test cases in a linked feature's Test Cases tab first.</div>`;
     return;
@@ -3105,7 +3956,7 @@ function renderDwTestCases(t){
     return;
   }
   c.innerHTML=linked.map(({mk,fk})=>{
-    const groups=featData[fk].testGroups;
+    const groups=ensureFeatureState(fk).testGroups;
     const p=getTkProgress(t.id,fk);
     if(!p.selected.length)return '';
     const selItems=p.selected.reduce((s,gid)=>{const g=groups.find(x=>x.id===gid);return s+(g?g.items.length:0);},0);
@@ -3327,6 +4178,8 @@ function populateFltStatus(){
   sel.innerHTML=`<option value="">All Statuses</option>`+statuses.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
   if(cur)sel.value=cur;
 }
+refreshSettingsSecurityUi();
+initWorkspaceAccess();
 hydrateApp();
 </script>
 </body>

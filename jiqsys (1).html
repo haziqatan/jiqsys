@@ -1073,12 +1073,31 @@ const MOD_MAP=Object.fromEntries(MODULES.map(m=>[m.key,'mt-'+m.key.replace(/[^a-
 // ════════════════════════════════════════════
 const FEAT_KEYS=['df','pr','op','pm','md','mob','rbac','lp','vc','be','qa','ob','fs','ft'];
 const featData=Object.fromEntries(FEAT_KEYS.map(k=>[k,{notes:'',testGroups:[]}]));
+const FEAT_MODULE_KEY={
+  df:'Digital Form',
+  pr:'PROMiS',
+  op:'Ops',
+  pm:'Project Mgmt',
+  md:'Master Data',
+  mob:'Mobile App',
+  rbac:'RBAC',
+  lp:'Landing Page',
+  vc:'Version Control',
+  be:'Backend',
+  qa:'Testing',
+  ob:'Onboarding',
+  fs:'Fox Settings',
+  ft:'Fox Trash',
+};
 let moduleRows=[];
 let team=[];
 let tickets=[];
 let trash=[];
 let appReady=false;
 const pendingTicketSaves=new Map();
+const pendingTestGroupSaves=new Map();
+const pendingTestCaseSaves=new Map();
+const pendingFeatureNoteSaves=new Map();
 
 function uid(){return Math.random().toString(36).slice(2,9);}
 function slugify(v){return String(v||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'')||'item';}
@@ -1120,6 +1139,13 @@ function buildTicketPayload(ticket){
 }
 function nextTicketNo(){
   return `TK-${Date.now().toString().slice(-6)}${Math.floor(Math.random()*10)}`;
+}
+function getModuleRowByFeatKey(fk){
+  const moduleKey=FEAT_MODULE_KEY[fk];
+  return moduleRows.find(row=>row.module_key===moduleKey)||null;
+}
+function getTestGroupById(fk,gid){
+  return featData[fk]?.testGroups.find(group=>group.id===gid)||null;
 }
 function upsertLocalTrash(ticket){
   const idx=trash.findIndex(x=>x.rowId===ticket.rowId);
@@ -1266,12 +1292,114 @@ async function loadTickets(){
     else tickets.push(ticket);
   });
 }
+async function loadFeatureTests(){
+  const [{data:groupRows,error:groupsError},{data:caseRows,error:casesError}]=await Promise.all([
+    supabaseClient.from('test_groups').select('id, module_id, name, sort_order').order('sort_order'),
+    supabaseClient.from('test_cases').select('id, test_group_id, label, sort_order').order('sort_order'),
+  ]);
+  if(groupsError)throw groupsError;
+  if(casesError)throw casesError;
+  FEAT_KEYS.forEach(fk=>{featData[fk].testGroups=[];});
+  const casesByGroup={};
+  (caseRows||[]).forEach(row=>{
+    if(!casesByGroup[row.test_group_id])casesByGroup[row.test_group_id]=[];
+    casesByGroup[row.test_group_id].push({id:row.id,label:row.label});
+  });
+  (groupRows||[]).forEach(row=>{
+    const moduleRow=moduleRows.find(m=>m.id===row.module_id);
+    const fk=moduleRow?MOD_FEAT_KEY[moduleRow.module_key]:null;
+    if(!fk||!featData[fk])return;
+    featData[fk].testGroups.push({
+      id:row.id,
+      name:row.name,
+      open:true,
+      items:casesByGroup[row.id]||[],
+    });
+  });
+}
+async function loadFeatureNotes(){
+  const {data,error}=await supabaseClient
+    .from('module_notes')
+    .select('module_id, notes_html');
+  if(error)throw error;
+  FEAT_KEYS.forEach(fk=>{featData[fk].notes='';});
+  (data||[]).forEach(row=>{
+    const moduleRow=moduleRows.find(m=>m.id===row.module_id);
+    const fk=moduleRow?MOD_FEAT_KEY[moduleRow.module_key]:null;
+    if(!fk||!featData[fk])return;
+    featData[fk].notes=row.notes_html||'';
+  });
+}
+function queueFeatureNoteSave(fk,delay=400){
+  clearTimeout(pendingFeatureNoteSaves.get(fk));
+  const timeout=setTimeout(async()=>{
+    try{
+      const moduleRow=getModuleRowByFeatKey(fk);
+      if(!moduleRow)return;
+      const {error}=await supabaseClient
+        .from('module_notes')
+        .upsert({
+          module_id:moduleRow.id,
+          notes_html:featData[fk].notes||''
+        },{onConflict:'module_id'});
+      if(error)throw error;
+    }catch(error){
+      showDbError('Saving feature details',error);
+    }finally{
+      pendingFeatureNoteSaves.delete(fk);
+    }
+  },delay);
+  pendingFeatureNoteSaves.set(fk,timeout);
+}
+function queueTestGroupSave(fk,gid,delay=250){
+  clearTimeout(pendingTestGroupSaves.get(gid));
+  const timeout=setTimeout(async()=>{
+    try{
+      const group=getTestGroupById(fk,gid);
+      if(!group)return;
+      const order=featData[fk].testGroups.findIndex(x=>x.id===gid);
+      const {error}=await supabaseClient
+        .from('test_groups')
+        .update({name:group.name,sort_order:order>-1?order:0})
+        .eq('id',gid);
+      if(error)throw error;
+    }catch(error){
+      showDbError('Saving test group',error);
+    }finally{
+      pendingTestGroupSaves.delete(gid);
+    }
+  },delay);
+  pendingTestGroupSaves.set(gid,timeout);
+}
+function queueTestCaseSave(fk,gid,iid,delay=250){
+  clearTimeout(pendingTestCaseSaves.get(iid));
+  const timeout=setTimeout(async()=>{
+    try{
+      const group=getTestGroupById(fk,gid);
+      const item=group?.items.find(x=>x.id===iid);
+      if(!group||!item)return;
+      const order=group.items.findIndex(x=>x.id===iid);
+      const {error}=await supabaseClient
+        .from('test_cases')
+        .update({label:item.label,sort_order:order>-1?order:0})
+        .eq('id',iid);
+      if(error)throw error;
+    }catch(error){
+      showDbError('Saving test case',error);
+    }finally{
+      pendingTestCaseSaves.delete(iid);
+    }
+  },delay);
+  pendingTestCaseSaves.set(iid,timeout);
+}
 async function hydrateApp(){
   try{
     await loadStatuses();
     await loadModules();
     await loadTeam();
     await loadTickets();
+    await loadFeatureNotes();
+    await loadFeatureTests();
     refreshAssigneeDropdowns();
     populateNtStatus();
     populateFltStatus();
@@ -1300,7 +1428,10 @@ function switchFeatTab(fk,tab,btn){
 }
 
 // ── Notes ──
-function saveFeatNotes(fk,val){featData[fk].notes=val;}
+function saveFeatNotes(fk,val){
+  featData[fk].notes=val;
+  queueFeatureNoteSave(fk);
+}
 
 // ════════════════════════════════════════════
 // RICH TEXT EDITOR
@@ -1358,7 +1489,7 @@ function rteMountEditor(fk){
 
 function rteInput(fk){
   const body=document.getElementById(`rte-${fk}`);
-  if(body)featData[fk].notes=body.innerHTML;
+  if(body)saveFeatNotes(fk,body.innerHTML);
 }
 
 function rteCmd(fk,cmd){
@@ -1569,13 +1700,38 @@ function rteTblRenumberHeaders(tbl){
 }
 
 // ── Test Groups ──
-function addTestGroup(fk){
-  featData[fk].testGroups.push({id:uid(),name:'New Test Group',open:true,items:[]});
-  renderTestGroups(fk);
+async function addTestGroup(fk){
+  const moduleRow=getModuleRowByFeatKey(fk);
+  if(!moduleRow){
+    showDbError('Adding test group',new Error(`Module mapping missing for ${fk}`));
+    return;
+  }
+  try{
+    const {data,error}=await supabaseClient
+      .from('test_groups')
+      .insert({
+        module_id:moduleRow.id,
+        name:'New Test Group',
+        sort_order:featData[fk].testGroups.length
+      })
+      .select('id, name')
+      .single();
+    if(error)throw error;
+    featData[fk].testGroups.push({id:data.id,name:data.name,open:true,items:[]});
+    renderTestGroups(fk);
+  }catch(error){
+    showDbError('Adding test group',error);
+  }
 }
-function deleteTestGroup(fk,gid){
-  featData[fk].testGroups=featData[fk].testGroups.filter(g=>g.id!==gid);
-  renderTestGroups(fk);
+async function deleteTestGroup(fk,gid){
+  try{
+    const {error}=await supabaseClient.from('test_groups').delete().eq('id',gid);
+    if(error)throw error;
+    featData[fk].testGroups=featData[fk].testGroups.filter(g=>g.id!==gid);
+    renderTestGroups(fk);
+  }catch(error){
+    showDbError('Deleting test group',error);
+  }
 }
 function toggleTestGroup(fk,gid){
   const g=featData[fk].testGroups.find(x=>x.id===gid);
@@ -1585,21 +1741,47 @@ function toggleTestGroup(fk,gid){
 function renameTestGroup(fk,gid,val){
   const g=featData[fk].testGroups.find(x=>x.id===gid);
   if(g)g.name=val;
+  queueTestGroupSave(fk,gid);
 }
 
 // ── Test Items ──
-function addTestItem(fk,gid){
+async function addTestItem(fk,gid){
   const g=featData[fk].testGroups.find(x=>x.id===gid);
-  if(g){g.items.push({id:uid(),label:''});renderTestGroups(fk);}
+  if(!g)return;
+  try{
+    const {data,error}=await supabaseClient
+      .from('test_cases')
+      .insert({
+        test_group_id:gid,
+        label:'',
+        sort_order:g.items.length
+      })
+      .select('id, label')
+      .single();
+    if(error)throw error;
+    g.items.push({id:data.id,label:data.label||''});
+    renderTestGroups(fk);
+  }catch(error){
+    showDbError('Adding test case',error);
+  }
 }
-function deleteTestItem(fk,gid,iid){
+async function deleteTestItem(fk,gid,iid){
   const g=featData[fk].testGroups.find(x=>x.id===gid);
-  if(g){g.items=g.items.filter(i=>i.id!==iid);renderTestGroups(fk);}
+  if(!g)return;
+  try{
+    const {error}=await supabaseClient.from('test_cases').delete().eq('id',iid);
+    if(error)throw error;
+    g.items=g.items.filter(i=>i.id!==iid);
+    renderTestGroups(fk);
+  }catch(error){
+    showDbError('Deleting test case',error);
+  }
 }
 function editTestItem(fk,gid,iid,val){
   const g=featData[fk].testGroups.find(x=>x.id===gid);
   const it=g&&g.items.find(i=>i.id===iid);
   if(it)it.label=val;
+  queueTestCaseSave(fk,gid,iid);
 }
 
 // ── Render: feature page — pure authoring, no checkboxes/progress ──

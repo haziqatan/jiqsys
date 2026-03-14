@@ -10,6 +10,7 @@ alter table public.test_cases enable row level security;
 alter table public.ticket_test_group_links enable row level security;
 alter table public.ticket_test_case_checks enable row level security;
 alter table public.ticket_references enable row level security;
+alter table public.app_settings enable row level security;
 
 drop policy if exists "dev_full_access_team_members" on public.team_members;
 create policy "dev_full_access_team_members"
@@ -102,6 +103,14 @@ with check (true);
 drop policy if exists "dev_full_access_ticket_references" on public.ticket_references;
 create policy "dev_full_access_ticket_references"
 on public.ticket_references
+for all
+to anon, authenticated
+using (true)
+with check (true);
+
+drop policy if exists "dev_full_access_app_settings" on public.app_settings;
+create policy "dev_full_access_app_settings"
+on public.app_settings
 for all
 to anon, authenticated
 using (true)

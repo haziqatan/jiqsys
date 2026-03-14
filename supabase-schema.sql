@@ -37,12 +37,16 @@ create table if not exists public.modules (
   module_key text not null unique,
   name text not null,
   page_slug text not null unique,
+  icon_key text not null default 'document',
   description text,
   sort_order integer not null,
   is_active boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.modules
+add column if not exists icon_key text not null default 'document';
 
 create table if not exists public.tickets (
   id uuid primary key default gen_random_uuid(),
@@ -130,6 +134,13 @@ create table if not exists public.ticket_references (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.app_settings (
+  setting_key text primary key,
+  setting_value jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 create index if not exists idx_tickets_status_id on public.tickets(status_id);
 create index if not exists idx_tickets_assignee_id on public.tickets(assignee_id);
 create index if not exists idx_tickets_deleted_at on public.tickets(deleted_at);
@@ -172,6 +183,11 @@ create trigger set_test_cases_updated_at
 before update on public.test_cases
 for each row execute function public.set_updated_at();
 
+drop trigger if exists set_app_settings_updated_at on public.app_settings;
+create trigger set_app_settings_updated_at
+before update on public.app_settings
+for each row execute function public.set_updated_at();
+
 insert into public.statuses (code, name, color, sort_order)
 values
   ('backlog', 'Backlog', '#aaa9a3', 1),
@@ -187,26 +203,37 @@ set
   sort_order = excluded.sort_order,
   is_active = true;
 
-insert into public.modules (module_key, name, page_slug, description, sort_order)
+insert into public.modules (module_key, name, page_slug, icon_key, description, sort_order)
 values
-  ('Digital Form', 'Digital Form', 'digital-form', 'Submit, route, and monitor operational requests through structured approval workflows.', 1),
-  ('PROMiS', 'PROMiS Dashboard', 'promis', 'Executive summaries, performance overviews, and cross-departmental reporting.', 2),
-  ('Ops', 'Executive Dashboard', 'ops', 'High-level KPI views, cross-module summaries, and leadership reporting.', 3),
-  ('Project Mgmt', 'Project Management', 'feat-pm', 'Plan, track, and deliver projects with milestones, timelines, and cross-team visibility.', 4),
-  ('Master Data', 'Master Data', 'feat-md', 'Centralised reference data management for assets, locations, vendors, and categories.', 5),
-  ('Mobile App', 'Mobile App', 'feat-mob', 'iOS and Android companion app for field staff to submit, track, and act on requests.', 6),
-  ('RBAC', 'RBAC / Access Control', 'feat-rbac', 'Role-based permission management controlling what each user can view, edit, or approve.', 7),
-  ('Landing Page', 'Landing Page', 'feat-lp', 'Public-facing entry point and product showcase.', 8),
-  ('Version Control', 'Version Control', 'feat-vc', 'Track changes, manage releases, and maintain a full audit trail across the platform.', 9),
-  ('Backend', 'Backend Integration', 'feat-be', 'APIs, webhooks, and service connectors linking the platform to external systems and data sources.', 10),
-  ('Testing', 'Testing / QA', 'feat-qa', 'Test case management, bug reporting, and quality assurance tracking across releases.', 11),
-  ('Onboarding', 'Onboarding', 'feat-ob', 'Guided user setup flows, walkthroughs, and onboarding checklists for new users.', 12),
-  ('Fox Settings', 'Settings', 'feat-settings', 'Platform-level configuration, preferences, and system settings.', 13),
-  ('Fox Trash', 'Trash', 'feat-trash', 'Soft-delete management, data recovery, and retention policy configuration.', 14)
+  ('Digital Form', 'Digital Form', 'digital-form', 'form', 'Submit, route, and monitor operational requests through structured approval workflows.', 1),
+  ('PROMiS', 'PROMiS Dashboard', 'promis', 'dashboard', 'Executive summaries, performance overviews, and cross-departmental reporting.', 2),
+  ('Ops', 'Executive Dashboard', 'ops', 'chart', 'High-level KPI views, cross-module summaries, and leadership reporting.', 3),
+  ('Project Mgmt', 'Project Management', 'feat-pm', 'project', 'Plan, track, and deliver projects with milestones, timelines, and cross-team visibility.', 4),
+  ('Master Data', 'Master Data', 'feat-md', 'database', 'Centralised reference data management for assets, locations, vendors, and categories.', 5),
+  ('Mobile App', 'Mobile App', 'feat-mob', 'mobile', 'iOS and Android companion app for field staff to submit, track, and act on requests.', 6),
+  ('RBAC', 'RBAC / Access Control', 'feat-rbac', 'shield', 'Role-based permission management controlling what each user can view, edit, or approve.', 7),
+  ('Landing Page', 'Landing Page', 'feat-lp', 'web', 'Public-facing entry point and product showcase.', 8),
+  ('Version Control', 'Version Control', 'feat-vc', 'version', 'Track changes, manage releases, and maintain a full audit trail across the platform.', 9),
+  ('Backend', 'Backend Integration', 'feat-be', 'server', 'APIs, webhooks, and service connectors linking the platform to external systems and data sources.', 10),
+  ('Testing', 'Testing / QA', 'feat-qa', 'checklist', 'Test case management, bug reporting, and quality assurance tracking across releases.', 11),
+  ('Onboarding', 'Onboarding', 'feat-ob', 'users', 'Guided user setup flows, walkthroughs, and onboarding checklists for new users.', 12),
+  ('Fox Settings', 'Settings', 'feat-settings', 'settings', 'Platform-level configuration, preferences, and system settings.', 13),
+  ('Fox Trash', 'Trash', 'feat-trash', 'trash', 'Soft-delete management, data recovery, and retention policy configuration.', 14)
 on conflict (module_key) do update
 set
   name = excluded.name,
   page_slug = excluded.page_slug,
+  icon_key = excluded.icon_key,
   description = excluded.description,
   sort_order = excluded.sort_order,
   is_active = true;
+
+insert into public.app_settings (setting_key, setting_value)
+values (
+  'workspace_security',
+  jsonb_build_object(
+    'password_enabled', false,
+    'password_hash', null
+  )
+)
+on conflict (setting_key) do nothing;

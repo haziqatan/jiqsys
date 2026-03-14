@@ -343,6 +343,22 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .feat-menu-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .feat-add-btn{width:24px;height:24px;border-radius:6px;border:1px solid var(--bdr);background:var(--wh);color:var(--t2);display:inline-flex;align-items:center;justify-content:center;font-size:15px;line-height:1;cursor:pointer;transition:all .12s}
 .feat-add-btn:hover{border-color:var(--t1);color:var(--t1);background:var(--act)}
+.feature-create-head{display:grid;grid-template-columns:94px minmax(0,1fr);gap:14px;align-items:start}
+.feature-icon-side{display:flex;flex-direction:column;gap:6px}
+.feature-icon-preview{width:94px;height:94px;border-radius:22px;border:1px solid var(--bdr);background:linear-gradient(180deg,#faf8f4 0%,#f2eee6 100%);display:flex;align-items:center;justify-content:center;color:var(--t1);box-shadow:inset 0 1px 0 rgba(255,255,255,.75)}
+.feature-icon-preview svg{width:32px;height:32px;fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
+.feature-icon-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.feature-icon-btn{height:48px;border-radius:14px;border:1px solid var(--bdr);background:#fff;color:var(--t2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .12s}
+.feature-icon-btn:hover{border-color:var(--t1);color:var(--t1);background:var(--act)}
+.feature-icon-btn.active{border-color:var(--t1);background:var(--t1);color:#fff;box-shadow:0 10px 22px rgba(17,17,17,.16)}
+.feature-icon-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
+.feature-icon-help{font-size:11.5px;color:var(--tm);line-height:1.5}
+@media (max-width:640px){
+  .feature-create-head{grid-template-columns:1fr}
+  .feature-icon-side{flex-direction:row;align-items:center}
+  .feature-icon-preview{width:64px;height:64px;border-radius:18px;flex-shrink:0}
+  .feature-icon-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 
 /* ── GANTT SCALE BUTTONS ── */
 .gscale-btn{padding:4px 12px;font-size:12px;font-weight:500;font-family:inherit;border:1px solid var(--bdr);border-radius:6px;background:var(--wh);color:var(--t2);cursor:pointer;transition:all .12s}
@@ -449,6 +465,87 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .feat-canvas-add{margin:0 10px 10px;border:1px dashed var(--bdr);border-radius:10px;background:var(--sb);color:var(--t2);font:inherit;font-size:12.5px;font-weight:600;padding:10px 12px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .12s}
 .feat-canvas-add:hover{border-color:var(--t1);color:var(--t1);background:var(--act)}
 .feat-canvas-add svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.flow-shell{background:var(--wh);border:1px solid var(--bdr);border-radius:16px;overflow:hidden;display:grid;grid-template-columns:260px minmax(0,1fr);min-height:680px}
+.flow-side{background:linear-gradient(180deg,#faf8f4 0%,#f4f0e8 100%);border-right:1px solid var(--bdr);display:flex;flex-direction:column;min-width:0}
+.flow-side-head{padding:18px 18px 14px;border-bottom:1px solid rgba(17,17,17,.05)}
+.flow-side-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:4px}
+.flow-side-title{font-size:18px;font-weight:700;letter-spacing:-.03em;color:var(--t1)}
+.flow-side-copy{font-size:12px;color:var(--t2);margin-top:6px;line-height:1.5}
+.flow-canvas-list{padding:12px;display:flex;flex-direction:column;gap:8px;overflow:auto;flex:1}
+.flow-canvas-item{border:1px solid var(--bdr);border-radius:12px;background:rgba(255,255,255,.76);padding:11px;cursor:pointer;transition:all .12s}
+.flow-canvas-item:hover{border-color:#d8d4cb;background:#fff}
+.flow-canvas-item.active{border-color:var(--t1);background:#fff;box-shadow:0 12px 26px rgba(17,17,17,.06)}
+.flow-canvas-row{display:flex;align-items:center;gap:9px}
+.flow-canvas-dot{width:26px;height:26px;border-radius:8px;background:var(--sb);display:flex;align-items:center;justify-content:center;color:var(--t2);flex-shrink:0}
+.flow-canvas-dot svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.flow-canvas-item.active .flow-canvas-dot{background:var(--t1);color:#fff}
+.flow-canvas-name{flex:1;min-width:0;border:none;background:transparent;color:var(--t1);font:inherit;font-size:13px;font-weight:600;outline:none}
+.flow-canvas-del{width:24px;height:24px;border:none;border-radius:7px;background:transparent;color:var(--tm);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .12s}
+.flow-canvas-del:hover{background:#fdecea;color:var(--red)}
+.flow-canvas-del:disabled{opacity:.35;cursor:not-allowed}
+.flow-canvas-del svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.flow-canvas-meta{font-size:11px;color:var(--tm);margin-top:6px;padding-left:35px}
+.flow-canvas-add{margin:0 12px 12px;border:1px dashed var(--bdr);border-radius:12px;background:rgba(255,255,255,.76);padding:10px 12px;color:var(--t2);font:inherit;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .12s}
+.flow-canvas-add:hover{border-color:var(--t1);color:var(--t1);background:#fff}
+.flow-canvas-add svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.flow-main{display:flex;flex-direction:column;min-width:0}
+.flow-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border-bottom:1px solid var(--bdr);background:#fff;flex-wrap:wrap}
+.flow-toolbar-left,.flow-toolbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.flow-tool{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:10px;border:1px solid var(--bdr);background:#fff;color:var(--t2);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .12s}
+.flow-tool:hover{border-color:var(--t1);color:var(--t1);background:var(--act)}
+.flow-tool.active{border-color:var(--t1);background:var(--t1);color:#fff;box-shadow:0 10px 22px rgba(17,17,17,.16)}
+.flow-tool.dragging{opacity:.5}
+.flow-tool svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.flow-status{font-size:12px;color:var(--tm)}
+.flow-stage-scroll{flex:1;overflow:auto;background:#f7f4ee}
+.flow-stage{position:relative;width:1800px;height:1200px;background-color:#f7f4ee;background-image:radial-gradient(circle,#d9d4c8 1px,transparent 1.3px);background-size:24px 24px}
+.flow-stage.drop-ready{box-shadow:inset 0 0 0 2px rgba(17,17,17,.08)}
+.flow-stage::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0));pointer-events:none}
+.flow-shapes{position:absolute;inset:0;z-index:2}
+.flow-links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:3}
+.flow-link{stroke:#6f6e69;stroke-width:2;fill:none;pointer-events:none}
+.flow-link.active{stroke:#111}
+.flow-link-hit{stroke:transparent;stroke-width:14;fill:none;cursor:pointer;pointer-events:stroke}
+.flow-shape{position:absolute;transform:translate(-50%,-50%);z-index:2}
+.flow-shape-box{width:100%;height:100%;border:1px solid var(--bdr);background:#fff;color:var(--t1);display:flex;align-items:center;justify-content:center;padding:14px;box-shadow:0 14px 32px rgba(17,17,17,.08);cursor:grab;transition:box-shadow .12s,border-color .12s,transform .12s}
+.flow-shape.process .flow-shape-box{border-radius:18px}
+.flow-shape.terminal .flow-shape-box{border-radius:999px}
+.flow-shape.decision .flow-shape-box{transform:rotate(45deg);border-radius:18px}
+.flow-shape.selected .flow-shape-box{border-color:#111;box-shadow:0 18px 34px rgba(17,17,17,.14)}
+.flow-shape.link-source .flow-shape-box{border-color:#3b72d9;box-shadow:0 0 0 4px rgba(59,114,217,.14),0 16px 34px rgba(17,17,17,.12)}
+.flow-shape.link-target .flow-shape-box{border-color:rgba(45,154,107,.35);box-shadow:0 0 0 2px rgba(45,154,107,.08),0 14px 32px rgba(17,17,17,.08)}
+.flow-shape.link-target-snap .flow-shape-box{border-color:#2d9a6b;box-shadow:0 0 0 5px rgba(45,154,107,.18),0 18px 36px rgba(17,17,17,.12)}
+.flow-shape-label{width:100%;text-align:center;font-size:13px;font-weight:600;line-height:1.35;outline:none;cursor:text;user-select:text;white-space:pre-wrap;word-break:break-word}
+.flow-shape.decision .flow-shape-label{transform:rotate(-45deg)}
+.flow-shape-label:empty::before{content:'Untitled';color:var(--tm)}
+.flow-empty{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(440px,70%);padding:26px 30px;border:1px dashed var(--bdr);border-radius:20px;background:rgba(255,255,255,.72);text-align:center;color:var(--t2);backdrop-filter:blur(6px);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.flow-empty-title{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:8px}
+.flow-empty-copy{font-size:13px;line-height:1.6}
+.flow-port{position:absolute;width:12px;height:12px;border-radius:50%;background:#3b72d9;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(59,114,217,.4);opacity:0;transition:opacity .15s,background .15s,box-shadow .15s;cursor:crosshair;pointer-events:all;z-index:10}
+.flow-port[data-side="top"]{top:0;left:50%;transform:translate(-50%,-50%)}
+.flow-port[data-side="right"]{top:50%;right:0;transform:translate(50%,-50%)}
+.flow-port[data-side="bottom"]{bottom:0;left:50%;transform:translate(-50%,50%)}
+.flow-port[data-side="left"]{top:50%;left:0;transform:translate(-50%,-50%)}
+.flow-port[data-side="top"]:hover{transform:translate(-50%,-50%) scale(1.45)}
+.flow-port[data-side="right"]:hover{transform:translate(50%,-50%) scale(1.45)}
+.flow-port[data-side="bottom"]:hover{transform:translate(-50%,50%) scale(1.45)}
+.flow-port[data-side="left"]:hover{transform:translate(-50%,-50%) scale(1.45)}
+.flow-shape:hover .flow-port,.flow-stage.port-connecting .flow-port{opacity:1}
+.flow-shape.link-target .flow-port{opacity:.55}
+.flow-shape.link-target-snap .flow-port{opacity:.85}
+.flow-port.port-drop{background:#2d9a6b;box-shadow:0 0 0 4px rgba(45,154,107,.22),0 2px 8px rgba(45,154,107,.45);opacity:1}
+.flow-resize{position:absolute;width:16px;height:16px;border-radius:999px;background:#4d7dd6;border:3px solid #fff;box-shadow:0 3px 10px rgba(77,125,214,.35);opacity:0;pointer-events:none;transition:opacity .15s,transform .12s;z-index:11}
+.flow-shape:hover .flow-resize,.flow-shape.selected .flow-resize{opacity:1;pointer-events:auto}
+.flow-resize:hover{transform:scale(1.18)}
+.flow-resize[data-dir="ne"]{top:0;right:0;transform:translate(50%,-50%);cursor:ne-resize}
+.flow-resize[data-dir="se"]{right:0;bottom:0;transform:translate(50%,50%);cursor:se-resize}
+.flow-resize[data-dir="sw"]{left:0;bottom:0;transform:translate(-50%,50%);cursor:sw-resize}
+.flow-resize[data-dir="nw"]{top:0;left:0;transform:translate(-50%,-50%);cursor:nw-resize}
+.flow-drag-preview{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:9}
+@media (max-width:980px){
+  .flow-shell{grid-template-columns:1fr}
+  .flow-side{border-right:none;border-bottom:1px solid var(--bdr)}
+}
 .feat-detail-main{flex:1;min-width:0}
 .feat-notes-wrap{background:var(--wh);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;position:relative}
 .rte-sidebar-btn{width:30px;height:30px;border-radius:8px;border:none;background:transparent;color:var(--t2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .12s}
@@ -703,79 +800,66 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 
 <!-- FLOWCHART -->
 <div class="page" id="page-flowchart" style="padding:32px 40px;max-width:100%">
-  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">System Architecture</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">System Flowchart</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">End-to-end data flow from form submission through approvals to dashboards.</div></div>
-  <div style="background:var(--wh);border:1px solid var(--bdr);border-radius:12px;overflow:hidden">
-    <div style="display:flex;gap:8px;padding:10px 16px;border-bottom:1px solid var(--bdr);background:var(--sb)">
-      <button class="btn btn-s btn-sm" onclick="fzI()">+ Zoom</button>
-      <button class="btn btn-s btn-sm" onclick="fzO()">− Zoom</button>
-      <button class="btn btn-s btn-sm" onclick="fzR()">Reset</button>
-    </div>
-    <div id="flow-c" style="height:600px;overflow:auto;cursor:grab">
-      <svg id="flow-svg" width="1080" height="580" viewBox="0 0 1080 580" xmlns="http://www.w3.org/2000/svg" style="display:block;transform-origin:50px 50px">
-        <defs>
-          <marker id="ah" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c8c6bf"/></marker>
-          <marker id="ahs" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#111"/></marker>
-          <marker id="aha" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#f5c800"/></marker>
-          <marker id="ahb" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#3b72d9"/></marker>
-          <marker id="ahg" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2d9a6b"/></marker>
-        </defs>
-        <rect x="28" y="16" width="148" height="548" rx="8" fill="#f9f9f8" stroke="#e5e4e0"/>
-        <rect x="194" y="16" width="185" height="548" rx="8" fill="#f9f9f8" stroke="#e5e4e0"/>
-        <rect x="397" y="16" width="185" height="548" rx="8" fill="#f9f9f8" stroke="#e5e4e0"/>
-        <rect x="600" y="16" width="185" height="548" rx="8" fill="#eaf0fd" stroke="#c0cff0"/>
-        <rect x="803" y="16" width="250" height="548" rx="8" fill="#e6f7ef" stroke="#b0ddc4"/>
-        <text x="102" y="36" text-anchor="middle" font-family="DM Sans" font-size="9" font-weight="600" letter-spacing=".07em" fill="#aaa9a3">REQUESTER</text>
-        <text x="286" y="36" text-anchor="middle" font-family="DM Sans" font-size="9" font-weight="600" letter-spacing=".07em" fill="#aaa9a3">DIGITAL FORM</text>
-        <text x="489" y="36" text-anchor="middle" font-family="DM Sans" font-size="9" font-weight="600" letter-spacing=".07em" fill="#aaa9a3">APPROVAL</text>
-        <text x="692" y="36" text-anchor="middle" font-family="DM Sans" font-size="9" font-weight="600" letter-spacing=".07em" fill="#2a56a8">PROMiS</text>
-        <text x="928" y="36" text-anchor="middle" font-family="DM Sans" font-size="9" font-weight="600" letter-spacing=".07em" fill="#1d7a53">OPERATIONAL</text>
-        <rect x="42" y="60" width="116" height="50" rx="9" fill="#111" stroke="#111"/>
-        <text x="100" y="81" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#fff">Requester</text>
-        <text x="100" y="96" text-anchor="middle" font-family="DM Sans" font-size="10" fill="rgba(255,255,255,.5)">/ User</text>
-        <rect x="208" y="55" width="156" height="50" rx="9" fill="#fff" stroke="#e5e4e0"/>
-        <text x="286" y="76" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#111">Fill Digital Form</text>
-        <text x="286" y="92" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#6f6e69">Details + attachments</text>
-        <rect x="208" y="145" width="156" height="50" rx="9" fill="#fff" stroke="#e5e4e0"/>
-        <text x="286" y="166" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#111">Submission Stored</text>
-        <text x="286" y="182" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#6f6e69">Ref ID generated</text>
-        <rect x="411" y="140" width="156" height="50" rx="9" fill="#fff" stroke="#111" stroke-width="1.5"/>
-        <text x="489" y="161" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#111">Unit Head Review</text>
-        <text x="489" y="177" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#6f6e69">Validates scope</text>
-        <polygon points="489,228 549,258 489,288 429,258" fill="#fef9e0" stroke="#e0c040" stroke-width="1.2"/>
-        <text x="489" y="258" text-anchor="middle" dominant-baseline="middle" font-family="DM Sans" font-size="11" font-weight="600" fill="#9a7800">Unit Approved?</text>
-        <rect x="411" y="322" width="156" height="50" rx="9" fill="#fff" stroke="#111" stroke-width="1.5"/>
-        <text x="489" y="343" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#111">HOD Approval</text>
-        <text x="489" y="359" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#6f6e69">Dept. sign-off</text>
-        <polygon points="489,410 549,440 489,470 429,440" fill="#fef9e0" stroke="#e0c040" stroke-width="1.2"/>
-        <text x="489" y="440" text-anchor="middle" dominant-baseline="middle" font-family="DM Sans" font-size="11" font-weight="600" fill="#9a7800">HOD Approved?</text>
-        <rect x="212" y="424" width="130" height="40" rx="9" fill="#fdecea" stroke="#e8bab4"/>
-        <text x="277" y="444" text-anchor="middle" dominant-baseline="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#b03a2e">Rejected</text>
-        <rect x="411" y="504" width="156" height="50" rx="9" fill="#111" stroke="#111"/>
-        <text x="489" y="525" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#fff">Processed Data</text>
-        <text x="489" y="541" text-anchor="middle" font-family="DM Sans" font-size="10" fill="rgba(255,255,255,.5)">Ready for dashboards</text>
-        <rect x="614" y="195" width="156" height="60" rx="9" fill="#dce9fc" stroke="#3b72d9" stroke-width="1.5"/>
-        <text x="692" y="217" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#1c3a7a">PROMiS Dashboard</text>
-        <text x="692" y="240" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#3b72d9">Management reporting</text>
-        <rect x="820" y="345" width="166" height="60" rx="9" fill="#cceedd" stroke="#2d9a6b" stroke-width="1.5"/>
-        <text x="903" y="370" text-anchor="middle" font-family="DM Sans" font-size="12" font-weight="600" fill="#0e4d30">Executive Dashboard</text>
-        <text x="903" y="390" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#2d9a6b">Task monitoring &amp; KPIs</text>
-        <line x1="158" y1="85" x2="206" y2="80" stroke="#111" stroke-width="1.5" marker-end="url(#ahs)" fill="none"/>
-        <line x1="286" y1="105" x2="286" y2="143" stroke="#111" stroke-width="1.5" marker-end="url(#ahs)" fill="none"/>
-        <line x1="364" y1="170" x2="409" y2="165" stroke="#c8c6bf" stroke-width="1.5" marker-end="url(#ah)" fill="none"/>
-        <line x1="489" y1="190" x2="489" y2="226" stroke="#c8c6bf" stroke-width="1.5" marker-end="url(#ah)" fill="none"/>
-        <line x1="489" y1="288" x2="489" y2="320" stroke="#f5c800" stroke-width="1.5" marker-end="url(#aha)" fill="none"/>
-        <text x="494" y="308" font-family="DM Sans" font-size="10" fill="#9a7800">Yes</text>
-        <line x1="429" y1="258" x2="342" y2="444" stroke="#d94f3d" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ah)" fill="none"/>
-        <text x="358" y="348" font-family="DM Sans" font-size="10" fill="#d94f3d">No</text>
-        <line x1="489" y1="372" x2="489" y2="408" stroke="#c8c6bf" stroke-width="1.5" marker-end="url(#ah)" fill="none"/>
-        <line x1="489" y1="470" x2="489" y2="502" stroke="#f5c800" stroke-width="1.5" marker-end="url(#aha)" fill="none"/>
-        <text x="494" y="489" font-family="DM Sans" font-size="10" fill="#9a7800">Yes</text>
-        <line x1="429" y1="440" x2="342" y2="444" stroke="#d94f3d" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ah)" fill="none"/>
-        <path d="M 567 529 C 620 529 620 225 612 225" stroke="#3b72d9" stroke-width="1.5" fill="none" marker-end="url(#ahb)"/>
-        <path d="M 567 529 C 740 529 770 375 818 375" stroke="#2d9a6b" stroke-width="1.5" fill="none" marker-end="url(#ahg)"/>
-        <path d="M 770 225 C 800 225 800 345 818 365" stroke="#9b9894" stroke-width="1" stroke-dasharray="4,3" fill="none" marker-end="url(#ah)"/>
-      </svg>
-    </div>
+  <div style="margin-bottom:24px"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:6px">System Architecture</div><div style="font-size:26px;font-weight:600;letter-spacing:-.5px">System Flowchart</div><div style="font-size:13.5px;color:var(--t2);margin-top:5px">Create your own canvases, drop shapes onto a dotted board, and connect them into editable flows.</div></div>
+  <div class="flow-shell">
+    <aside class="flow-side">
+      <div class="flow-side-head">
+        <div class="flow-side-eyebrow">Canvas Stack</div>
+        <div class="flow-side-title">System Maps</div>
+        <div class="flow-side-copy">Each canvas can hold its own diagram. Rename, reorganise, and keep separate architecture views.</div>
+      </div>
+      <div class="flow-canvas-list" id="flow-canvas-list"></div>
+      <button class="flow-canvas-add" type="button" onclick="addFlowCanvas()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>New Canvas</span>
+      </button>
+    </aside>
+    <section class="flow-main">
+      <div class="flow-toolbar">
+        <div class="flow-toolbar-left">
+          <button class="flow-tool" id="flow-tool-process" type="button" draggable="true" ondragstart="startFlowPaletteDrag(event,'process')" ondragend="endFlowPaletteDrag(event)" onclick="addFlowShape('process')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/></svg>
+            Process
+          </button>
+          <button class="flow-tool" id="flow-tool-decision" type="button" draggable="true" ondragstart="startFlowPaletteDrag(event,'decision')" ondragend="endFlowPaletteDrag(event)" onclick="addFlowShape('decision')">
+            <svg viewBox="0 0 24 24"><polygon points="12 3 21 12 12 21 3 12"/></svg>
+            Decision
+          </button>
+          <button class="flow-tool" id="flow-tool-terminal" type="button" draggable="true" ondragstart="startFlowPaletteDrag(event,'terminal')" ondragend="endFlowPaletteDrag(event)" onclick="addFlowShape('terminal')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="5"/></svg>
+            Terminator
+          </button>
+          <button class="flow-tool" id="flow-tool-link" type="button" onclick="toggleFlowLinkMode()">
+            <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><line x1="8" y1="12" x2="16" y2="7"/><line x1="8" y1="12" x2="16" y2="17"/></svg>
+            Link Shapes
+          </button>
+          <button class="flow-tool" id="flow-tool-delete" type="button" onclick="deleteSelectedFlowShape()">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            Delete Shape
+          </button>
+        </div>
+        <div class="flow-toolbar-right">
+          <div class="flow-status" id="flow-status">Click a shape to edit or drag it. Turn on link mode to connect shapes.</div>
+        </div>
+      </div>
+      <div class="flow-stage-scroll" id="flow-stage-scroll">
+        <div class="flow-stage" id="flow-stage" onclick="handleFlowStageClick(event)" ondragover="allowFlowStageDrop(event)" ondragleave="handleFlowStageDragLeave(event)" ondrop="handleFlowStageDrop(event)">
+          <svg class="flow-links" id="flow-links" viewBox="0 0 1800 1200" preserveAspectRatio="none">
+            <defs>
+              <marker id="flow-arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+                <path d="M0 0L10 4L0 8Z" fill="#b7b0a2"></path>
+              </marker>
+            </defs>
+          </svg>
+          <div id="flow-shapes" class="flow-shapes"></div>
+          <svg class="flow-drag-preview" id="flow-drag-preview" viewBox="0 0 1800 1200" preserveAspectRatio="none"></svg>
+          <div class="flow-empty" id="flow-empty">
+            <div class="flow-empty-title">Start with a blank canvas</div>
+            <div class="flow-empty-copy">Use the toolbar to add shapes, drag them onto the dotted board, then turn on <strong>Link Shapes</strong> and click two shapes to connect them.</div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 <!-- TRASH -->
@@ -1054,22 +1138,31 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
             </div>
             <div class="st-actions">
               <span class="st-chip"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Static prototype mode</span>
-              <span class="st-chip"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 000 7H14.5a3.5 3.5 0 010 7H6"/></svg>Password lives in browser storage</span>
+              <span class="st-chip"><svg viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 000 7H14.5a3.5 3.5 0 010 7H6"/></svg>Security syncs from Supabase</span>
             </div>
           </div>
         </section>
         <section class="st-pane" data-st-pane="security">
           <div class="st-pane-eyebrow">Security</div>
           <div class="st-pane-title">Password Lock</div>
-          <div class="st-pane-copy">Set a workspace password, update it later, or lock the app immediately. For this static deployment, the password hash is stored in the browser.</div>
+          <div class="st-pane-copy">Turn the workspace password on only if you want it. The password is stored as a one-way hash in Supabase, and this browser can stay remembered after you unlock once.</div>
           <div class="st-card">
             <div class="st-grid">
               <div style="grid-column:1/-1">
                 <div class="ilbl">Current Status</div>
                 <div class="st-chip" id="security-status-chip"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span id="security-status-text">No password set</span></div>
               </div>
+              <div style="grid-column:1/-1">
+                <label style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--bdr);border-radius:12px;background:#fff;cursor:pointer">
+                  <input id="settings-password-enabled" type="checkbox" style="width:16px;height:16px;accent-color:#111" onchange="refreshSettingsSecurityUi(false)"/>
+                  <div>
+                    <div style="font-size:13px;font-weight:600;color:var(--t1)">Require password to open Jiqsys</div>
+                    <div style="font-size:12px;color:var(--tm);margin-top:2px">If this stays off, the app opens directly with no login prompt.</div>
+                  </div>
+                </label>
+              </div>
               <div>
-                <div class="ilbl">New Password</div>
+                <div class="ilbl">Password</div>
                 <input class="inf" id="settings-password" type="password" placeholder="Set or replace password" />
               </div>
               <div>
@@ -1079,9 +1172,9 @@ select.inf{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
             </div>
             <div class="auth-msg" id="settings-password-msg" style="margin-top:10px"></div>
             <div class="st-actions">
-              <button class="btn btn-p" onclick="saveSettingsPassword()">Save Password</button>
+              <button class="btn btn-p" onclick="saveSettingsPassword()">Save Security</button>
               <button class="btn btn-s" onclick="lockWorkspaceNow()">Lock Now</button>
-              <button class="btn btn-s" style="color:var(--red)" onclick="clearWorkspacePassword()">Remove Password</button>
+              <button class="btn btn-s" style="color:var(--red)" onclick="clearWorkspacePassword()">Disable Password</button>
             </div>
           </div>
         </section>
@@ -1112,29 +1205,75 @@ const PRI={Critical:{bg:'#fdecea',c:'#b03a2e'},High:{bg:'#fff3cd',c:'#8a6800'},N
 // ════════════════════════════════════════════
 // MODULES — seed icon presets for known modules
 // ════════════════════════════════════════════
+const FEATURE_ICON_SET={
+  form:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="14" y1="17" x2="8" y2="17"/>',
+  dashboard:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+  chart:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+  project:'<rect x="3" y="3" width="9" height="9" rx="1"/><rect x="13" y="3" width="8" height="4" rx="1"/><rect x="13" y="10" width="8" height="5" rx="1"/><rect x="3" y="15" width="18" height="6" rx="1"/>',
+  database:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>',
+  mobile:'<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  web:'<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+  version:'<circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/><polyline points="8 12 10 10 12 12 14 10 16 12"/>',
+  server:'<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+  checklist:'<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>',
+  users:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/>',
+  trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>',
+  folder:'<path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/>',
+  briefcase:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="3" y1="12" x2="21" y2="12"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 010 18"/><path d="M12 3a15 15 0 000 18"/>',
+  bell:'<path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M13.73 21a2 2 0 01-3.46 0"/>',
+  megaphone:'<path d="M3 11v2a2 2 0 002 2h2l4 4V5L7 9H5a2 2 0 00-2 2z"/><path d="M16 8a5 5 0 010 8"/><path d="M18 5a9 9 0 010 14"/>',
+  layout:'<rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/><line x1="9" y1="10" x2="21" y2="10"/>',
+  document:'<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/>'
+};
+const FEATURE_ICON_CHOICES=[
+  {key:'document',label:'Document'},
+  {key:'form',label:'Form'},
+  {key:'dashboard',label:'Dashboard'},
+  {key:'chart',label:'Chart'},
+  {key:'project',label:'Project'},
+  {key:'database',label:'Database'},
+  {key:'mobile',label:'Mobile'},
+  {key:'shield',label:'Security'},
+  {key:'web',label:'Web'},
+  {key:'server',label:'Backend'},
+  {key:'checklist',label:'Testing'},
+  {key:'users',label:'Users'},
+  {key:'folder',label:'Folder'},
+  {key:'briefcase',label:'Business'},
+  {key:'globe',label:'Global'},
+  {key:'bell',label:'Alerts'},
+  {key:'megaphone',label:'Announcement'},
+  {key:'layout',label:'Workspace'},
+  {key:'settings',label:'Settings'},
+  {key:'trash',label:'Trash'},
+];
 const MODULES=[
-  {key:'Digital Form',   page:'digital-form', label:'Digital Form',          icon:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>'},
-  {key:'PROMiS',         page:'promis',        label:'PROMiS Dashboard',      icon:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>'},
-  {key:'Ops',            page:'ops',           label:'Executive Dashboard',   icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>'},
-  {key:'Project Mgmt',   page:'feat-pm',       label:'Project Management',    icon:'<rect x="3" y="3" width="9" height="9" rx="1"/><rect x="13" y="3" width="8" height="4" rx="1"/><rect x="13" y="10" width="8" height="5" rx="1"/><rect x="3" y="15" width="18" height="6" rx="1"/>'},
-  {key:'Master Data',    page:'feat-md',       label:'Master Data',           icon:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>'},
-  {key:'Mobile App',     page:'feat-mob',      label:'Mobile App',            icon:'<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>'},
-  {key:'RBAC',           page:'feat-rbac',     label:'RBAC / Access Control', icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'},
-  {key:'Landing Page',   page:'feat-lp',       label:'Landing Page',          icon:'<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'},
-  {key:'Version Control',page:'feat-vc',       label:'Version Control',       icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/><polyline points="8 12 10 10 12 12 14 10 16 12"/>'},
-  {key:'Backend',        page:'feat-be',       label:'Backend Integration',   icon:'<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>'},
-  {key:'Testing',        page:'feat-qa',       label:'Testing / QA',          icon:'<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>'},
-  {key:'Onboarding',     page:'feat-ob',       label:'Onboarding',            icon:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'},
-  {key:'Fox Settings',   page:'feat-settings', label:'Settings',              icon:'<circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/>'},
-  {key:'Fox Trash',      page:'feat-trash',    label:'Trash',                 icon:'<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>'},
+  {key:'Digital Form',page:'digital-form',label:'Digital Form',iconKey:'form'},
+  {key:'PROMiS',page:'promis',label:'PROMiS Dashboard',iconKey:'dashboard'},
+  {key:'Ops',page:'ops',label:'Executive Dashboard',iconKey:'chart'},
+  {key:'Project Mgmt',page:'feat-pm',label:'Project Management',iconKey:'project'},
+  {key:'Master Data',page:'feat-md',label:'Master Data',iconKey:'database'},
+  {key:'Mobile App',page:'feat-mob',label:'Mobile App',iconKey:'mobile'},
+  {key:'RBAC',page:'feat-rbac',label:'RBAC / Access Control',iconKey:'shield'},
+  {key:'Landing Page',page:'feat-lp',label:'Landing Page',iconKey:'web'},
+  {key:'Version Control',page:'feat-vc',label:'Version Control',iconKey:'version'},
+  {key:'Backend',page:'feat-be',label:'Backend Integration',iconKey:'server'},
+  {key:'Testing',page:'feat-qa',label:'Testing / QA',iconKey:'checklist'},
+  {key:'Onboarding',page:'feat-ob',label:'Onboarding',iconKey:'users'},
+  {key:'Fox Settings',page:'feat-settings',label:'Settings',iconKey:'settings'},
+  {key:'Fox Trash',page:'feat-trash',label:'Trash',iconKey:'trash'},
 ];
 
 // ════════════════════════════════════════════
 // FEATURE DATA — notes + test groups per feature key
 // ════════════════════════════════════════════
 const featData={};
-const FEATURE_ICON_MAP=Object.fromEntries(MODULES.map(m=>[m.key,m.icon]));
-const DEFAULT_FEATURE_ICON='<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/>';
+const FEATURE_ICON_MAP=Object.fromEntries(MODULES.map(m=>[m.key,m.iconKey]));
+const DEFAULT_FEATURE_ICON_KEY='document';
+const DEFAULT_FEATURE_ICON=FEATURE_ICON_SET[DEFAULT_FEATURE_ICON_KEY];
 let moduleRows=[];
 let deletedModuleRows=[];
 let team=[];
@@ -1148,9 +1287,16 @@ const pendingFeatureNoteSaves=new Map();
 const pendingModuleMetaSaves=new Map();
 const rteSelectionRanges=new Map();
 const rteResizeHandlers=new Map();
-const AUTH_PASSWORD_HASH_KEY='jiqsys_password_hash';
-const AUTH_SESSION_KEY='jiqsys_session_open';
-let authMode='login';
+const WORKSPACE_SECURITY_KEY='workspace_security';
+const FLOWCHART_SETTING_KEY='system_flowchart';
+const AUTH_REMEMBER_KEY='jiqsys_workspace_unlock_hash';
+let workspaceSecurity={password_enabled:false,password_hash:null};
+let flowchartState={canvases:[],activeCanvasId:null,linkMode:false,selectedShapeId:null,linkSourceId:null};
+let flowDragState=null;
+let flowJustDragged=false;
+let flowPaletteDragType='';
+let flowResizeState=null;
+const FLOW_LINK_SNAP_RADIUS=40;
 
 function uid(){return Math.random().toString(36).slice(2,9);}
 function slugify(v){return String(v||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'')||'item';}
@@ -1170,44 +1316,259 @@ async function sha256Hex(input){
   const hashBuffer=await crypto.subtle.digest('SHA-256',data);
   return [...new Uint8Array(hashBuffer)].map(v=>v.toString(16).padStart(2,'0')).join('');
 }
-function getSavedPasswordHash(){
-  return localStorage.getItem(AUTH_PASSWORD_HASH_KEY)||'';
+function getDefaultWorkspaceSecurity(){
+  return {password_enabled:false,password_hash:null};
 }
 function hasWorkspacePassword(){
-  return !!getSavedPasswordHash();
+  return !!(workspaceSecurity.password_enabled&&workspaceSecurity.password_hash);
 }
 function isWorkspaceUnlocked(){
-  return sessionStorage.getItem(AUTH_SESSION_KEY)==='1';
+  if(!hasWorkspacePassword())return true;
+  return localStorage.getItem(AUTH_REMEMBER_KEY)===workspaceSecurity.password_hash;
 }
 function setWorkspaceUnlocked(v){
-  if(v)sessionStorage.setItem(AUTH_SESSION_KEY,'1');
-  else sessionStorage.removeItem(AUTH_SESSION_KEY);
+  if(v&&workspaceSecurity.password_hash)localStorage.setItem(AUTH_REMEMBER_KEY,workspaceSecurity.password_hash);
+  else localStorage.removeItem(AUTH_REMEMBER_KEY);
 }
 function setAuthMessage(message,target='auth-msg'){
   const el=document.getElementById(target);
   if(el)el.textContent=message||'';
 }
+async function loadWorkspaceSecurity(){
+  const {data,error}=await supabaseClient
+    .from('app_settings')
+    .select('setting_value')
+    .eq('setting_key',WORKSPACE_SECURITY_KEY)
+    .maybeSingle();
+  if(error)throw error;
+  if(!data){
+    const defaults=getDefaultWorkspaceSecurity();
+    const {error:insertError}=await supabaseClient
+      .from('app_settings')
+      .insert({setting_key:WORKSPACE_SECURITY_KEY,setting_value:defaults});
+    if(insertError)throw insertError;
+    workspaceSecurity=defaults;
+    return;
+  }
+  workspaceSecurity={
+    ...getDefaultWorkspaceSecurity(),
+    ...(data.setting_value||{})
+  };
+}
+async function persistWorkspaceSecurity(nextSecurity){
+  const payload={
+    ...getDefaultWorkspaceSecurity(),
+    ...(nextSecurity||{})
+  };
+  const {error}=await supabaseClient
+    .from('app_settings')
+    .upsert({
+      setting_key:WORKSPACE_SECURITY_KEY,
+      setting_value:payload
+    },{onConflict:'setting_key'});
+  if(error)throw error;
+  workspaceSecurity=payload;
+}
+function createFlowCanvas(title='Canvas 1'){
+  return {id:`flow-canvas-${uid()}`,title,shapes:[],links:[]};
+}
+function createFlowShape(type='process'){
+  const presets={
+    process:{w:180,h:92,label:'Process'},
+    decision:{w:126,h:126,label:'Decision'},
+    terminal:{w:188,h:78,label:'Start / End'},
+  };
+  const preset=presets[type]||presets.process;
+  return {
+    id:`flow-shape-${uid()}`,
+    type,
+    x:280,
+    y:180,
+    w:preset.w,
+    h:preset.h,
+    label:preset.label,
+  };
+}
+function getFlowShapeMinSize(type){
+  return ({
+    process:{w:180,h:92},
+    decision:{w:126,h:126},
+    terminal:{w:188,h:78},
+  })[type]||{w:180,h:92};
+}
+function getFlowViewportCenter(){
+  const stage=document.getElementById('flow-stage-scroll');
+  if(!stage)return {x:280,y:180};
+  return {
+    x:stage.scrollLeft+(stage.clientWidth/2),
+    y:stage.scrollTop+(stage.clientHeight/2),
+  };
+}
+function buildFlowShape(type='process',x=null,y=null,count=0){
+  const shape=createFlowShape(type);
+  const viewport=getFlowViewportCenter();
+  const defaultX=viewport.x+((count%3)-1)*36;
+  const defaultY=viewport.y+Math.floor(count/3)*28;
+  shape.x=Math.max(shape.w/2,Math.min(1800-shape.w/2,Math.round(Number.isFinite(x)?x:defaultX)));
+  shape.y=Math.max(shape.h/2,Math.min(1200-shape.h/2,Math.round(Number.isFinite(y)?y:defaultY)));
+  return shape;
+}
+function scrollFlowShapeIntoView(shape){
+  const stage=document.getElementById('flow-stage-scroll');
+  if(!stage||!shape)return;
+  const left=shape.x-(shape.w/2);
+  const right=shape.x+(shape.w/2);
+  const top=shape.y-(shape.h/2);
+  const bottom=shape.y+(shape.h/2);
+  const pad=48;
+  const viewLeft=stage.scrollLeft;
+  const viewRight=stage.scrollLeft+stage.clientWidth;
+  const viewTop=stage.scrollTop;
+  const viewBottom=stage.scrollTop+stage.clientHeight;
+  if(left-pad<viewLeft)stage.scrollLeft=Math.max(0,left-pad);
+  else if(right+pad>viewRight)stage.scrollLeft=Math.max(0,right+pad-stage.clientWidth);
+  if(top-pad<viewTop)stage.scrollTop=Math.max(0,top-pad);
+  else if(bottom+pad>viewBottom)stage.scrollTop=Math.max(0,bottom+pad-stage.clientHeight);
+}
+function getDefaultFlowchartState(){
+  const canvas=createFlowCanvas();
+  return {canvases:[canvas],activeCanvasId:canvas.id,linkMode:false,selectedShapeId:null,linkSourceId:null};
+}
+function ensureFlowchartState(){
+  if(!Array.isArray(flowchartState.canvases)||!flowchartState.canvases.length){
+    flowchartState=getDefaultFlowchartState();
+  }
+  flowchartState.canvases=flowchartState.canvases.map((canvas,index)=>({
+    id:canvas.id||`flow-canvas-${uid()}`,
+    title:(canvas.title||`Canvas ${index+1}`).trim()||`Canvas ${index+1}`,
+    shapes:Array.isArray(canvas.shapes)?canvas.shapes.map(shape=>({
+      id:shape.id||`flow-shape-${uid()}`,
+      type:['process','decision','terminal'].includes(shape.type)?shape.type:'process',
+      x:Math.max(90,Math.min(Number(shape.x)||280,1710)),
+      y:Math.max(90,Math.min(Number(shape.y)||180,1110)),
+      w:Number(shape.w)||180,
+      h:Number(shape.h)||92,
+      label:String(shape.label||'Untitled').trim()||'Untitled',
+    })):[],
+    rawLinks:Array.isArray(canvas.links)?canvas.links:[],
+    links:[],
+  }));
+  flowchartState.canvases.forEach(canvas=>{
+    const shapeIds=new Set(canvas.shapes.map(shape=>shape.id));
+    canvas.links=canvas.rawLinks.map(link=>({
+      id:link.id||`flow-link-${uid()}`,
+      from:link.from,
+      to:link.to,
+      fromSide:['top','right','bottom','left'].includes(link.fromSide)?link.fromSide:null,
+      toSide:['top','right','bottom','left'].includes(link.toSide)?link.toSide:null,
+      direction:['forward','backward','both'].includes(link.direction)?link.direction:'forward',
+    })).filter(link=>link.from&&link.to&&shapeIds.has(link.from)&&shapeIds.has(link.to));
+    delete canvas.rawLinks;
+  });
+  if(!flowchartState.activeCanvasId||!flowchartState.canvases.some(canvas=>canvas.id===flowchartState.activeCanvasId)){
+    flowchartState.activeCanvasId=flowchartState.canvases[0].id;
+  }
+  flowchartState.linkMode=!!flowchartState.linkMode;
+  flowchartState.selectedShapeId=flowchartState.selectedShapeId||null;
+  flowchartState.linkSourceId=flowchartState.linkSourceId||null;
+  const activeCanvas=flowchartState.canvases.find(canvas=>canvas.id===flowchartState.activeCanvasId)||flowchartState.canvases[0];
+  const activeShapeIds=new Set(activeCanvas.shapes.map(shape=>shape.id));
+  if(flowchartState.selectedShapeId&&!activeShapeIds.has(flowchartState.selectedShapeId))flowchartState.selectedShapeId=null;
+  if(flowchartState.linkSourceId&&!activeShapeIds.has(flowchartState.linkSourceId))flowchartState.linkSourceId=null;
+  return flowchartState;
+}
+function getActiveFlowCanvas(){
+  const state=ensureFlowchartState();
+  return state.canvases.find(canvas=>canvas.id===state.activeCanvasId)||state.canvases[0];
+}
+async function loadFlowchartState(){
+  const {data,error}=await supabaseClient
+    .from('app_settings')
+    .select('setting_value')
+    .eq('setting_key',FLOWCHART_SETTING_KEY)
+    .maybeSingle();
+  if(error)throw error;
+  if(!data){
+    flowchartState=getDefaultFlowchartState();
+    const {error:insertError}=await supabaseClient
+      .from('app_settings')
+      .insert({setting_key:FLOWCHART_SETTING_KEY,setting_value:flowchartState});
+    if(insertError)throw insertError;
+    return;
+  }
+  flowchartState={
+    ...getDefaultFlowchartState(),
+    ...(data.setting_value||{})
+  };
+  ensureFlowchartState();
+}
+function serializeFlowchartState(){
+  const state=ensureFlowchartState();
+  return {
+    activeCanvasId:state.activeCanvasId,
+    canvases:state.canvases.map(canvas=>({
+      id:canvas.id,
+      title:canvas.title,
+      shapes:canvas.shapes.map(shape=>({
+        id:shape.id,
+        type:shape.type,
+        x:shape.x,
+        y:shape.y,
+        w:shape.w,
+        h:shape.h,
+        label:shape.label,
+      })),
+      links:canvas.links.map(link=>({
+        id:link.id,
+        from:link.from,
+        to:link.to,
+        direction:link.direction||'forward',
+      })),
+    })),
+  };
+}
+let pendingFlowchartSave=null;
+function queueFlowchartSave(delay=250){
+  clearTimeout(pendingFlowchartSave);
+  pendingFlowchartSave=setTimeout(async()=>{
+    try{
+      const {error}=await supabaseClient
+        .from('app_settings')
+        .upsert({
+          setting_key:FLOWCHART_SETTING_KEY,
+          setting_value:serializeFlowchartState()
+        },{onConflict:'setting_key'});
+      if(error)throw error;
+    }catch(error){
+      showDbError('Saving system flowchart',error);
+    }finally{
+      pendingFlowchartSave=null;
+    }
+  },delay);
+}
 function configureAuthScreen(){
-  const hasPassword=hasWorkspacePassword();
-  authMode=hasPassword?'login':'setup';
   const subtitle=document.getElementById('auth-subtitle');
   const submit=document.getElementById('auth-submit-btn');
   const confirmWrap=document.getElementById('auth-confirm-wrap');
   const note=document.getElementById('auth-note');
   const password=document.getElementById('auth-password');
   const confirm=document.getElementById('auth-password-confirm');
-  if(subtitle)subtitle.textContent=hasPassword?'Enter your password to unlock the workspace.':'Set a password before using Jiqsys for the first time.';
-  if(submit)submit.textContent=hasPassword?'Unlock':'Create Password';
-  if(confirmWrap)confirmWrap.style.display=hasPassword?'none':'block';
-  if(note)note.textContent=hasPassword?'Open Settings from the sidebar footer if you want to change this password.':'This password hash is stored in your browser for this static prototype.';
+  if(subtitle)subtitle.textContent='Enter your password to unlock the workspace.';
+  if(submit)submit.textContent='Unlock';
+  if(confirmWrap)confirmWrap.style.display='none';
+  if(note)note.textContent='This device stays remembered after you unlock. Change the password later from Settings.';
   if(password)password.value='';
   if(confirm)confirm.value='';
   setAuthMessage('');
   const label=document.getElementById('auth-password-label');
-  if(label)label.textContent=hasPassword?'Password':'Create Password';
+  if(label)label.textContent='Password';
   setTimeout(()=>document.getElementById('auth-password')?.focus(),40);
 }
 function openAuthGate(){
+  if(!hasWorkspacePassword()){
+    closeAuthGate();
+    return;
+  }
   configureAuthScreen();
   const ovl=document.getElementById('auth-ovl');
   if(ovl)ovl.classList.remove('hidden');
@@ -1217,25 +1578,16 @@ function closeAuthGate(){
   if(ovl)ovl.classList.add('hidden');
 }
 async function submitAccessPassword(){
+  if(!hasWorkspacePassword()){
+    closeAuthGate();
+    return;
+  }
   const password=document.getElementById('auth-password')?.value||'';
-  const confirm=document.getElementById('auth-password-confirm')?.value||'';
   if(password.length<4){
     setAuthMessage('Use at least 4 characters.');
     return;
   }
-  if(authMode==='setup'){
-    if(password!==confirm){
-      setAuthMessage('Passwords do not match.');
-      return;
-    }
-    localStorage.setItem(AUTH_PASSWORD_HASH_KEY,await sha256Hex(password));
-    setWorkspaceUnlocked(true);
-    closeAuthGate();
-    refreshSettingsSecurityUi();
-    toast('Password created',{icon:'check'});
-    return;
-  }
-  const matches=await sha256Hex(password)===getSavedPasswordHash();
+  const matches=await sha256Hex(password)===workspaceSecurity.password_hash;
   if(!matches){
     setAuthMessage('Incorrect password.');
     return;
@@ -1244,9 +1596,8 @@ async function submitAccessPassword(){
   closeAuthGate();
 }
 function initWorkspaceAccess(){
-  if(hasWorkspacePassword()){
-    if(isWorkspaceUnlocked())closeAuthGate();
-    else openAuthGate();
+  if(!hasWorkspacePassword()||isWorkspaceUnlocked()){
+    closeAuthGate();
   }else{
     openAuthGate();
   }
@@ -1255,10 +1606,19 @@ function switchSettingsSection(section){
   document.querySelectorAll('[data-st-section]').forEach(btn=>btn.classList.toggle('active',btn.dataset.stSection===section));
   document.querySelectorAll('[data-st-pane]').forEach(pane=>pane.classList.toggle('active',pane.dataset.stPane===section));
 }
-function refreshSettingsSecurityUi(){
+function refreshSettingsSecurityUi(syncToggle=true){
   const hasPassword=hasWorkspacePassword();
   const status=document.getElementById('security-status-text');
-  if(status)status.textContent=hasPassword?'Password enabled':'No password set';
+  if(status)status.textContent=hasPassword?'Password enabled and saved in Supabase':'Password disabled';
+  const enabled=document.getElementById('settings-password-enabled');
+  if(enabled&&syncToggle)enabled.checked=!!workspaceSecurity.password_enabled;
+  const effectiveEnabled=enabled?enabled.checked:!!workspaceSecurity.password_enabled;
+  const password=document.getElementById('settings-password');
+  const confirm=document.getElementById('settings-password-confirm');
+  if(password)password.disabled=!effectiveEnabled;
+  if(confirm)confirm.disabled=!effectiveEnabled;
+  const lockBtn=[...document.querySelectorAll('#settings-ovl .st-actions .btn')].find(btn=>btn.textContent.trim()==='Lock Now');
+  if(lockBtn)lockBtn.disabled=!hasPassword;
   const msg=document.getElementById('settings-password-msg');
   if(msg)msg.textContent='';
 }
@@ -1268,35 +1628,63 @@ function openSettingsModal(section='general'){
   openOvl('settings-ovl');
 }
 async function saveSettingsPassword(){
+  const enabled=!!document.getElementById('settings-password-enabled')?.checked;
   const password=document.getElementById('settings-password')?.value||'';
   const confirm=document.getElementById('settings-password-confirm')?.value||'';
-  if(password.length<4){
-    setAuthMessage('Use at least 4 characters.','settings-password-msg');
-    return;
+  try{
+    if(!enabled){
+      await persistWorkspaceSecurity(getDefaultWorkspaceSecurity());
+      setWorkspaceUnlocked(false);
+      document.getElementById('settings-password').value='';
+      document.getElementById('settings-password-confirm').value='';
+      refreshSettingsSecurityUi();
+      closeAuthGate();
+      toast('Password disabled',{icon:'restore'});
+      return;
+    }
+    let nextHash=workspaceSecurity.password_hash||null;
+    const wantsPasswordChange=password||confirm;
+    if(!nextHash&&!wantsPasswordChange){
+      setAuthMessage('Set a password before enabling the lock.','settings-password-msg');
+      return;
+    }
+    if(wantsPasswordChange){
+      if(password.length<4){
+        setAuthMessage('Use at least 4 characters.','settings-password-msg');
+        return;
+      }
+      if(password!==confirm){
+        setAuthMessage('Passwords do not match.','settings-password-msg');
+        return;
+      }
+      nextHash=await sha256Hex(password);
+    }
+    await persistWorkspaceSecurity({
+      password_enabled:true,
+      password_hash:nextHash
+    });
+    setWorkspaceUnlocked(true);
+    document.getElementById('settings-password').value='';
+    document.getElementById('settings-password-confirm').value='';
+    refreshSettingsSecurityUi();
+    closeAuthGate();
+    toast(wantsPasswordChange?'Password updated':'Password lock enabled',{icon:'check'});
+  }catch(error){
+    showDbError('Saving workspace security',error);
+    setAuthMessage('Could not save security settings.','settings-password-msg');
   }
-  if(password!==confirm){
-    setAuthMessage('Passwords do not match.','settings-password-msg');
-    return;
-  }
-  localStorage.setItem(AUTH_PASSWORD_HASH_KEY,await sha256Hex(password));
-  setWorkspaceUnlocked(true);
-  document.getElementById('settings-password').value='';
-  document.getElementById('settings-password-confirm').value='';
-  refreshSettingsSecurityUi();
-  toast('Password updated',{icon:'check'});
 }
 function clearWorkspacePassword(){
-  localStorage.removeItem(AUTH_PASSWORD_HASH_KEY);
-  setWorkspaceUnlocked(true);
+  const toggle=document.getElementById('settings-password-enabled');
+  if(toggle)toggle.checked=false;
   document.getElementById('settings-password').value='';
   document.getElementById('settings-password-confirm').value='';
-  refreshSettingsSecurityUi();
-  toast('Password removed',{icon:'restore'});
+  saveSettingsPassword();
 }
 function lockWorkspaceNow(){
   closeOvl('settings-ovl');
   setWorkspaceUnlocked(false);
-  openAuthGate();
+  if(hasWorkspacePassword())openAuthGate();
 }
 function normalizeTicket(t){
   t.modules=t.modules||[];
@@ -1465,12 +1853,12 @@ async function loadModules(){
   const [{data:activeRows,error:activeError},{data:inactiveRows,error:inactiveError}]=await Promise.all([
     supabaseClient
       .from('modules')
-      .select('id, module_key, name, page_slug, description, sort_order')
+      .select('id, module_key, name, page_slug, icon_key, description, sort_order')
       .eq('is_active',true)
       .order('sort_order'),
     supabaseClient
       .from('modules')
-      .select('id, module_key, name, page_slug, description, sort_order')
+      .select('id, module_key, name, page_slug, icon_key, description, sort_order')
       .eq('is_active',false)
       .order('name')
   ]);
@@ -1545,9 +1933,21 @@ function mountFeatureModalShell(){
         <button class="mcls" onclick="closeOvl('feature-ovl')">×</button>
       </div>
       <div class="mbdy">
+        <div class="feature-create-head">
+          <div class="feature-icon-side">
+            <div class="ilbl">Icon</div>
+            <div class="feature-icon-preview" id="feature-icon-preview" aria-hidden="true"></div>
+            <input id="feature-icon" type="hidden" value="${DEFAULT_FEATURE_ICON_KEY}"/>
+          </div>
+          <div class="fr" style="margin-bottom:0">
+            <div class="ilbl">Title <span style="color:var(--red)">*</span></div>
+            <input class="inf" id="feature-title" placeholder="e.g. Procurement"/>
+          </div>
+        </div>
         <div class="fr">
-          <div class="ilbl">Title <span style="color:var(--red)">*</span></div>
-          <input class="inf" id="feature-title" placeholder="e.g. Procurement"/>
+          <div class="ilbl">Choose Icon</div>
+          <div class="feature-icon-grid" id="feature-icon-grid"></div>
+          <div class="feature-icon-help">These icons are hand-picked inline SVG icons in the same stroke style as the rest of Jiqsys.</div>
         </div>
         <div class="fr" style="margin-bottom:0">
           <div class="ilbl">Description</div>
@@ -1561,13 +1961,33 @@ function mountFeatureModalShell(){
     </div>
   </div>`);
   document.getElementById('feature-ovl').addEventListener('click',e=>{if(e.target.id==='feature-ovl')closeOvl('feature-ovl');});
+  renderFeatureIconPicker(DEFAULT_FEATURE_ICON_KEY);
 }
 function ensureFeatureUi(){
   mountFeatureSidebarShell();
   mountFeaturePagesShell();
   mountFeatureModalShell();
 }
-function getFeatureIcon(row){return FEATURE_ICON_MAP[row.module_key]||DEFAULT_FEATURE_ICON;}
+function getFeatureIconKey(row){
+  return row?.icon_key||FEATURE_ICON_MAP[row?.module_key]||DEFAULT_FEATURE_ICON_KEY;
+}
+function getFeatureIcon(row){
+  return FEATURE_ICON_SET[getFeatureIconKey(row)]||DEFAULT_FEATURE_ICON;
+}
+function renderFeatureIconPicker(selectedKey=DEFAULT_FEATURE_ICON_KEY){
+  const grid=document.getElementById('feature-icon-grid');
+  if(!grid)return;
+  grid.innerHTML=FEATURE_ICON_CHOICES.map(icon=>`<button class="feature-icon-btn${icon.key===selectedKey?' active':''}" type="button" onclick="setFeatureIconSelection('${icon.key}')" title="${escHtml(icon.label)}" aria-label="${escHtml(icon.label)}">
+    <svg viewBox="0 0 24 24">${FEATURE_ICON_SET[icon.key]}</svg>
+  </button>`).join('');
+  const input=document.getElementById('feature-icon');
+  if(input)input.value=selectedKey;
+  const preview=document.getElementById('feature-icon-preview');
+  if(preview)preview.innerHTML=`<svg viewBox="0 0 24 24">${FEATURE_ICON_SET[selectedKey]||DEFAULT_FEATURE_ICON}</svg>`;
+}
+function setFeatureIconSelection(iconKey){
+  renderFeatureIconPicker(iconKey);
+}
 function buildFeaturePage(row){
   const fk=getFeatureKeyFromRow(row);
   ensureFeatureState(fk);
@@ -1712,6 +2132,7 @@ async function restoreFeature(fk){
 function openFeatureModal(){
   document.getElementById('feature-title').value='';
   document.getElementById('feature-desc').value='';
+  renderFeatureIconPicker(DEFAULT_FEATURE_ICON_KEY);
   openOvl('feature-ovl');
   setTimeout(()=>document.getElementById('feature-title')?.focus(),80);
 }
@@ -1725,6 +2146,7 @@ function uniqueField(base,selector){
 async function saveFeature(){
   const name=document.getElementById('feature-title').value.trim();
   const description=document.getElementById('feature-desc').value.trim();
+  const iconKey=document.getElementById('feature-icon')?.value||DEFAULT_FEATURE_ICON_KEY;
   if(!name){
     document.getElementById('feature-title').focus();
     return;
@@ -1738,11 +2160,12 @@ async function saveFeature(){
         module_key:moduleKey,
         name,
         page_slug:pageSlug,
+        icon_key:iconKey,
         description:description||null,
         sort_order:getFeatureRows().length+1,
         is_active:true
       })
-      .select('id, module_key, name, page_slug, description, sort_order')
+      .select('id, module_key, name, page_slug, icon_key, description, sort_order')
       .single();
     if(error)throw error;
     moduleRows.push(data);
@@ -1946,22 +2369,38 @@ async function hydrateApp(){
     await loadTickets();
     await loadFeatureNotes();
     await loadFeatureTests();
+    await loadFlowchartState();
     refreshAssigneeDropdowns();
     populateNtStatus();
     populateFltStatus();
     renderTeamPage();
     renderTrashPage();
     renderActive();
+    renderSystemFlowchart();
     appReady=true;
   }catch(error){
     showDbError('Loading Supabase data',error);
+    flowchartState=getDefaultFlowchartState();
     refreshAssigneeDropdowns();
     populateNtStatus();
     populateFltStatus();
     renderTeamPage();
     renderTrashPage();
     renderActive();
+    renderSystemFlowchart();
   }
+}
+
+async function initApp(){
+  try{
+    await loadWorkspaceSecurity();
+  }catch(error){
+    showDbError('Loading workspace security',error);
+    workspaceSecurity=getDefaultWorkspaceSecurity();
+  }
+  refreshSettingsSecurityUi();
+  initWorkspaceAccess();
+  await hydrateApp();
 }
 
 // ── Tab switcher ──
@@ -3087,6 +3526,645 @@ async function bulkPermanentDelete(){
 }
 
 // ════════════════════════════════════════════
+// SYSTEM FLOWCHART
+// ════════════════════════════════════════════
+function flowCanvasTitleForIndex(index){
+  const titles=new Set(ensureFlowchartState().canvases.map(canvas=>canvas.title));
+  let title=`Canvas ${index}`;
+  let n=index;
+  while(titles.has(title)){
+    n++;
+    title=`Canvas ${n}`;
+  }
+  return title;
+}
+function getFlowShape(shapeId){
+  return getActiveFlowCanvas()?.shapes.find(shape=>shape.id===shapeId)||null;
+}
+function getFlowShapeCenter(shape){
+  return {x:shape.x,y:shape.y};
+}
+function getPortNormal(side){
+  switch(side){
+    case'top':return{x:0,y:-1};
+    case'right':return{x:1,y:0};
+    case'bottom':return{x:0,y:1};
+    case'left':return{x:-1,y:0};
+    default:return{x:0,y:0};
+  }
+}
+function inferLinkSide(fromShape,toShape){
+  const dx=toShape.x-fromShape.x;
+  const dy=toShape.y-fromShape.y;
+  if(Math.abs(dx)>=Math.abs(dy))return dx>=0?'right':'left';
+  return dy>=0?'bottom':'top';
+}
+function buildFlowConnectorPath(fromX,fromY,fromSide,toX,toY,toSide){
+  const startNormal=getPortNormal(fromSide);
+  const endNormal=getPortNormal(toSide);
+  const dx=toX-fromX;
+  const dy=toY-fromY;
+  const spread=Math.max(28,Math.min(84,Math.max(Math.abs(dx),Math.abs(dy))*0.18));
+  const startStubX=fromX+startNormal.x*spread;
+  const startStubY=fromY+startNormal.y*spread;
+  const endStubX=toX-endNormal.x*spread;
+  const endStubY=toY-endNormal.y*spread;
+  const horizontalStart=fromSide==='left'||fromSide==='right';
+  const horizontalEnd=toSide==='left'||toSide==='right';
+  const points=[
+    [fromX,fromY],
+    [startStubX,startStubY]
+  ];
+  if(horizontalStart&&horizontalEnd){
+    const midX=Math.round((startStubX+endStubX)/2);
+    points.push([midX,startStubY],[midX,endStubY]);
+  }else if(!horizontalStart&&!horizontalEnd){
+    const midY=Math.round((startStubY+endStubY)/2);
+    points.push([startStubX,midY],[endStubX,midY]);
+  }else if(horizontalStart){
+    points.push([endStubX,startStubY]);
+  }else{
+    points.push([startStubX,endStubY]);
+  }
+  points.push([endStubX,endStubY],[toX,toY]);
+  const deduped=points.filter((point,index,list)=>index===0||point[0]!==list[index-1][0]||point[1]!==list[index-1][1]);
+  return deduped.map((point,index)=>`${index===0?'M':'L'} ${point[0]} ${point[1]}`).join(' ');
+}
+function buildFlowArrowHead(point,side,color,mode='inward',size=10,length=14){
+  const outward=getPortNormal(side);
+  const dir=mode==='outward'?outward:{x:-outward.x,y:-outward.y};
+  const perp={x:-dir.y,y:dir.x};
+  const base={
+    x:point.x-dir.x*length,
+    y:point.y-dir.y*length
+  };
+  const left={
+    x:base.x+perp.x*size/2,
+    y:base.y+perp.y*size/2
+  };
+  const right={
+    x:base.x-perp.x*size/2,
+    y:base.y-perp.y*size/2
+  };
+  return `<path d="M ${point.x} ${point.y} L ${left.x} ${left.y} L ${right.x} ${right.y} Z" fill="${color}" pointer-events="none"/>`;
+}
+function getShapeEdgePoint(shape,fromX,fromY){
+  const cx=shape.x,cy=shape.y,hw=shape.w/2,hh=shape.h/2;
+  const dx=fromX-cx,dy=fromY-cy;
+  if(Math.abs(dx)<0.001&&Math.abs(dy)<0.001)return{x:cx,y:cy};
+  let t;
+  if(shape.type==='decision'){
+    // Diamond: half-diagonals = hw*sqrt(2) (box rotated 45°)
+    const hd=hw*Math.SQRT2;
+    t=hd/(Math.abs(dx)+Math.abs(dy));
+  }else{
+    t=Math.min(
+      Math.abs(dx)>0.001?hw/Math.abs(dx):Infinity,
+      Math.abs(dy)>0.001?hh/Math.abs(dy):Infinity
+    );
+  }
+  return{x:Math.round(cx+dx*t),y:Math.round(cy+dy*t)};
+}
+function flowStatusText(){
+  const state=ensureFlowchartState();
+  if(state.linkMode&&state.linkSourceId)return 'Select another shape to create the link.';
+  if(state.linkMode)return 'Link mode is on. Click one shape, then another shape.';
+  if(state.selectedShapeId)return 'Shape selected. Drag it, edit its label, or delete it.';
+  return 'Click a shape to edit or drag it. Turn on link mode to connect shapes.';
+}
+function renderFlowCanvasList(){
+  const list=document.getElementById('flow-canvas-list');
+  if(!list)return;
+  const state=ensureFlowchartState();
+  list.innerHTML=state.canvases.map((canvas,index)=>`<div class="flow-canvas-item${canvas.id===state.activeCanvasId?' active':''}" onclick="selectFlowCanvas('${canvas.id}')">
+    <div class="flow-canvas-row">
+      <div class="flow-canvas-dot"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="13" y2="14"/></svg></div>
+      <input class="flow-canvas-name" value="${escHtml(canvas.title)}" placeholder="Canvas title" onclick="event.stopPropagation()" oninput="renameFlowCanvas('${canvas.id}',this.value)" />
+      <button class="flow-canvas-del" type="button" onclick="event.stopPropagation();deleteFlowCanvas('${canvas.id}')" ${state.canvases.length===1?'disabled':''} aria-label="Delete canvas">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
+    </div>
+    <div class="flow-canvas-meta">${canvas.shapes.length} shape${canvas.shapes.length!==1?'s':''} · ${canvas.links.length} link${canvas.links.length!==1?'s':''}</div>
+  </div>`).join('');
+}
+function renderFlowLinks(){
+  const layer=document.getElementById('flow-links');
+  if(!layer)return;
+  const canvas=getActiveFlowCanvas();
+  if(!canvas){layer.innerHTML='';return;}
+  layer.innerHTML=canvas.links.map(link=>{
+    const from=getFlowShape(link.from);
+    const to=getFlowShape(link.to);
+    if(!from||!to)return '';
+    const fromSide=link.fromSide||inferLinkSide(from,to);
+    const toSide=link.toSide||inferLinkSide(to,from);
+    const a=getPortCanvasPos(from,fromSide);
+    const b=getPortCanvasPos(to,toSide);
+    const active=!!(flowchartState.selectedShapeId&&(link.from===flowchartState.selectedShapeId||link.to===flowchartState.selectedShapeId));
+    const color=active?'#111':'#6f6e69';
+    const dir=link.direction||'forward';
+    const arrowLen=14;
+    const sn=getPortNormal(fromSide);
+    const en=getPortNormal(toSide);
+    const pathAx=(dir==='backward'||dir==='both')?a.x-sn.x*arrowLen:a.x;
+    const pathAy=(dir==='backward'||dir==='both')?a.y-sn.y*arrowLen:a.y;
+    const pathBx=(dir==='forward'||dir==='both')?b.x+en.x*arrowLen:b.x;
+    const pathBy=(dir==='forward'||dir==='both')?b.y+en.y*arrowLen:b.y;
+    const d=buildFlowConnectorPath(pathAx,pathAy,fromSide,pathBx,pathBy,toSide);
+    const startArrow=(dir==='backward'||dir==='both')?buildFlowArrowHead(a,fromSide,color,'outward'):'';
+    const endArrow=(dir==='forward'||dir==='both')?buildFlowArrowHead(b,toSide,color,'inward'):'';
+    return `<path class="flow-link${active?' active':''}" d="${d}"/><path class="flow-link-hit" d="${d}" onclick="cycleFlowLinkDirection(event,'${link.id}')"/>${startArrow}${endArrow}`;
+  }).join('');
+}
+function cycleFlowLinkDirection(event,linkId){
+  event.stopPropagation();
+  const canvas=getActiveFlowCanvas();
+  if(!canvas)return;
+  const link=canvas.links.find(l=>l.id===linkId);
+  if(!link)return;
+  const cycle={forward:'backward',backward:'both',both:'forward'};
+  link.direction=cycle[link.direction||'forward'];
+  queueFlowchartSave();
+  renderFlowLinks();
+}
+function renderFlowShapes(){
+  const wrap=document.getElementById('flow-shapes');
+  const empty=document.getElementById('flow-empty');
+  if(!wrap)return;
+  const canvas=getActiveFlowCanvas();
+  if(!canvas){
+    wrap.innerHTML='';
+    if(empty)empty.style.display='flex';
+    return;
+  }
+  wrap.innerHTML=canvas.shapes.map(shape=>`<div class="flow-shape ${shape.type}${shape.id===flowchartState.selectedShapeId?' selected':''}${shape.id===flowchartState.linkSourceId?' link-source':''}${portDragState&&shape.id!==portDragState.fromShapeId?' link-target':''}${portDragState?.targetShapeId===shape.id?' link-target-snap':''}" id="flow-shape-${shape.id}" style="left:${shape.x}px;top:${shape.y}px;width:${shape.w}px;height:${shape.h}px" onmousedown="startFlowDrag(event,'${shape.id}')" onclick="handleFlowShapeClick(event,'${shape.id}')">
+    <div class="flow-shape-box" id="flow-shape-box-${shape.id}">
+      <div class="flow-shape-label" id="flow-shape-label-${shape.id}" contenteditable="true" spellcheck="false" onfocus="focusFlowShapeLabel(event,'${shape.id}')" onblur="finishFlowShapeEdit('${shape.id}')" oninput="renameFlowShape('${shape.id}',this.textContent)" onkeydown="handleFlowShapeKeydown(event,'${shape.id}')">${escHtml(shape.label)}</div>
+    </div>
+    <div class="flow-port" data-side="top" onmousedown="startPortDrag(event,'${shape.id}','top')" onmouseenter="enterTargetPort(event,'${shape.id}','top')" onmouseleave="leaveTargetPort()"></div>
+    <div class="flow-port" data-side="right" onmousedown="startPortDrag(event,'${shape.id}','right')" onmouseenter="enterTargetPort(event,'${shape.id}','right')" onmouseleave="leaveTargetPort()"></div>
+    <div class="flow-port" data-side="bottom" onmousedown="startPortDrag(event,'${shape.id}','bottom')" onmouseenter="enterTargetPort(event,'${shape.id}','bottom')" onmouseleave="leaveTargetPort()"></div>
+    <div class="flow-port" data-side="left" onmousedown="startPortDrag(event,'${shape.id}','left')" onmouseenter="enterTargetPort(event,'${shape.id}','left')" onmouseleave="leaveTargetPort()"></div>
+    <div class="flow-resize" data-dir="ne" onmousedown="startFlowResize(event,'${shape.id}','ne')"></div>
+    <div class="flow-resize" data-dir="se" onmousedown="startFlowResize(event,'${shape.id}','se')"></div>
+    <div class="flow-resize" data-dir="sw" onmousedown="startFlowResize(event,'${shape.id}','sw')"></div>
+    <div class="flow-resize" data-dir="nw" onmousedown="startFlowResize(event,'${shape.id}','nw')"></div>
+  </div>`).join('');
+  if(empty)empty.style.display=canvas.shapes.length?'none':'flex';
+  renderFlowLinks();
+}
+function renderFlowToolbar(){
+  const state=ensureFlowchartState();
+  document.getElementById('flow-tool-link')?.classList.toggle('active',state.linkMode);
+  const deleteBtn=document.getElementById('flow-tool-delete');
+  if(deleteBtn)deleteBtn.disabled=!state.selectedShapeId;
+  const status=document.getElementById('flow-status');
+  if(status)status.textContent=flowStatusText();
+}
+function renderSystemFlowchart(){
+  ensureFlowchartState();
+  renderFlowCanvasList();
+  renderFlowShapes();
+  renderFlowToolbar();
+}
+function startFlowPaletteDrag(event,type){
+  flowPaletteDragType=type;
+  event.currentTarget.classList.add('dragging');
+  if(event.dataTransfer){
+    event.dataTransfer.effectAllowed='copy';
+    event.dataTransfer.setData('text/plain',type);
+  }
+}
+function endFlowPaletteDrag(event){
+  flowPaletteDragType='';
+  event.currentTarget.classList.remove('dragging');
+  document.getElementById('flow-stage')?.classList.remove('drop-ready');
+}
+function allowFlowStageDrop(event){
+  if(!(flowPaletteDragType||(event.dataTransfer&&event.dataTransfer.getData('text/plain'))))return;
+  event.preventDefault();
+  if(event.dataTransfer)event.dataTransfer.dropEffect='copy';
+  event.currentTarget.classList.add('drop-ready');
+}
+function handleFlowStageDragLeave(event){
+  if(event.currentTarget.contains(event.relatedTarget))return;
+  event.currentTarget.classList.remove('drop-ready');
+}
+function handleFlowStageDrop(event){
+  const type=flowPaletteDragType||(event.dataTransfer&&event.dataTransfer.getData('text/plain'));
+  event.preventDefault();
+  event.currentTarget.classList.remove('drop-ready');
+  if(!type)return;
+  const rect=event.currentTarget.getBoundingClientRect();
+  addFlowShape(type,event.clientX-rect.left,event.clientY-rect.top);
+  flowPaletteDragType='';
+  document.querySelectorAll('.flow-tool.dragging').forEach(btn=>btn.classList.remove('dragging'));
+}
+function addFlowCanvas(){
+  const state=ensureFlowchartState();
+  const canvas=createFlowCanvas(flowCanvasTitleForIndex(state.canvases.length+1));
+  state.canvases.push(canvas);
+  state.activeCanvasId=canvas.id;
+  state.selectedShapeId=null;
+  state.linkSourceId=null;
+  queueFlowchartSave();
+  renderSystemFlowchart();
+}
+function selectFlowCanvas(canvasId){
+  const state=ensureFlowchartState();
+  if(state.activeCanvasId===canvasId)return;
+  state.activeCanvasId=canvasId;
+  state.selectedShapeId=null;
+  state.linkSourceId=null;
+  renderSystemFlowchart();
+  queueFlowchartSave();
+}
+function renameFlowCanvas(canvasId,value){
+  const canvas=ensureFlowchartState().canvases.find(entry=>entry.id===canvasId);
+  if(!canvas)return;
+  canvas.title=String(value||'').trimStart()||'Untitled Canvas';
+  queueFlowchartSave();
+}
+function deleteFlowCanvas(canvasId){
+  const state=ensureFlowchartState();
+  if(state.canvases.length<=1)return;
+  const idx=state.canvases.findIndex(entry=>entry.id===canvasId);
+  if(idx<0)return;
+  state.canvases.splice(idx,1);
+  state.activeCanvasId=(state.canvases[idx]||state.canvases[idx-1]||state.canvases[0]).id;
+  state.selectedShapeId=null;
+  state.linkSourceId=null;
+  queueFlowchartSave();
+  renderSystemFlowchart();
+}
+function addFlowShape(type,x=null,y=null){
+  const canvas=getActiveFlowCanvas();
+  if(!canvas)return;
+  const shape=buildFlowShape(type,x,y,canvas.shapes.length);
+  canvas.shapes.push(shape);
+  flowchartState.selectedShapeId=shape.id;
+  flowchartState.linkSourceId=flowchartState.linkMode?shape.id:null;
+  queueFlowchartSave();
+  renderSystemFlowchart();
+  requestAnimationFrame(()=>scrollFlowShapeIntoView(shape));
+}
+function renameFlowShape(shapeId,value){
+  const shape=getFlowShape(shapeId);
+  if(!shape)return;
+  shape.label=String(value||'').replace(/\s+/g,' ').trim()||'Untitled';
+  queueFlowchartSave();
+}
+function focusFlowShapeLabel(event,shapeId){
+  event.stopPropagation();
+  const state=ensureFlowchartState();
+  state.selectedShapeId=shapeId;
+  document.querySelectorAll('#flow-shapes .flow-shape.selected').forEach(el=>el.classList.remove('selected'));
+  document.getElementById(`flow-shape-${shapeId}`)?.classList.add('selected');
+  renderFlowLinks();
+  renderFlowToolbar();
+}
+function beginFlowShapeEdit(shapeId){
+  const label=document.getElementById(`flow-shape-label-${shapeId}`);
+  if(!label)return;
+  requestAnimationFrame(()=>{
+    label.focus();
+    const range=document.createRange();
+    range.selectNodeContents(label);
+    range.collapse(false);
+    const sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+}
+function finishFlowShapeEdit(shapeId){
+  const label=document.getElementById(`flow-shape-label-${shapeId}`);
+  if(!label)return;
+  renameFlowShape(shapeId,label.textContent);
+}
+function handleFlowShapeKeydown(event,shapeId){
+  if(event.key==='Escape'){
+    event.preventDefault();
+    event.currentTarget.blur();
+  }
+  event.stopPropagation();
+}
+function handleFlowShapeClick(event,shapeId){
+  event.stopPropagation();
+  if(event.target.closest('.flow-shape-label')){
+    focusFlowShapeLabel(event,shapeId);
+  }
+  // Ignore if the mousedown became a real drag
+  if(flowJustDragged){flowJustDragged=false;return;}
+  const state=ensureFlowchartState();
+  if(state.linkMode){
+    if(!state.linkSourceId){
+      state.linkSourceId=shapeId;
+      state.selectedShapeId=shapeId;
+      renderSystemFlowchart();
+      return;
+    }
+    if(state.linkSourceId===shapeId){
+      state.linkSourceId=null;
+      state.selectedShapeId=shapeId;
+      renderSystemFlowchart();
+      return;
+    }
+    const canvas=getActiveFlowCanvas();
+    const exists=canvas.links.some(link=>link.from===state.linkSourceId&&link.to===shapeId);
+    if(!exists){
+      const sourceShape=getFlowShape(state.linkSourceId);
+      const targetShape=getFlowShape(shapeId);
+      canvas.links.push({
+        id:`flow-link-${uid()}`,
+        from:state.linkSourceId,
+        to:shapeId,
+        fromSide:sourceShape&&targetShape?inferLinkSide(sourceShape,targetShape):null,
+        toSide:sourceShape&&targetShape?inferLinkSide(targetShape,sourceShape):null,
+        direction:'forward'
+      });
+      queueFlowchartSave();
+    }
+    state.selectedShapeId=shapeId;
+    state.linkSourceId=null;
+    renderSystemFlowchart();
+    return;
+  }
+  // Normal mode: update selection via direct DOM (no re-render — keeps editing alive)
+  document.querySelectorAll('#flow-shapes .flow-shape.selected').forEach(el=>el.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  state.selectedShapeId=shapeId;
+  renderFlowLinks();
+  renderFlowToolbar();
+  // Start editing immediately on click
+  beginFlowShapeEdit(shapeId);
+}
+function handleFlowStageClick(){
+  flowchartState.selectedShapeId=null;
+  if(flowchartState.linkMode)flowchartState.linkSourceId=null;
+  renderSystemFlowchart();
+}
+function toggleFlowLinkMode(){
+  const state=ensureFlowchartState();
+  state.linkMode=!state.linkMode;
+  state.linkSourceId=null;
+  renderFlowToolbar();
+  renderFlowShapes();
+}
+function deleteSelectedFlowShape(){
+  const canvas=getActiveFlowCanvas();
+  const shapeId=flowchartState.selectedShapeId;
+  if(!canvas||!shapeId)return;
+  canvas.shapes=canvas.shapes.filter(shape=>shape.id!==shapeId);
+  canvas.links=canvas.links.filter(link=>link.from!==shapeId&&link.to!==shapeId);
+  flowchartState.selectedShapeId=null;
+  flowchartState.linkSourceId=null;
+  queueFlowchartSave();
+  renderSystemFlowchart();
+}
+function startFlowDrag(event,shapeId){
+  if(event.target.closest('.flow-shape-label')||event.target.closest('.flow-resize'))return;
+  const shape=getFlowShape(shapeId);
+  if(!shape)return;
+  event.preventDefault();
+  event.stopPropagation();
+  flowJustDragged=false;
+  flowchartState.selectedShapeId=shapeId;
+  flowDragState={shapeId,startX:event.clientX,startY:event.clientY,originX:shape.x,originY:shape.y};
+  document.addEventListener('mousemove',handleFlowDragMove);
+  document.addEventListener('mouseup',stopFlowDrag);
+  renderSystemFlowchart();
+}
+function handleFlowDragMove(event){
+  if(!flowDragState)return;
+  flowJustDragged=true;
+  const shape=getFlowShape(flowDragState.shapeId);
+  if(!shape)return;
+  const nextX=Math.max(shape.w/2,Math.min(1800-shape.w/2,flowDragState.originX+(event.clientX-flowDragState.startX)));
+  const nextY=Math.max(shape.h/2,Math.min(1200-shape.h/2,flowDragState.originY+(event.clientY-flowDragState.startY)));
+  shape.x=Math.round(nextX);
+  shape.y=Math.round(nextY);
+  renderFlowShapes();
+  renderFlowToolbar();
+}
+function stopFlowDrag(){
+  if(!flowDragState)return;
+  document.removeEventListener('mousemove',handleFlowDragMove);
+  document.removeEventListener('mouseup',stopFlowDrag);
+  flowDragState=null;
+  queueFlowchartSave();
+}
+
+function startFlowResize(event,shapeId,dir){
+  const shape=getFlowShape(shapeId);
+  if(!shape)return;
+  event.preventDefault();
+  event.stopPropagation();
+  flowchartState.selectedShapeId=shapeId;
+  flowResizeState={
+    shapeId,
+    dir,
+    startX:event.clientX,
+    startY:event.clientY,
+    originX:shape.x,
+    originY:shape.y,
+    originW:shape.w,
+    originH:shape.h,
+  };
+  document.addEventListener('mousemove',handleFlowResizeMove);
+  document.addEventListener('mouseup',stopFlowResize);
+  renderSystemFlowchart();
+}
+function handleFlowResizeMove(event){
+  if(!flowResizeState)return;
+  const shape=getFlowShape(flowResizeState.shapeId);
+  if(!shape)return;
+  const dx=event.clientX-flowResizeState.startX;
+  const dy=event.clientY-flowResizeState.startY;
+  const dir=flowResizeState.dir;
+  const min=getFlowShapeMinSize(shape.type);
+  let w=flowResizeState.originW;
+  let h=flowResizeState.originH;
+  let x=flowResizeState.originX;
+  let y=flowResizeState.originY;
+  if(shape.type==='decision'){
+    const sizeDelta=Math.max(
+      dir.includes('e')?dx:dir.includes('w')?-dx:0,
+      dir.includes('s')?dy:dir.includes('n')?-dy:0
+    );
+    const next=Math.max(min.w,flowResizeState.originW+sizeDelta*2);
+    w=next;h=next;
+  }else{
+    if(dir.includes('e'))w=Math.max(min.w,flowResizeState.originW+dx);
+    if(dir.includes('w'))w=Math.max(min.w,flowResizeState.originW-dx);
+    if(dir.includes('s'))h=Math.max(min.h,flowResizeState.originH+dy);
+    if(dir.includes('n'))h=Math.max(min.h,flowResizeState.originH-dy);
+  }
+  if(dir.includes('e'))x=flowResizeState.originX+(w-flowResizeState.originW)/2;
+  if(dir.includes('w'))x=flowResizeState.originX-(w-flowResizeState.originW)/2;
+  if(dir.includes('s'))y=flowResizeState.originY+(h-flowResizeState.originH)/2;
+  if(dir.includes('n'))y=flowResizeState.originY-(h-flowResizeState.originH)/2;
+  shape.w=Math.round(w);
+  shape.h=Math.round(h);
+  shape.x=Math.max(shape.w/2,Math.min(1800-shape.w/2,Math.round(x)));
+  shape.y=Math.max(shape.h/2,Math.min(1200-shape.h/2,Math.round(y)));
+  const el=document.getElementById(`flow-shape-${shape.id}`);
+  if(el){
+    el.style.width=`${shape.w}px`;
+    el.style.height=`${shape.h}px`;
+    el.style.left=`${shape.x}px`;
+    el.style.top=`${shape.y}px`;
+  }
+  renderFlowLinks();
+}
+function stopFlowResize(){
+  if(!flowResizeState)return;
+  document.removeEventListener('mousemove',handleFlowResizeMove);
+  document.removeEventListener('mouseup',stopFlowResize);
+  flowResizeState=null;
+  queueFlowchartSave();
+}
+
+// ─── Port-drag connection ────────────────────
+let portDragState=null;
+function getPortCanvasPos(shape,side){
+  switch(side){
+    case'top':    return{x:shape.x,            y:shape.y-shape.h/2};
+    case'right':  return{x:shape.x+shape.w/2,  y:shape.y};
+    case'bottom': return{x:shape.x,            y:shape.y+shape.h/2};
+    case'left':   return{x:shape.x-shape.w/2,  y:shape.y};
+  }
+}
+function getFlowSnapTarget(x,y){
+  const canvas=getActiveFlowCanvas();
+  if(!canvas||!portDragState)return null;
+  let best=null;
+  canvas.shapes.forEach(shape=>{
+    if(shape.id===portDragState.fromShapeId)return;
+    ['top','right','bottom','left'].forEach(side=>{
+      const point=getPortCanvasPos(shape,side);
+      const distance=Math.hypot(point.x-x,point.y-y);
+      if(distance>FLOW_LINK_SNAP_RADIUS)return;
+      if(!best||distance<best.distance){
+        best={shapeId:shape.id,side,x:point.x,y:point.y,distance};
+      }
+    });
+  });
+  return best;
+}
+function syncPortDragHighlights(){
+  const shapes=document.querySelectorAll('#flow-shapes .flow-shape');
+  shapes.forEach(shapeEl=>{
+    const shapeId=shapeEl.id.replace('flow-shape-','');
+    const isSource=!!(portDragState&&shapeId===portDragState.fromShapeId);
+    shapeEl.classList.toggle('link-target',!!portDragState&&!isSource);
+    shapeEl.classList.toggle('link-target-snap',!!portDragState&&portDragState.targetShapeId===shapeId);
+  });
+  document.querySelectorAll('.flow-port.port-drop').forEach(port=>port.classList.remove('port-drop'));
+  if(portDragState?.targetShapeId&&portDragState.targetSide){
+    const target=document.getElementById(`flow-shape-${portDragState.targetShapeId}`);
+    target?.querySelector(`.flow-port[data-side="${portDragState.targetSide}"]`)?.classList.add('port-drop');
+  }
+}
+function updatePortDragTarget(target){
+  if(!portDragState)return;
+  if(target){
+    portDragState.targetShapeId=target.shapeId;
+    portDragState.targetSide=target.side;
+    portDragState.toX=target.x;
+    portDragState.toY=target.y;
+  }else{
+    portDragState.targetShapeId=null;
+    portDragState.targetSide=null;
+  }
+  syncPortDragHighlights();
+}
+function clientToFlowCanvas(cx,cy){
+  const stage=document.getElementById('flow-stage');
+  if(!stage)return{x:0,y:0};
+  const r=stage.getBoundingClientRect();
+  return{x:cx-r.left,y:cy-r.top};
+}
+function startPortDrag(event,shapeId,side){
+  event.preventDefault();
+  event.stopPropagation();
+  const shape=getFlowShape(shapeId);
+  if(!shape)return;
+  const from=getPortCanvasPos(shape,side);
+  portDragState={fromShapeId:shapeId,fromSide:side,fromX:from.x,fromY:from.y,toX:from.x,toY:from.y,targetShapeId:null,targetSide:null};
+  document.getElementById('flow-stage')?.classList.add('port-connecting');
+  document.addEventListener('mousemove',handlePortDragMove);
+  document.addEventListener('mouseup',stopPortDrag);
+  syncPortDragHighlights();
+  renderPortDragPreview();
+}
+function handlePortDragMove(event){
+  if(!portDragState)return;
+  const pos=clientToFlowCanvas(event.clientX,event.clientY);
+  portDragState.toX=pos.x;
+  portDragState.toY=pos.y;
+  updatePortDragTarget(getFlowSnapTarget(pos.x,pos.y));
+  renderPortDragPreview();
+}
+function enterTargetPort(event,shapeId,side){
+  if(!portDragState||shapeId===portDragState.fromShapeId)return;
+  const shape=getFlowShape(shapeId);
+  if(shape)updatePortDragTarget({shapeId,side,...getPortCanvasPos(shape,side)});
+  renderPortDragPreview();
+}
+function leaveTargetPort(){
+  if(!portDragState)return;
+  updatePortDragTarget(null);
+  renderPortDragPreview();
+}
+function stopPortDrag(){
+  document.removeEventListener('mousemove',handlePortDragMove);
+  document.removeEventListener('mouseup',stopPortDrag);
+  document.getElementById('flow-stage')?.classList.remove('port-connecting');
+  if(portDragState?.targetShapeId){
+    const canvas=getActiveFlowCanvas();
+    if(canvas){
+      const exists=canvas.links.some(l=>l.from===portDragState.fromShapeId&&l.to===portDragState.targetShapeId);
+      if(!exists){
+        canvas.links.push({
+          id:`flow-link-${uid()}`,
+          from:portDragState.fromShapeId,
+          to:portDragState.targetShapeId,
+          fromSide:portDragState.fromSide||null,
+          toSide:portDragState.targetSide||null,
+          direction:'forward'
+        });
+        queueFlowchartSave();
+        renderSystemFlowchart();
+      }
+    }
+  }
+  portDragState=null;
+  syncPortDragHighlights();
+  renderPortDragPreview();
+}
+function renderPortDragPreview(){
+  const svg=document.getElementById('flow-drag-preview');
+  if(!svg)return;
+  if(!portDragState){svg.innerHTML='';return;}
+  const{fromX,fromY,toX,toY,targetShapeId,fromSide}=portDragState;
+  const snapped=!!targetShapeId;
+  const color=snapped?'#2d9a6b':'#3b72d9';
+  let toSide=portDragState.targetSide;
+  if(!toSide){
+    const dx=toX-fromX;
+    const dy=toY-fromY;
+    if(Math.abs(dx)>=Math.abs(dy))toSide=dx>=0?'left':'right';
+    else toSide=dy>=0?'top':'bottom';
+  }
+  const arrowLen=14;
+  const endNormal=getPortNormal(toSide);
+  const pathBx=snapped?toX+endNormal.x*arrowLen:toX;
+  const pathBy=snapped?toY+endNormal.y*arrowLen:toY;
+  const d=buildFlowConnectorPath(fromX,fromY,fromSide||'right',pathBx,pathBy,toSide);
+  svg.innerHTML=`<path d="${d}" stroke="${color}" stroke-width="2.2" fill="none"${snapped?'':' stroke-dasharray="7 4"'}/>${buildFlowArrowHead({x:toX,y:toY},toSide,color,'inward')}<circle cx="${fromX}" cy="${fromY}" r="5" fill="${color}"/>`;
+}
+
+// ════════════════════════════════════════════
 // NAVIGATION
 // ════════════════════════════════════════════
 function nav(p){
@@ -3098,6 +4176,7 @@ function nav(p){
   if(pg){pg.classList.add('active');pg.scrollTop=0;}
   if(p==='home')renderHome();
   if(p==='tickets')renderActive();
+  if(p==='flowchart')renderSystemFlowchart();
   if(p==='trash')renderTrashPage();
   if(p==='team')renderTeamPage();
   const featureRow=getFeatureRowByKey(p);
@@ -3117,6 +4196,15 @@ document.addEventListener('click',e=>{
   const item=e.target.closest('.ni[data-page]');
   if(!item)return;
   nav(item.dataset.page);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Delete'&&e.key!=='Backspace')return;
+  const tag=document.activeElement?.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||document.activeElement?.isContentEditable)return;
+  if(!document.getElementById('page-flowchart')?.classList.contains('active'))return;
+  if(!flowchartState.selectedShapeId)return;
+  e.preventDefault();
+  deleteSelectedFlowShape();
 });
 refreshAssigneeDropdowns();
 
@@ -3145,7 +4233,7 @@ function priBdg(p){const m=PRI[p]||PRI.Normal;return `<span class="pri" style="b
 function fmtD(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-MY',{day:'numeric',month:'short'});}
 function modTag(m){
   const row=moduleRows.find(x=>x.module_key===m);
-  const icon=row?getFeatureIcon(row):FEATURE_ICON_MAP[m];
+  const icon=row?getFeatureIcon(row):(FEATURE_ICON_SET[FEATURE_ICON_MAP[m]||DEFAULT_FEATURE_ICON_KEY]||DEFAULT_FEATURE_ICON);
   const label=row?.name||m;
   return `<span class="mtag">${icon?`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>`:''}${escHtml(label)}</span>`;
 }
@@ -4158,29 +5246,15 @@ function closeOvl(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.ovl').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
 // ════════════════════════════════════════════
-// FLOWCHART ZOOM / PAN
-// ════════════════════════════════════════════
-let fz=1;const fsvg=document.getElementById('flow-svg');
-function applyFz(){fsvg.style.transform=`scale(${fz})`;fsvg.style.transformOrigin='50px 50px';}
-function fzI(){fz=Math.min(fz+.1,2);applyFz();}
-function fzO(){fz=Math.max(fz-.1,.4);applyFz();}
-function fzR(){fz=1;applyFz();}
-const fc2=document.getElementById('flow-c');
-let fd=false,fsx,fsy,fsl,fst;
-fc2.addEventListener('mousedown',e=>{fd=true;fsx=e.pageX-fc2.offsetLeft;fsy=e.pageY-fc2.offsetTop;fsl=fc2.scrollLeft;fst=fc2.scrollTop;});
-fc2.addEventListener('mouseleave',()=>fd=false);fc2.addEventListener('mouseup',()=>fd=false);
-fc2.addEventListener('mousemove',e=>{if(!fd)return;e.preventDefault();fc2.scrollLeft=fsl-(e.pageX-fc2.offsetLeft-fsx);fc2.scrollTop=fst-(e.pageY-fc2.offsetTop-fsy);});
-
 // INIT
+// ════════════════════════════════════════════
 function populateFltStatus(){
   const sel=document.getElementById('flt-status');if(!sel)return;
   const cur=sel.value;
   sel.innerHTML=`<option value="">All Statuses</option>`+statuses.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
   if(cur)sel.value=cur;
 }
-refreshSettingsSecurityUi();
-initWorkspaceAccess();
-hydrateApp();
+initApp();
 </script>
 </body>
 </html>

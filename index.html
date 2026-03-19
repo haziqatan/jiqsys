@@ -47,7 +47,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;font-family:'DM S
 .shell{display:flex;height:100vh;overflow:hidden;overscroll-behavior:none}
 
 /* ── SIDEBAR ── */
-.sidebar{width:var(--sw);min-width:var(--sw);background:var(--sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;flex-shrink:0;transition:width .18s ease,min-width .18s ease}
+.sidebar{position:sticky;top:0;width:var(--sw);min-width:var(--sw);height:100vh;max-height:100vh;background:var(--sb);border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scroll-snap-type:none;scroll-behavior:smooth;scrollbar-gutter:stable;-webkit-overflow-scrolling:touch;touch-action:pan-y;flex-shrink:0;transition:width .18s ease,min-width .18s ease}
 .sidebar-head{padding:18px 16px 14px;border-bottom:1px solid var(--bdr)}
 .s-logo{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:30px}
 .s-brand{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
@@ -112,7 +112,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;font-family:'DM S
 .tm-btn.del:hover{border-color:var(--red);color:var(--red)}
 
 /* ── MAIN ── */
-.main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.main{flex:1;min-width:0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
 .page{display:none;flex:1;overflow-y:auto;overscroll-behavior-y:contain;padding:36px 44px;flex-direction:column}
 .page.active{display:flex}
 #page-tickets{padding:0;overflow:hidden}
@@ -1477,6 +1477,7 @@ const rteResizeHandlers=new Map();
 const WORKSPACE_SECURITY_KEY='workspace_security';
 const WORKSPACE_APPEARANCE_KEY='workspace_appearance';
 const SIDEBAR_COLLAPSE_KEY='jiqsys_sidebar_collapsed';
+const SIDEBAR_SCROLL_KEY='jiqsys_sidebar_scroll_top';
 const FLOWCHART_SETTING_KEY='system_flowchart';
 const FLOWCHART_SVG_NS='http://www.w3.org/2000/svg';
 const FLOWCHART_PORT_IDS=['top','right','bottom','left'];
@@ -1491,6 +1492,7 @@ const AUTH_REMEMBER_KEY='jiqsys_workspace_unlock_hash';
 let workspaceSecurity={password_enabled:false,password_hash:null};
 let workspaceAppearance={theme:'light'};
 let sidebarCollapsed=false;
+let sidebarScrollRestoreToken=0;
 let flowchartState={nodes:[],conns:[]};
 let flowchartUi={
   initialized:false,
@@ -1535,6 +1537,42 @@ function getSidebarToggleIcon(){
     ? `<rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/><polyline points="12 9 15 12 12 15"/>`
     : `<rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/><polyline points="14 9 11 12 14 15"/>`;
 }
+function getSidebarScrollTop(){
+  const sidebar=document.getElementById('app-sidebar');
+  if(sidebar)return sidebar.scrollTop;
+  try{
+    const stored=Number(localStorage.getItem(SIDEBAR_SCROLL_KEY)||'0');
+    return Number.isFinite(stored)&&stored>0?stored:0;
+  }catch(error){
+    return 0;
+  }
+}
+function saveSidebarScroll(scrollTop){
+  const next=Math.max(0,Math.round(Number(scrollTop)||0));
+  try{
+    localStorage.setItem(SIDEBAR_SCROLL_KEY,String(next));
+  }catch(error){}
+}
+function restoreSidebarScroll(scrollTop=getSidebarScrollTop()){
+  const sidebar=document.getElementById('app-sidebar');
+  if(!sidebar)return;
+  const next=Math.max(0,Math.round(Number(scrollTop)||0));
+  const token=++sidebarScrollRestoreToken;
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      if(token!==sidebarScrollRestoreToken)return;
+      const maxScroll=Math.max(0,sidebar.scrollHeight-sidebar.clientHeight);
+      sidebar.scrollTop=Math.min(next,maxScroll);
+    });
+  });
+}
+function initSidebarScrollSync(){
+  const sidebar=document.getElementById('app-sidebar');
+  if(!sidebar||sidebar.dataset.scrollSync==='1')return;
+  sidebar.addEventListener('scroll',()=>saveSidebarScroll(sidebar.scrollTop),{passive:true});
+  sidebar.dataset.scrollSync='1';
+  restoreSidebarScroll();
+}
 function applySidebarState(){
   document.getElementById('app-shell')?.classList.toggle('sidebar-collapsed',sidebarCollapsed);
   const btn=document.getElementById('sidebar-toggle');
@@ -1552,13 +1590,16 @@ function loadSidebarState(){
     sidebarCollapsed=false;
   }
   applySidebarState();
+  restoreSidebarScroll();
 }
 function toggleSidebar(){
+  const sidebarScrollTop=getSidebarScrollTop();
   sidebarCollapsed=!sidebarCollapsed;
   try{
     localStorage.setItem(SIDEBAR_COLLAPSE_KEY,sidebarCollapsed?'1':'0');
   }catch(error){}
   applySidebarState();
+  restoreSidebarScroll(sidebarScrollTop);
 }
 function applyWorkspaceTheme(theme){
   const nextTheme=theme==='dark'?'dark':'light';
@@ -2475,9 +2516,11 @@ function renderFeaturePages(){
 }
 function renderFeatureUi(){
   const activePage=document.querySelector('.page.active')?.id.replace(/^page-/,'');
+  const sidebarScrollTop=getSidebarScrollTop();
   renderFeatureSidebar();
   renderFeaturePages();
   applySidebarState();
+  restoreSidebarScroll(sidebarScrollTop);
   if(activePage&&document.getElementById(`page-${activePage}`))nav(activePage);
 }
 function closeFeatureMenus(){
@@ -2789,6 +2832,7 @@ async function hydrateApp(){
 
 async function initApp(){
   loadSidebarState();
+  initSidebarScrollSync();
   try{
     await loadWorkspaceAppearance();
   }catch(error){

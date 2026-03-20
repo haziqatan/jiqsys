@@ -47,6 +47,10 @@ create unique index if not exists workspace_invitations_pending_email_key
 on public.workspace_invitations (workspace_id, (lower(invited_email)))
 where status = 'pending';
 
+create unique index if not exists workspaces_private_owner_unique
+on public.workspaces (owner_user_id)
+where kind = 'private' and owner_user_id is not null;
+
 drop trigger if exists set_workspace_invitations_updated_at on public.workspace_invitations;
 create trigger set_workspace_invitations_updated_at
 before update on public.workspace_invitations
@@ -129,6 +133,15 @@ begin
   from public.profiles
   where id = current_user_id;
 
+  select w.id
+  into private_workspace_id
+  from public.workspaces w
+  where w.owner_user_id = current_user_id
+    and w.kind = 'private'
+  order by w.created_at asc
+  limit 1;
+
+  if private_workspace_id is null then
   select wm.workspace_id
   into private_workspace_id
   from public.workspace_members wm
@@ -138,6 +151,7 @@ begin
     and w.kind = 'private'
   order by wm.created_at asc
   limit 1;
+  end if;
 
   if private_workspace_id is null then
     select wbo.workspace_id
@@ -147,97 +161,76 @@ begin
     order by wbo.created_at asc
     limit 1;
 
-    if private_workspace_id is not null then
-      update public.workspaces
-      set
-        name = public.format_workspace_name(profile_name),
-        owner_user_id = current_user_id,
-        kind = 'private',
-        updated_at = now()
-      where id = private_workspace_id;
-
-      insert into public.workspace_members (
-        workspace_id,
-        user_id,
-        role,
-        can_create_tickets,
-        can_edit_tickets,
-        can_delete_tickets,
-        can_create_features,
-        can_edit_features,
-        can_delete_features,
-        can_manage_team,
-        can_manage_statuses,
-        can_manage_settings,
-        can_manage_members
-      )
-      values (
-        private_workspace_id,
-        current_user_id,
-        'owner',
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true
-      )
-      on conflict (workspace_id, user_id) do update
-      set
-        role = 'owner',
-        can_create_tickets = true,
-        can_edit_tickets = true,
-        can_delete_tickets = true,
-        can_create_features = true,
-        can_edit_features = true,
-        can_delete_features = true,
-        can_manage_team = true,
-        can_manage_statuses = true,
-        can_manage_settings = true,
-        can_manage_members = true,
-        updated_at = now();
-    else
+    if private_workspace_id is null then
       insert into public.workspaces (name, owner_user_id, kind)
       values (public.format_workspace_name(profile_name), current_user_id, 'private')
+      on conflict do nothing
       returning id into private_workspace_id;
 
-      insert into public.workspace_members (
-        workspace_id,
-        user_id,
-        role,
-        can_create_tickets,
-        can_edit_tickets,
-        can_delete_tickets,
-        can_create_features,
-        can_edit_features,
-        can_delete_features,
-        can_manage_team,
-        can_manage_statuses,
-        can_manage_settings,
-        can_manage_members
-      )
-      values (
-        private_workspace_id,
-        current_user_id,
-        'owner',
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true
-      )
-      on conflict (workspace_id, user_id) do nothing;
+      if private_workspace_id is null then
+        select w.id
+        into private_workspace_id
+        from public.workspaces w
+        where w.owner_user_id = current_user_id
+          and w.kind = 'private'
+        order by w.created_at asc
+        limit 1;
+      end if;
     end if;
   end if;
+
+  update public.workspaces
+  set
+    name = public.format_workspace_name(profile_name),
+    owner_user_id = current_user_id,
+    kind = 'private',
+    updated_at = now()
+  where id = private_workspace_id;
+
+  insert into public.workspace_members (
+    workspace_id,
+    user_id,
+    role,
+    can_create_tickets,
+    can_edit_tickets,
+    can_delete_tickets,
+    can_create_features,
+    can_edit_features,
+    can_delete_features,
+    can_manage_team,
+    can_manage_statuses,
+    can_manage_settings,
+    can_manage_members
+  )
+  values (
+    private_workspace_id,
+    current_user_id,
+    'owner',
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  )
+  on conflict (workspace_id, user_id) do update
+  set
+    role = 'owner',
+    can_create_tickets = true,
+    can_edit_tickets = true,
+    can_delete_tickets = true,
+    can_create_features = true,
+    can_edit_features = true,
+    can_delete_features = true,
+    can_manage_team = true,
+    can_manage_statuses = true,
+    can_manage_settings = true,
+    can_manage_members = true,
+    updated_at = now();
 
   if profile_active_workspace_id is null
     or not exists (

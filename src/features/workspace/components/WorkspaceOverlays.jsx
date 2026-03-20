@@ -22,6 +22,54 @@ async function signOutWorkspaceUser() {
   window.location.reload();
 }
 
+function getWorkspaceInitials(name) {
+  return String(name || 'WS')
+    .trim()
+    .split(/\s+/)
+    .map((word) => word[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2) || 'WS';
+}
+
+function WorkspaceSwitchCard({ auth }) {
+  const memberships = auth?.access?.memberships || [];
+  const activeWorkspaceId = auth?.access?.activeWorkspaceId;
+
+  if (!memberships.length) return null;
+
+  return (
+    <div className="st-card" style={{ marginTop: '16px' }}>
+      <div className="st-pane-eyebrow" style={{ marginBottom: '10px' }}>Switch Workspace</div>
+      <div style={{ display: 'grid', gap: '10px' }}>
+        {memberships.map((membership) => {
+          const workspace = membership.workspace || {};
+          const isActive = membership.workspace_id === activeWorkspaceId;
+          const role = membership.role === 'owner' ? 'Owner' : 'Member';
+          const kind = workspace.kind === 'shared' ? 'Shared' : 'Private';
+          return (
+            <button
+              key={membership.workspace_id}
+              className={`ws-switcher-option${isActive ? ' active' : ''}`}
+              type="button"
+              onClick={() => auth?.switchWorkspace?.(membership.workspace_id)}
+              disabled={auth?.loading || isActive}
+              style={{ width: '100%' }}
+            >
+              <span className="ws-switcher-option-mark">{getWorkspaceInitials(workspace.name)}</span>
+              <span className="ws-switcher-option-copy">
+                <span className="ws-switcher-option-name">{workspace.name || 'Workspace'}</span>
+                <span className="ws-switcher-option-meta">{kind} · {role}</span>
+              </span>
+              {isActive ? <span className="ws-switcher-option-check">Current</span> : null}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 async function sendInvitationEmail({ invitationId, workspaceId }) {
   const supabase = getSupabaseClient();
   const {
@@ -689,6 +737,7 @@ export default function WorkspaceOverlays({ auth }) {
                     <button className="btn btn-s" onClick={() => signOutWorkspaceUser()}>Sign Out</button>
                   </div>
                 </div>
+                <WorkspaceSwitchCard auth={auth} />
               </section>
 
               <section className="st-pane" data-st-pane="appearance">

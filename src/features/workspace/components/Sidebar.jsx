@@ -39,7 +39,6 @@ export default function Sidebar({ auth }) {
   const displayName = getUserDisplayName(auth?.user);
   const initials = getUserInitials(auth?.user);
   const roleLabel = isWorkspaceOwner(auth?.access) ? 'Owner' : 'Member';
-  const workspaceOptions = auth?.access?.memberships || [];
 
   return (
     <nav className="sidebar" id="app-sidebar">
@@ -66,31 +65,6 @@ export default function Sidebar({ auth }) {
             </svg>
           </button>
         </div>
-        {workspaceOptions.length ? (
-          <div style={{ marginTop: '12px' }}>
-            <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--tm)', marginBottom: '6px' }}>
-              Workspace
-            </div>
-            <select
-              className="inf"
-              value={auth?.access?.activeWorkspaceId || ''}
-              onChange={(event) => auth?.switchWorkspace?.(event.currentTarget.value)}
-              disabled={auth?.loading}
-              style={{ width: '100%' }}
-            >
-              {workspaceOptions.map((membership) => {
-                const workspace = membership.workspace || {};
-                const workspaceRole = membership.role === 'owner' ? 'Owner' : 'Member';
-                const workspaceKind = workspace.kind === 'private' ? 'Private' : 'Shared';
-                return (
-                  <option key={membership.workspace_id} value={membership.workspace_id}>
-                    {workspace.name || 'Workspace'} · {workspaceKind} · {workspaceRole}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        ) : null}
       </div>
 
       <div className="sidebar-scroll" id="app-sidebar-scroll">
@@ -165,7 +139,6 @@ export default function Sidebar({ auth }) {
         <div
           className="ubl ubl-settings"
           onClick={() => callLegacyAction('openSettingsModal', 'general')}
-          title="Settings"
           aria-label="Settings"
         >
           <div className="uav">{initials}</div>

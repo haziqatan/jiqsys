@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Scroller</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #080810;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 16px 40px;
+      gap: 20px;
+    }
+
+    /* ── Header ── */
+    .header { text-align: center; }
+    .title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .subtitle { color: #6b7280; font-size: 0.9rem; margin-top: 4px; }
+
+    /* ── Display area ── */
+    #display-area {
+      width: 100%;
+      max-width: 880px;
+      height: 420px;
+      background: #111118;
+      border: 1px solid #1e1e30;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 80px rgba(96,165,250,0.05);
+    }
+
+    /* scroll window */
+    #scroll-window {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      padding: 48px 72px;
+    }
+
+    #scroll-content {
+      line-height: 1.8;
+      color: #dde6f0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .end-pad { height: 420px; }
+
+    /* top & bottom fade */
+    #display-area::before,
+    #display-area::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 80px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    #display-area::before {
+      top: 0;
+      background: linear-gradient(to bottom, #111118, transparent);
+    }
+    #display-area::after {
+      bottom: 0;
+      background: linear-gradient(to top, #111118, transparent);
+    }
+
+    /* editor (hidden by default) */
+    #editor {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: #0d0d18;
+      border: none;
+      color: #c9d1d9;
+      font-size: 1rem;
+      line-height: 1.75;
+      padding: 28px 32px;
+      resize: none;
+      outline: none;
+      font-family: inherit;
+    }
+    #editor::placeholder { color: #374151; }
+
+    /* ── Controls card ── */
+    .controls {
+      width: 100%;
+      max-width: 880px;
+      background: #111118;
+      border: 1px solid #1e1e30;
+      border-radius: 18px;
+      padding: 22px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 11px 26px;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .btn-secondary {
+      background: #1a2236;
+      color: #94a3b8;
+      border: 1px solid #2d3f5a;
+    }
+    .btn-secondary:hover { background: #1e2d45; color: #cbd5e1; }
+
+    #btn-play {
+      background: linear-gradient(135deg, #3b82f6, #7c3aed);
+      color: #fff;
+      min-width: 130px;
+      box-shadow: 0 4px 18px rgba(59,130,246,0.35);
+    }
+    #btn-play:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(59,130,246,0.45);
+    }
+    #btn-play.paused-state {
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      box-shadow: 0 4px 18px rgba(124,58,237,0.35);
+    }
+    #btn-play:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Sliders ── */
+    .slider-group { display: flex; flex-direction: column; gap: 7px; }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      color: #6b7280;
+    }
+    .slider-value { color: #93c5fd; font-weight: 700; }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: #1e293b;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      box-shadow: 0 0 10px rgba(96,165,250,0.5);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.73rem;
+      color: #374151;
+    }
+
+    /* ── Status bar ── */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #374151;
+      transition: background 0.3s;
+    }
+    .status-dot.playing { background: #22c55e; box-shadow: 0 0 8px #22c55e88; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1 class="title">Text Scroller</h1>
+    <p class="subtitle">Paste your text and scroll hands-free</p>
+  </div>
+
+  <div id="display-area">
+    <div id="scroll-window">
+      <div id="scroll-content"></div>
+    </div>
+    <textarea id="editor" placeholder="Paste or type your text here..."></textarea>
+  </div>
+
+  <div class="controls">
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="btn-edit">✏ Edit Text</button>
+      <button class="btn btn-secondary" id="btn-reset">↺ Reset</button>
+      <button class="btn" id="btn-play">▶ Play</button>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Ready</span>
+    </div>
+
+    <div class="slider-group">
+      <label class="slider-label">
+        <span>Scroll Speed</span>
+        <span class="slider-value" id="speed-val">50</span>
+      </label>
+      <input type="range" id="speed-slider" min="1" max="100" value="50" />
+      <div class="slider-ticks"><span>Slow</span><span>Fast</span></div>
+    </div>
+
+    <div class="slider-group">
+      <label class="slider-label">
+        <span>Font Size</span>
+        <span class="slider-value" id="font-val">28px</span>
+      </label>
+      <input type="range" id="font-slider" min="14" max="72" value="28" />
+      <div class="slider-ticks"><span>Small</span><span>Large</span></div>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_TEXT = `Welcome to Text Scroller!
+
+Paste your script, speech, or any text here and it will scroll smoothly at whatever speed you choose.
+
+Use the Edit button to replace this text with your own content. Adjust the speed slider to find a comfortable reading pace.
+
+This is perfect for teleprompters, speech rehearsal, reading practice, or presenting without looking at your notes.
+
+Hit ▶ Play when you're ready to start scrolling. Use Pause to stop at any time, and Reset to jump back to the top.
+
+Enjoy your smooth scrolling experience!`;
+
+    // State
+    let isPlaying = false;
+    let isEditing = false;
+    let speed = 50;
+    let fontSize = 28;
+    let scrollPos = 0;
+    let lastTime = null;
+    let rafId = null;
+
+    // Elements
+    const scrollWindow = document.getElementById('scroll-window');
+    const scrollContent = document.getElementById('scroll-content');
+    const editor = document.getElementById('editor');
+    const btnPlay = document.getElementById('btn-play');
+    const btnEdit = document.getElementById('btn-edit');
+    const btnReset = document.getElementById('btn-reset');
+    const speedSlider = document.getElementById('speed-slider');
+    const fontSlider = document.getElementById('font-slider');
+    const speedVal = document.getElementById('speed-val');
+    const fontVal = document.getElementById('font-val');
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+
+    // Init
+    editor.value = DEFAULT_TEXT;
+    renderText(DEFAULT_TEXT);
+
+    function renderText(text) {
+      scrollContent.style.fontSize = fontSize + 'px';
+      scrollContent.textContent = text;
+      const pad = document.createElement('div');
+      pad.className = 'end-pad';
+      scrollContent.appendChild(pad);
+    }
+
+    function setStatus(state) {
+      if (state === 'playing') {
+        statusDot.className = 'status-dot playing';
+        statusText.textContent = 'Scrolling…';
+      } else if (state === 'paused') {
+        statusDot.className = 'status-dot';
+        statusText.textContent = 'Paused';
+      } else if (state === 'done') {
+        statusDot.className = 'status-dot';
+        statusText.textContent = 'Reached the end';
+      } else {
+        statusDot.className = 'status-dot';
+        statusText.textContent = 'Ready';
+      }
+    }
+
+    function tick(timestamp) {
+      if (!lastTime) lastTime = timestamp;
+      const delta = (timestamp - lastTime) / 1000;
+      lastTime = timestamp;
+
+      const pps = speed * 0.9; // px per second
+      scrollPos += pps * delta;
+
+      const maxScroll = scrollWindow.scrollHeight - scrollWindow.clientHeight;
+      if (scrollPos >= maxScroll) {
+        scrollPos = maxScroll;
+        scrollWindow.scrollTop = scrollPos;
+        stopPlay();
+        setStatus('done');
+        return;
+      }
+
+      scrollWindow.scrollTop = scrollPos;
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startPlay() {
+      const maxScroll = scrollWindow.scrollHeight - scrollWindow.clientHeight;
+      if (scrollPos >= maxScroll) {
+        scrollPos = 0;
+        scrollWindow.scrollTop = 0;
+      }
+      isPlaying = true;
+      lastTime = null;
+      rafId = requestAnimationFrame(tick);
+      btnPlay.textContent = '⏸ Pause';
+      btnPlay.classList.add('paused-state');
+      setStatus('playing');
+    }
+
+    function stopPlay() {
+      isPlaying = false;
+      cancelAnimationFrame(rafId);
+      lastTime = null;
+      btnPlay.textContent = '▶ Play';
+      btnPlay.classList.remove('paused-state');
+    }
+
+    // Controls
+    btnPlay.addEventListener('click', () => {
+      if (isPlaying) {
+        stopPlay();
+        setStatus('paused');
+      } else {
+        startPlay();
+      }
+    });
+
+    btnReset.addEventListener('click', () => {
+      stopPlay();
+      scrollPos = 0;
+      scrollWindow.scrollTop = 0;
+      setStatus('ready');
+    });
+
+    btnEdit.addEventListener('click', () => {
+      isEditing = !isEditing;
+      if (isEditing) {
+        stopPlay();
+        scrollWindow.style.display = 'none';
+        editor.style.display = 'block';
+        editor.focus();
+        btnEdit.textContent = '✓ Done';
+        btnPlay.disabled = true;
+        setStatus('ready');
+      } else {
+        editor.style.display = 'none';
+        scrollWindow.style.display = 'block';
+        scrollContent.innerHTML = '';
+        renderText(editor.value || DEFAULT_TEXT);
+        scrollPos = 0;
+        scrollWindow.scrollTop = 0;
+        btnEdit.textContent = '✏ Edit Text';
+        btnPlay.disabled = false;
+        setStatus('ready');
+      }
+    });
+
+    speedSlider.addEventListener('input', () => {
+      speed = Number(speedSlider.value);
+      speedVal.textContent = speed;
+    });
+
+    fontSlider.addEventListener('input', () => {
+      fontSize = Number(fontSlider.value);
+      fontVal.textContent = fontSize + 'px';
+      scrollContent.style.fontSize = fontSize + 'px';
+    });
+
+    // Allow manual scroll while paused
+    scrollWindow.addEventListener('wheel', (e) => {
+      if (!isPlaying) {
+        scrollPos = Math.max(0, scrollPos + e.deltaY);
+        scrollWindow.scrollTop = scrollPos;
+      }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (isEditing) return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        btnPlay.click();
+      }
+      if (e.code === 'KeyR') {
+        btnReset.click();
+      }
+    });
+  </script>
+</body>
+</html>
